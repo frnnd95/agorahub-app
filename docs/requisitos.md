@@ -1,8 +1,11 @@
 # Documento de Requisitos — ÁgoraHub
 
 | Versão | Responsável | Data | Alterações |
-|---|---|---|---|
-| 1.0 | Equipe ÁgoraHub | 06/10/2026 | Criação do documento (seções 1 e 2) |
+|--------|---|---|---|
+| 1.0    | Equipe ÁgoraHub | 06/10/2026 | Criação do documento (seções 1 e 2) |
+| 1.1    | Equipe ÁgoraHub | 06/10/2026 | Seção 3: tipos de usuário, papéis e protopersonas |
+| 1.2    | Equipe ÁgoraHub | 06/10/2026 | Seção 4: glossário |
+
 
 ## 1. Introdução
 
@@ -70,7 +73,27 @@ Pessoas fictícias criadas a partir da pesquisa, usadas para orientar as decisõ
 
 ## 4. Glossário
 
-*Em construção.*
+Termos usados neste documento, em ordem alfabética.
+
+| Termo                  | Significado                                                                                                                           |
+|------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
+| Dono do projeto        | Estudante que criou um projeto.                                                                                                       |
+| E-mail institucional   | Endereço do domínio `@aluno.ifal.edu.br`. É o único aceito no cadastro de estudantes.                                                 |
+| Hub de Projetos        | Lista dos projetos abertos que ainda têm vagas disponíveis.                                                                           |
+| Lista de tags          | Conjunto fixo de tags definido pela equipe. Os estudantes escolhem tags dessa lista, mas não podem criar, editar ou apagar tags.      |
+| Mural de Oportunidades | Tela inicial do app, com a lista de oportunidades.                                                                                    |
+| MVP                    | Versão mínima do app, entregue no semestre 2026.2.                                                                                    |
+| Oportunidade           | Edital, bolsa, hackathon, evento ou similar publicado no mural, com título, tipo, prazo, resumo, imagem e link para mais informações. |
+| Perfil                 | Nome, curso e de 3 a 5 tags do estudante. O estudante pode editar o perfil depois, marcando ou desmarcando tags da lista.             |
+| Primeiro acesso        | Momento em que o estudante, depois de criar a conta, completa o perfil. Só então pode usar o app.                                     |
+| Projeto                | Proposta criada por um estudante para formar equipe, com título, descrição, número de vagas e tags necessárias.                       |
+| Solicitação            | Pedido de um estudante para participar de um projeto.                                                                                 |
+| Solicitante            | Estudante que enviou uma solicitação.                                                                                                 |
+| Status da solicitação  | **Pendente** (aguardando resposta do dono), **Aceita** ou **Recusada** (com o motivo informado pelo dono).                            |
+| Status do projeto      | **Aberto** (recebe solicitações), **Fechado** (todas as vagas foram preenchidas) ou **Encerrado** (o dono encerrou o projeto).        |
+| Tag                    | Área de habilidade ou interesse, como Mobile, UX/UI ou Banco de Dados. Usada no perfil dos estudantes e nos projetos.                 |
+| Vagas disponíveis      | Número de vagas do projeto menos o número de solicitações aceitas.                                                                    |
+| Versão completa        | Funcionalidades que fazem parte da visão do produto, mas ficam fora do MVP.                                                           |
 
 ## 5. Solução proposta
 
