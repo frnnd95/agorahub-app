@@ -101,22 +101,22 @@ Termos usados neste documento, em ordem alfabética.
 
 O ÁgoraHub é um aplicativo Android com duas frentes principais:
 
-- **Mural de Oportunidades:** reúne num só lugar editais, bolsas, hackathons e eventos, mostrando apenas os que ainda estão dentro do prazo.
+- **Mural de Oportunidades:** reúne num só lugar editais, bolsas, hackathons e eventos, mostrando apenas os que ainda estão dentro do prazo, dos mais urgentes para os menos urgentes.
 - **Hub de Projetos:** quem tem uma ideia cria um projeto com vagas e as tags de que precisa; quem quer participar encontra projetos pelas suas áreas de interesse e pede para entrar.
 
 Quando o dono do projeto aceita uma solicitação, passa a ver o e-mail institucional do solicitante, e o contato continua fora do app.
 
 ### 5.1 Como o ÁgoraHub responde aos problemas
 
-| Problema identificado                                                 | Como o ÁgoraHub responde                                                                                                 |
-|-----------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
-| Oportunidades espalhadas em e-mails, murais e grupos; prazos perdidos | Mural de Oportunidades com todas as oportunidades num só lugar, mostrando apenas as que ainda estão dentro do prazo      |
-| Dificuldade de encontrar colegas para formar equipe                   | Hub de Projetos com projetos que mostram as vagas e as tags necessárias, com filtro por tag                              |
-| Receio de abordar desconhecidos                                       | Pedido de participação com um toque, sem conversa pública; a recusa vem com um motivo pronto, sem exposição              |
-| Pouco tempo no campus                                                 | Tudo acontece pelo celular, no tempo de cada estudante                                                                   |
-| Excesso de informação nos grupos de mensagens                         | Mural só com oportunidades cadastradas pela equipe, sem bate-papo e sem postagens livres                                 |
-| Ferramentas pouco acessíveis                                          | Telas compatíveis com leitor de tela, com bom contraste e respeitando o tamanho de fonte do celular                      |
-| Exposição de dados pessoais                                           | O e-mail do solicitante só é mostrado ao dono depois do aceite, e o solicitante é avisado disso antes de enviar o pedido |
+| Problema identificado                                                 | Como o ÁgoraHub responde                                                                                                                                      |
+|-----------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Oportunidades espalhadas em e-mails, murais e grupos; prazos perdidos | Mural de Oportunidades com todas as oportunidades num só lugar, mostrando apenas as que ainda estão dentro do prazo, das mais urgentes para as menos urgentes |
+| Dificuldade de encontrar colegas para formar equipe                   | Hub de Projetos com projetos que mostram as vagas e as tags necessárias, com filtro por tag                                                                   |
+| Receio de abordar desconhecidos                                       | Pedido de participação com um toque, sem conversa pública; a recusa vem com um motivo pronto, sem exposição                                                   |
+| Pouco tempo no campus                                                 | Tudo acontece pelo celular, no tempo de cada estudante                                                                                                        |
+| Excesso de informação nos grupos de mensagens                         | Mural só com oportunidades cadastradas pela equipe, sem bate-papo e sem postagens livres                                                                      |
+| Ferramentas pouco acessíveis                                          | Telas compatíveis com leitor de tela, com bom contraste e respeitando o tamanho de fonte do celular                                                           |
+| Exposição de dados pessoais                                           | O e-mail do solicitante só é mostrado ao dono depois do aceite, e o solicitante é avisado disso antes de enviar o pedido                                      |
 
 ### 5.2 Principais funcionalidades do MVP
 
@@ -131,7 +131,7 @@ Quando o dono do projeto aceita uma solicitação, passa a ver o e-mail instituc
 
 ### 5.3 O que fica para a versão completa
 
-Notificações no celular, recuperação de senha, publicação de oportunidades por administradores e professores, vínculo entre um projeto e uma oportunidade do mural, cancelamento de pedidos, saída e remoção de membros de um projeto, e apoio para tirar dúvidas e formar grupos de estudo. Os detalhes estão na seção 7.
+Notificações no celular, recuperação de senha, filtro do mural por tipo de oportunidade, publicação de oportunidades por administradores e professores, vínculo entre um projeto e uma oportunidade do mural, cancelamento de pedidos, saída e remoção de membros de um projeto, e apoio para tirar dúvidas e formar grupos de estudo. Os detalhes estão na seção 7.
 
 ## 6. Requisitos do MVP
 
