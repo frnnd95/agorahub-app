@@ -42,7 +42,7 @@ A pesquisa também mostrou que 17 respondentes têm dificuldade para tirar dúvi
 
 | Tipo de usuário | Descrição | No MVP? |
 |---|---|---|
-| Estudante | Aluno do IFAL com e-mail institucional (`@aluno.ifal.edu.br`). Consulta o mural, cria projetos e pede para participar de projetos de colegas. | Sim |
+| Estudante | Aluno do IFAL com e-mail institucional (`@aluno.ifal.edu.br`). Consulta o Mural de Oportunidades, cria projetos no Hub de Projetos e pede para participar de projetos de colegas. | Sim |
 | Equipe ÁgoraHub | Integrantes da equipe que mantêm o Mural de Oportunidades atualizado. No MVP, cadastram as oportunidades fora do aplicativo. | Sim, fora do app |
 | Administrador | Publica e remove oportunidades pelo próprio aplicativo. | Não (versão completa) |
 | Professor | Divulga desafios e oportunidades e acompanha a participação dos estudantes. | Não (versão completa) |
