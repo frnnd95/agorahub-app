@@ -7,6 +7,8 @@
 | 1.2    | Equipe ÁgoraHub | 06/10/2026 | Seção 4: glossário                                |
 | 1.3    | Equipe ÁgoraHub | 06/10/2026 | Seção 5: solução proposta                         |
 | 1.4    | Equipe ÁgoraHub | 06/10/2026 | Seção 6: requisitos funcionais                    |
+| 1.5    | Equipe ÁgoraHub | 06/10/2026 | Seção 6.2: regras de negócio                      |
+
 ## 1. Introdução
 
 Este documento apresenta os requisitos do aplicativo **ÁgoraHub**, projeto acadêmico das disciplinas de Projeto Integrador e Programação para Dispositivos Móveis (Sistemas de Informação, IFAL Arapiraca, 2026.2).
@@ -75,27 +77,27 @@ Pessoas fictícias criadas a partir da pesquisa, usadas para orientar as decisõ
 
 Termos usados neste documento, em ordem alfabética.
 
-| Termo                  | Significado                                                                                                                                                             |
-|------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Dono do projeto        | Estudante que criou um projeto.                                                                                                                                         |
-| E-mail institucional   | Endereço do domínio `@aluno.ifal.edu.br`. É o único aceito no cadastro de estudantes.                                                                                   |
-| Hub de Projetos        | Lista dos projetos abertos que ainda têm vagas disponíveis.                                                                                                             |
-| Lista de tags          | Conjunto fixo de tags definido pela equipe. Os estudantes escolhem tags dessa lista, mas não podem criar, editar ou apagar tags.                                        |
-| Membro do projeto      | Estudante cuja solicitação para participar de um projeto foi aceita.                                                                                                    |
-| Mural de Oportunidades | Tela inicial do app, com a lista de oportunidades.                                                                                                                      |
-| MVP                    | Versão mínima do app, entregue no semestre 2026.2.                                                                                                                      |
-| Oportunidade           | Edital, bolsa, hackathon, evento ou similar publicado no mural, com título, tipo, prazo, resumo, imagem e link para mais informações.                                   |
-| Perfil                 | Nome, curso e de 3 a 5 tags do estudante. O estudante pode editar o perfil depois, marcando ou desmarcando tags da lista.                                               |
-| Prazo                  | Último dia para se inscrever ou participar de uma oportunidade. Em eventos sem inscrição, é a data do evento. A oportunidade fica visível no mural até o fim desse dia. |
-| Primeiro acesso        | Momento em que o estudante, depois de criar a conta, completa o perfil. Só então pode usar o app.                                                                       |
-| Projeto                | Proposta criada por um estudante para formar equipe, com título, descrição, número de vagas e tags necessárias.                                                         |
-| Solicitação            | Pedido de um estudante para participar de um projeto.                                                                                                                   |
-| Solicitante            | Estudante que enviou uma solicitação.                                                                                                                                   |
-| Status da solicitação  | **Pendente** (aguardando resposta do dono), **Aceita** ou **Recusada** (com o motivo informado pelo dono).                                                              |
-| Status do projeto      | **Aberto** (recebe solicitações), **Fechado** (todas as vagas foram preenchidas) ou **Encerrado** (o dono encerrou o projeto).                                          |
-| Tag                    | Área de habilidade ou interesse, como Mobile, UX/UI ou Banco de Dados. Usada no perfil dos estudantes e nos projetos.                                                   |
-| Vagas disponíveis      | Número de vagas do projeto menos o número de solicitações aceitas.                                                                                                      |
-| Versão completa        | Funcionalidades que fazem parte da visão do produto, mas ficam fora do MVP.                                                                                             |
+| Termo                  | Significado                                                                                                                                                                    |
+|------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Dono do projeto        | Estudante que criou um projeto.                                                                                                                                                |
+| E-mail institucional   | Endereço do domínio `@aluno.ifal.edu.br`. É o único aceito no cadastro de estudantes.                                                                                          |
+| Hub de Projetos        | Lista dos projetos abertos que ainda têm vagas disponíveis.                                                                                                                    |
+| Lista de tags          | Conjunto fixo de tags definido pela equipe. Os estudantes escolhem tags dessa lista, mas não podem criar, editar ou apagar tags.                                               |
+| Membro do projeto      | Estudante cuja solicitação para participar de um projeto foi aceita e que não foi removido dele.                                                                               |
+| Mural de Oportunidades | Tela inicial do app, com a lista de oportunidades.                                                                                                                             |
+| MVP                    | Versão mínima do app, entregue no semestre 2026.2.                                                                                                                             |
+| Oportunidade           | Edital, bolsa, hackathon, evento ou similar publicado no mural, com título, tipo, prazo, resumo, imagem e link para mais informações.                                          |
+| Perfil                 | Nome, curso e de 3 a 5 tags do estudante. O estudante pode editar o perfil depois, marcando ou desmarcando tags da lista.                                                      |
+| Prazo                  | Último dia para se inscrever ou participar de uma oportunidade. Em eventos sem inscrição, é a data do evento. A oportunidade fica visível no mural até o fim desse dia.        |
+| Primeiro acesso        | Momento em que o estudante, depois de criar a conta, completa o perfil. Só então pode usar o app.                                                                              |
+| Projeto                | Proposta criada por um estudante para formar equipe, com título, descrição, número de vagas e tags necessárias.                                                                |
+| Solicitação            | Pedido de um estudante para participar de um projeto.                                                                                                                          |
+| Solicitante            | Estudante que enviou uma solicitação.                                                                                                                                          |
+| Status da solicitação  | **Pendente** (aguardando resposta do dono), **Aceita**, **Recusada** (com o motivo informado pelo dono) ou **Removida** (o dono removeu o membro do projeto).                  |
+| Status do projeto      | **Aberto** (recebe solicitações), **Fechado** (todas as vagas foram preenchidas; o dono pode reabri-lo se uma vaga for liberada) ou **Encerrado** (o dono encerrou o projeto). |
+| Tag                    | Área de habilidade ou interesse, como Mobile, UX/UI ou Banco de Dados. Usada no perfil dos estudantes e nos projetos.                                                          |
+| Vagas disponíveis      | Número de vagas do projeto menos o número de solicitações aceitas.                                                                                                             |
+| Versão completa        | Funcionalidades que fazem parte da visão do produto, mas ficam fora do MVP.                                                                                                    |
 
 ## 5. Solução proposta
 
@@ -127,11 +129,11 @@ Quando o dono do projeto aceita uma solicitação, passa a ver o e-mail instituc
 5. Hub de Projetos, com filtro por tag e os detalhes de cada projeto.
 6. Pedido de participação num projeto, com aviso sobre o compartilhamento do e-mail.
 7. Resposta às solicitações recebidas (aceitar ou recusar com motivo) e acesso ao e-mail dos aceitos.
-8. Acompanhamento das solicitações enviadas e dos projetos criados, incluindo encerrar um projeto.
+8. Acompanhamento das solicitações enviadas e dos projetos criados, incluindo remover membros, reabrir e encerrar projetos.
 
 ### 5.3 O que fica para a versão completa
 
-Notificações no celular, recuperação de senha, filtro do mural por tipo de oportunidade, publicação de oportunidades por administradores e professores, vínculo entre um projeto e uma oportunidade do mural, cancelamento de pedidos, saída e remoção de membros de um projeto, e apoio para tirar dúvidas e formar grupos de estudo. Os detalhes estão na seção 7.
+Notificações no celular, recuperação de senha, filtro do mural por tipo de oportunidade, publicação de oportunidades por administradores e professores, vínculo entre um projeto e uma oportunidade do mural, cancelamento de pedidos, saída de membros de um projeto, e apoio para tirar dúvidas e formar grupos de estudo. Os detalhes estão na seção 7.
 
 ## 6. Requisitos do MVP
 
@@ -160,6 +162,8 @@ Notificações no celular, recuperação de senha, filtro do mural por tipo de o
 | RF19 | Exibir ao dono os projetos que ele criou (Meus Projetos), com status, vagas disponíveis e vagas preenchidas.                               | Média      | RF10       |
 | RF20 | Exibir ao dono os membros de um projeto dele, com nome, tags e e-mail institucional de cada um.                                            | Alta       | RF16, RF19 |
 | RF21 | Encerrar um projeto.                                                                                                                       | Média      | RF19       |
+| RF22 | Remover um membro de um projeto.                                                                                                           | Média      | RF20       |
+| RF23 | Reabrir um projeto fechado.                                                                                                                | Média      | RF19       |
 
 #### 6.1.1 Diagrama de dependências
 
@@ -178,7 +182,38 @@ flowchart LR
     RF14 --> RF18
     RF10 --> RF19 --> RF20
     RF19 --> RF21
+    RF20 --> RF22
+    RF19 --> RF23
 ```
+
+### 6.2 Regras de negócio
+
+A coluna **Relacionada a** indica os requisitos funcionais em que a regra se aplica.
+
+| Id.  | Descrição                                                                                                                                                                                                                                                                | Prioridade | Relacionada a          |
+|------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|------------------------|
+| RN01 | Só e-mails do domínio `@aluno.ifal.edu.br` podem ser cadastrados.                                                                                                                                                                                                        | Alta       | RF01                   |
+| RN02 | O estudante só acessa o Mural de Oportunidades, o Hub de Projetos e as solicitações depois de completar o perfil.                                                                                                                                                        | Alta       | RF04, RF07, RF11       |
+| RN03 | As tags são escolhidas da lista de tags. Estudantes não podem criar, editar ou apagar tags da lista.                                                                                                                                                                     | Alta       | RF04, RF06, RF10, RF12 |
+| RN04 | O perfil precisa ter de 3 a 5 tags, e o projeto, pelo menos 1 tag necessária.                                                                                                                                                                                            | Alta       | RF04, RF06, RF10       |
+| RN05 | As oportunidades são cadastradas pela Equipe ÁgoraHub. Estudantes não publicam oportunidades.                                                                                                                                                                            | Média      | RF07                   |
+| RN06 | O Mural de Oportunidades só mostra oportunidades dentro do prazo. A oportunidade fica visível até o fim do último dia do prazo.                                                                                                                                          | Média      | RF07                   |
+| RN07 | O Mural de Oportunidades mostra as oportunidades da que tem o prazo mais próximo para a que tem o prazo mais distante.                                                                                                                                                   | Média      | RF07                   |
+| RN08 | Todo projeto é criado com status Aberto e pelo menos 1 vaga. Quem cria o projeto é o dono dele.                                                                                                                                                                          | Alta       | RF10                   |
+| RN09 | Vagas disponíveis = número de vagas do projeto − número de membros.                                                                                                                                                                                                      | Alta       | RF11, RF13, RF19       |
+| RN10 | O Hub de Projetos mostra só projetos com status Aberto e com vagas disponíveis.                                                                                                                                                                                          | Alta       | RF11                   |
+| RN11 | O dono não pode solicitar participação no próprio projeto.                                                                                                                                                                                                               | Alta       | RF14                   |
+| RN12 | O estudante não pode enviar uma solicitação para um projeto se já tiver uma solicitação Pendente para ele, se já for membro dele ou se tiver sido removido dele. Depois de uma recusa, pode enviar uma nova solicitação, desde que o projeto apareça no Hub de Projetos. | Alta       | RF14                   |
+| RN13 | A solicitação só é enviada depois que o estudante confirma o aviso: "Se sua solicitação for aceita, seu e-mail institucional será compartilhado com o dono do projeto."                                                                                                  | Alta       | RF14                   |
+| RN14 | Uma solicitação Pendente pode ser aceita ou recusada. Uma solicitação Aceita pode passar a Removida. Recusada e Removida são status finais: não mudam mais.                                                                                                              | Alta       | RF16, RF17, RF22       |
+| RN15 | Uma solicitação só pode ser aceita se o projeto tiver vagas disponíveis.                                                                                                                                                                                                 | Alta       | RF16                   |
+| RN16 | Toda recusa feita pelo dono tem um motivo escolhido da lista: Perfil não compatível, Vagas preenchidas ou Outro. Ao escolher Outro, o dono precisa escrever o motivo. O solicitante vê o motivo.                                                                         | Média      | RF17, RF18             |
+| RN17 | Quando as vagas disponíveis chegam a zero, o projeto passa para o status Fechado, e as solicitações pendentes dele são recusadas automaticamente com o motivo "Vagas preenchidas".                                                                                       | Alta       | RF16                   |
+| RN18 | Ao remover um membro, a solicitação dele passa para Removida e a vaga volta a ficar disponível. O status do projeto não muda: um projeto Fechado continua Fechado até o dono reabri-lo.                                                                                  | Média      | RF22                   |
+| RN19 | Só um projeto com status Fechado e com vagas disponíveis pode ser reaberto. Ao ser reaberto, ele volta para o status Aberto e reaparece no Hub de Projetos.                                                                                                              | Média      | RF23                   |
+| RN20 | Ao encerrar um projeto, ele passa para o status Encerrado, e as solicitações pendentes dele são recusadas automaticamente com o motivo "Projeto encerrado". Um projeto Encerrado não pode ser reaberto.                                                                  | Média      | RF21                   |
+| RN21 | O e-mail institucional de um estudante só é mostrado ao dono de um projeto do qual esse estudante é membro.                                                                                                                                                              | Alta       | RF20                   |
+| RN22 | Solicitações não são apagadas: só mudam de status.                                                                                                                                                                                                                       | Baixa      | RF15, RF18             |
 
 ## 7. Requisitos da versão completa
 
