@@ -35,7 +35,38 @@ A pesquisa também mostrou que 17 respondentes têm dificuldade para tirar dúvi
 
 ## 3. Usuários
 
-*Em construção.*
+### 3.1 Tipos de usuário
+
+| Tipo de usuário | Descrição | No MVP? |
+|---|---|---|
+| Estudante | Aluno do IFAL com e-mail institucional (`@aluno.ifal.edu.br`). Consulta o mural, cria projetos e pede para participar de projetos de colegas. | Sim |
+| Equipe ÁgoraHub | Integrantes da equipe que mantêm o Mural de Oportunidades atualizado. No MVP, cadastram as oportunidades fora do aplicativo. | Sim, fora do app |
+| Administrador | Publica e remove oportunidades pelo próprio aplicativo. | Não (versão completa) |
+| Professor | Divulga desafios e oportunidades e acompanha a participação dos estudantes. | Não (versão completa) |
+
+### 3.2 Papéis do estudante
+
+O mesmo estudante pode assumir dois papéis, dependendo da situação:
+
+| Papel | Quando | O que pode fazer |
+|---|---|---|
+| Dono do projeto | Quando cria um projeto | Ver as solicitações recebidas, aceitar ou recusar, ver o e-mail dos aceitos e encerrar o projeto. |
+| Solicitante | Quando pede para participar do projeto de outro estudante | Enviar a solicitação e acompanhar o status. |
+
+### 3.3 Protopersonas
+
+Pessoas fictícias criadas a partir da pesquisa, usadas para orientar as decisões do produto.
+
+| Protopersona | Quem é | O que espera do ÁgoraHub | Atendida no MVP? |
+|---|---|---|---|
+| Marina, 21 | Estuda IA e UX por conta própria, mas não tem com quem montar projetos. | Saber das oportunidades a tempo e encontrar colegas com interesses complementares. | Sim |
+| Pedro, 18 | Calouro tímido, não sabe como se aproximar dos grupos. | Entrar em projetos sem precisar dar o primeiro passo "no escuro". | Sim |
+| John, 19 | Mora longe e passa pouco tempo no campus. | Se conectar com colegas e projetos sem depender de estar no campus. | Sim |
+| Isabela, 22 | Usa leitor de tela. | Um app acessível desde o primeiro acesso. | Sim, com leitor de tela; a navegação completa por teclado fica para a versão completa |
+| Camila, 20 | Tem ansiedade social e evita se expor em grupos. | Se conectar aos poucos, sem exposição imediata. | Em parte: pede para entrar num projeto de forma discreta; pedir ajuda com dúvidas fica fora do MVP |
+| Roberta, 26 | Voltou de licença-maternidade e não conhece a turma nova. | Encontrar parceiros e colaborar a distância. | Em parte: encontra projetos por interesse; grupos de estudo ficam fora do MVP |
+| Théo, 23 | Veterano que ajuda colegas pelo WhatsApp e se sente sobrecarregado. | Um espaço organizado para oferecer ajuda. | Não (versão completa) |
+| Prof. Ricardo, 41 | Professor que quer engajar os alunos em desafios. | Um canal para divulgar desafios e acompanhar a participação. | Não (versão completa) |
 
 ## 4. Glossário
 
