@@ -6,8 +6,7 @@
 | 1.1    | Equipe ÁgoraHub | 06/10/2026 | Seção 3: tipos de usuário, papéis e protopersonas |
 | 1.2    | Equipe ÁgoraHub | 06/10/2026 | Seção 4: glossário                                |
 | 1.3    | Equipe ÁgoraHub | 06/10/2026 | Seção 5: solução proposta                         |
-
-
+| 1.4    | Equipe ÁgoraHub | 06/10/2026 | Seção 6: requisitos funcionais                    |
 ## 1. Introdução
 
 Este documento apresenta os requisitos do aplicativo **ÁgoraHub**, projeto acadêmico das disciplinas de Projeto Integrador e Programação para Dispositivos Móveis (Sistemas de Informação, IFAL Arapiraca, 2026.2).
@@ -82,6 +81,7 @@ Termos usados neste documento, em ordem alfabética.
 | E-mail institucional   | Endereço do domínio `@aluno.ifal.edu.br`. É o único aceito no cadastro de estudantes.                                                                                   |
 | Hub de Projetos        | Lista dos projetos abertos que ainda têm vagas disponíveis.                                                                                                             |
 | Lista de tags          | Conjunto fixo de tags definido pela equipe. Os estudantes escolhem tags dessa lista, mas não podem criar, editar ou apagar tags.                                        |
+| Membro do projeto      | Estudante cuja solicitação para participar de um projeto foi aceita.                                                                                                    |
 | Mural de Oportunidades | Tela inicial do app, com a lista de oportunidades.                                                                                                                      |
 | MVP                    | Versão mínima do app, entregue no semestre 2026.2.                                                                                                                      |
 | Oportunidade           | Edital, bolsa, hackathon, evento ou similar publicado no mural, com título, tipo, prazo, resumo, imagem e link para mais informações.                                   |
@@ -135,7 +135,50 @@ Notificações no celular, recuperação de senha, filtro do mural por tipo de o
 
 ## 6. Requisitos do MVP
 
-*Em construção.*
+### 6.1 Requisitos funcionais
+
+| Id.  | Descrição                                                                                                                                  | Prioridade | Depende de |
+|------|--------------------------------------------------------------------------------------------------------------------------------------------|------------|------------|
+| RF01 | Cadastrar uma conta com nome, e-mail institucional e senha.                                                                                | Alta       | —          |
+| RF02 | Entrar no app com e-mail e senha.                                                                                                          | Alta       | RF01       |
+| RF03 | Sair da conta.                                                                                                                             | Média      | RF02       |
+| RF04 | Completar o perfil no primeiro acesso, informando o curso e escolhendo de 3 a 5 tags da lista de tags.                                     | Alta       | RF02       |
+| RF05 | Visualizar o próprio perfil.                                                                                                               | Baixa      | RF04       |
+| RF06 | Editar as tags do próprio perfil.                                                                                                          | Baixa      | RF05       |
+| RF07 | Exibir o Mural de Oportunidades, com título, tipo, prazo e imagem de cada oportunidade.                                                    | Alta       | —          |
+| RF08 | Exibir os detalhes de uma oportunidade: resumo e link para mais informações.                                                               | Alta       | RF07       |
+| RF09 | Abrir o link de uma oportunidade no navegador do celular.                                                                                  | Média      | RF08       |
+| RF10 | Criar um projeto, com título, descrição, número de vagas e tags necessárias.                                                               | Alta       | RF02       |
+| RF11 | Exibir o Hub de Projetos, com título, vagas disponíveis e tags de cada projeto.                                                            | Alta       | RF10       |
+| RF12 | Filtrar o Hub de Projetos por tag.                                                                                                         | Média      | RF11       |
+| RF13 | Exibir os detalhes de um projeto: descrição, vagas disponíveis, tags e nome do dono.                                                       | Alta       | RF11       |
+| RF14 | Solicitar participação num projeto, a partir dos detalhes dele, depois de confirmar o aviso de compartilhamento do e-mail.                 | Alta       | RF04, RF13 |
+| RF15 | Exibir ao dono as solicitações recebidas, separadas por status, com as pendentes em primeiro lugar e o nome e as tags de cada solicitante. | Alta       | RF14       |
+| RF16 | Aceitar uma solicitação pendente.                                                                                                          | Alta       | RF15       |
+| RF17 | Recusar uma solicitação pendente, informando o motivo.                                                                                     | Alta       | RF15       |
+| RF18 | Exibir ao estudante as solicitações que ele enviou, com o status de cada uma e o motivo, em caso de recusa.                                | Média      | RF14       |
+| RF19 | Exibir ao dono os projetos que ele criou (Meus Projetos), com status, vagas disponíveis e vagas preenchidas.                               | Média      | RF10       |
+| RF20 | Exibir ao dono os membros de um projeto dele, com nome, tags e e-mail institucional de cada um.                                            | Alta       | RF16, RF19 |
+| RF21 | Encerrar um projeto.                                                                                                                       | Média      | RF19       |
+
+#### 6.1.1 Diagrama de dependências
+
+Cada seta vai do requisito que precisa existir antes para o requisito que depende dele.
+
+```mermaid
+flowchart LR
+    RF01 --> RF02 --> RF03
+    RF02 --> RF04 --> RF05 --> RF06
+    RF07 --> RF08 --> RF09
+    RF02 --> RF10 --> RF11 --> RF12
+    RF11 --> RF13 --> RF14
+    RF04 --> RF14
+    RF14 --> RF15 --> RF16 --> RF20
+    RF15 --> RF17
+    RF14 --> RF18
+    RF10 --> RF19 --> RF20
+    RF19 --> RF21
+```
 
 ## 7. Requisitos da versão completa
 
