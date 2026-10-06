@@ -1,10 +1,11 @@
 # Documento de Requisitos — ÁgoraHub
 
-| Versão | Responsável | Data | Alterações |
-|--------|---|---|---|
-| 1.0    | Equipe ÁgoraHub | 06/10/2026 | Criação do documento (seções 1 e 2) |
+| Versão | Responsável     | Data       | Alterações                                        |
+|--------|-----------------|------------|---------------------------------------------------|
+| 1.0    | Equipe ÁgoraHub | 06/10/2026 | Criação do documento (seções 1 e 2)               |
 | 1.1    | Equipe ÁgoraHub | 06/10/2026 | Seção 3: tipos de usuário, papéis e protopersonas |
-| 1.2    | Equipe ÁgoraHub | 06/10/2026 | Seção 4: glossário |
+| 1.2    | Equipe ÁgoraHub | 06/10/2026 | Seção 4: glossário                                |
+| 1.3    | Equipe ÁgoraHub | 06/10/2026 | Seção 5: solução proposta                         |
 
 
 ## 1. Introdução
@@ -40,64 +41,97 @@ A pesquisa também mostrou que 17 respondentes têm dificuldade para tirar dúvi
 
 ### 3.1 Tipos de usuário
 
-| Tipo de usuário | Descrição | No MVP? |
-|---|---|---|
-| Estudante | Aluno do IFAL com e-mail institucional (`@aluno.ifal.edu.br`). Consulta o Mural de Oportunidades, cria projetos no Hub de Projetos e pede para participar de projetos de colegas. | Sim |
-| Equipe ÁgoraHub | Integrantes da equipe que mantêm o Mural de Oportunidades atualizado. No MVP, cadastram as oportunidades fora do aplicativo. | Sim, fora do app |
-| Administrador | Publica e remove oportunidades pelo próprio aplicativo. | Não (versão completa) |
-| Professor | Divulga desafios e oportunidades e acompanha a participação dos estudantes. | Não (versão completa) |
+| Tipo de usuário | Descrição                                                                                                                                                                         | No MVP?               |
+|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------|
+| Estudante       | Aluno do IFAL com e-mail institucional (`@aluno.ifal.edu.br`). Consulta o Mural de Oportunidades, cria projetos no Hub de Projetos e pede para participar de projetos de colegas. | Sim                   |
+| Equipe ÁgoraHub | Integrantes da equipe que mantêm o Mural de Oportunidades atualizado. No MVP, cadastram as oportunidades fora do aplicativo.                                                      | Sim, fora do app      |
+| Administrador   | Publica e remove oportunidades pelo próprio aplicativo.                                                                                                                           | Não (versão completa) |
+| Professor       | Divulga desafios e oportunidades e acompanha a participação dos estudantes.                                                                                                       | Não (versão completa) |
 
 ### 3.2 Papéis do estudante
 
 O mesmo estudante pode assumir dois papéis, dependendo da situação:
 
-| Papel | Quando | O que pode fazer |
-|---|---|---|
-| Dono do projeto | Quando cria um projeto | Ver as solicitações recebidas, aceitar ou recusar, ver o e-mail dos aceitos e encerrar o projeto. |
-| Solicitante | Quando pede para participar do projeto de outro estudante | Enviar a solicitação e acompanhar o status. |
+| Papel           | Quando                                                    | O que pode fazer                                                                                  |
+|-----------------|-----------------------------------------------------------|---------------------------------------------------------------------------------------------------|
+| Dono do projeto | Quando cria um projeto                                    | Ver as solicitações recebidas, aceitar ou recusar, ver o e-mail dos aceitos e encerrar o projeto. |
+| Solicitante     | Quando pede para participar do projeto de outro estudante | Enviar a solicitação e acompanhar o status.                                                       |
 
 ### 3.3 Protopersonas
 
 Pessoas fictícias criadas a partir da pesquisa, usadas para orientar as decisões do produto.
 
-| Protopersona | Quem é | O que espera do ÁgoraHub | Atendida no MVP? |
-|---|---|---|---|
-| Marina, 21 | Estuda IA e UX por conta própria, mas não tem com quem montar projetos. | Saber das oportunidades a tempo e encontrar colegas com interesses complementares. | Sim |
-| Pedro, 18 | Calouro tímido, não sabe como se aproximar dos grupos. | Entrar em projetos sem precisar dar o primeiro passo "no escuro". | Sim |
-| John, 19 | Mora longe e passa pouco tempo no campus. | Se conectar com colegas e projetos sem depender de estar no campus. | Sim |
-| Isabela, 22 | Usa leitor de tela. | Um app acessível desde o primeiro acesso. | Sim, com leitor de tela; a navegação completa por teclado fica para a versão completa |
-| Camila, 20 | Tem ansiedade social e evita se expor em grupos. | Se conectar aos poucos, sem exposição imediata. | Em parte: pede para entrar num projeto de forma discreta; pedir ajuda com dúvidas fica fora do MVP |
-| Roberta, 26 | Voltou de licença-maternidade e não conhece a turma nova. | Encontrar parceiros e colaborar a distância. | Em parte: encontra projetos por interesse; grupos de estudo ficam fora do MVP |
-| Théo, 23 | Veterano que ajuda colegas pelo WhatsApp e se sente sobrecarregado. | Um espaço organizado para oferecer ajuda. | Não (versão completa) |
-| Prof. Ricardo, 41 | Professor que quer engajar os alunos em desafios. | Um canal para divulgar desafios e acompanhar a participação. | Não (versão completa) |
+| Protopersona      | Quem é                                                                  | O que espera do ÁgoraHub                                                           | Atendida no MVP?                                                                                   |
+|-------------------|-------------------------------------------------------------------------|------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
+| Marina, 21        | Estuda IA e UX por conta própria, mas não tem com quem montar projetos. | Saber das oportunidades a tempo e encontrar colegas com interesses complementares. | Sim                                                                                                |
+| Pedro, 18         | Calouro tímido, não sabe como se aproximar dos grupos.                  | Entrar em projetos sem precisar dar o primeiro passo "no escuro".                  | Sim                                                                                                |
+| John, 19          | Mora longe e passa pouco tempo no campus.                               | Se conectar com colegas e projetos sem depender de estar no campus.                | Sim                                                                                                |
+| Isabela, 22       | Usa leitor de tela.                                                     | Um app acessível desde o primeiro acesso.                                          | Sim, com leitor de tela; a navegação completa por teclado fica para a versão completa              |
+| Camila, 20        | Tem ansiedade social e evita se expor em grupos.                        | Se conectar aos poucos, sem exposição imediata.                                    | Em parte: pede para entrar num projeto de forma discreta; pedir ajuda com dúvidas fica fora do MVP |
+| Roberta, 26       | Voltou de licença-maternidade e não conhece a turma nova.               | Encontrar parceiros e colaborar a distância.                                       | Em parte: encontra projetos por interesse; grupos de estudo ficam fora do MVP                      |
+| Théo, 23          | Veterano que ajuda colegas pelo WhatsApp e se sente sobrecarregado.     | Um espaço organizado para oferecer ajuda.                                          | Não (versão completa)                                                                              |
+| Prof. Ricardo, 41 | Professor que quer engajar os alunos em desafios.                       | Um canal para divulgar desafios e acompanhar a participação.                       | Não (versão completa)                                                                              |
 
 ## 4. Glossário
 
 Termos usados neste documento, em ordem alfabética.
 
-| Termo                  | Significado                                                                                                                           |
-|------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
-| Dono do projeto        | Estudante que criou um projeto.                                                                                                       |
-| E-mail institucional   | Endereço do domínio `@aluno.ifal.edu.br`. É o único aceito no cadastro de estudantes.                                                 |
-| Hub de Projetos        | Lista dos projetos abertos que ainda têm vagas disponíveis.                                                                           |
-| Lista de tags          | Conjunto fixo de tags definido pela equipe. Os estudantes escolhem tags dessa lista, mas não podem criar, editar ou apagar tags.      |
-| Mural de Oportunidades | Tela inicial do app, com a lista de oportunidades.                                                                                    |
-| MVP                    | Versão mínima do app, entregue no semestre 2026.2.                                                                                    |
-| Oportunidade           | Edital, bolsa, hackathon, evento ou similar publicado no mural, com título, tipo, prazo, resumo, imagem e link para mais informações. |
-| Perfil                 | Nome, curso e de 3 a 5 tags do estudante. O estudante pode editar o perfil depois, marcando ou desmarcando tags da lista.             |
-| Primeiro acesso        | Momento em que o estudante, depois de criar a conta, completa o perfil. Só então pode usar o app.                                     |
-| Projeto                | Proposta criada por um estudante para formar equipe, com título, descrição, número de vagas e tags necessárias.                       |
-| Solicitação            | Pedido de um estudante para participar de um projeto.                                                                                 |
-| Solicitante            | Estudante que enviou uma solicitação.                                                                                                 |
-| Status da solicitação  | **Pendente** (aguardando resposta do dono), **Aceita** ou **Recusada** (com o motivo informado pelo dono).                            |
-| Status do projeto      | **Aberto** (recebe solicitações), **Fechado** (todas as vagas foram preenchidas) ou **Encerrado** (o dono encerrou o projeto).        |
-| Tag                    | Área de habilidade ou interesse, como Mobile, UX/UI ou Banco de Dados. Usada no perfil dos estudantes e nos projetos.                 |
-| Vagas disponíveis      | Número de vagas do projeto menos o número de solicitações aceitas.                                                                    |
-| Versão completa        | Funcionalidades que fazem parte da visão do produto, mas ficam fora do MVP.                                                           |
+| Termo                  | Significado                                                                                                                                                             |
+|------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Dono do projeto        | Estudante que criou um projeto.                                                                                                                                         |
+| E-mail institucional   | Endereço do domínio `@aluno.ifal.edu.br`. É o único aceito no cadastro de estudantes.                                                                                   |
+| Hub de Projetos        | Lista dos projetos abertos que ainda têm vagas disponíveis.                                                                                                             |
+| Lista de tags          | Conjunto fixo de tags definido pela equipe. Os estudantes escolhem tags dessa lista, mas não podem criar, editar ou apagar tags.                                        |
+| Mural de Oportunidades | Tela inicial do app, com a lista de oportunidades.                                                                                                                      |
+| MVP                    | Versão mínima do app, entregue no semestre 2026.2.                                                                                                                      |
+| Oportunidade           | Edital, bolsa, hackathon, evento ou similar publicado no mural, com título, tipo, prazo, resumo, imagem e link para mais informações.                                   |
+| Perfil                 | Nome, curso e de 3 a 5 tags do estudante. O estudante pode editar o perfil depois, marcando ou desmarcando tags da lista.                                               |
+| Prazo                  | Último dia para se inscrever ou participar de uma oportunidade. Em eventos sem inscrição, é a data do evento. A oportunidade fica visível no mural até o fim desse dia. |
+| Primeiro acesso        | Momento em que o estudante, depois de criar a conta, completa o perfil. Só então pode usar o app.                                                                       |
+| Projeto                | Proposta criada por um estudante para formar equipe, com título, descrição, número de vagas e tags necessárias.                                                         |
+| Solicitação            | Pedido de um estudante para participar de um projeto.                                                                                                                   |
+| Solicitante            | Estudante que enviou uma solicitação.                                                                                                                                   |
+| Status da solicitação  | **Pendente** (aguardando resposta do dono), **Aceita** ou **Recusada** (com o motivo informado pelo dono).                                                              |
+| Status do projeto      | **Aberto** (recebe solicitações), **Fechado** (todas as vagas foram preenchidas) ou **Encerrado** (o dono encerrou o projeto).                                          |
+| Tag                    | Área de habilidade ou interesse, como Mobile, UX/UI ou Banco de Dados. Usada no perfil dos estudantes e nos projetos.                                                   |
+| Vagas disponíveis      | Número de vagas do projeto menos o número de solicitações aceitas.                                                                                                      |
+| Versão completa        | Funcionalidades que fazem parte da visão do produto, mas ficam fora do MVP.                                                                                             |
 
 ## 5. Solução proposta
 
-*Em construção.*
+O ÁgoraHub é um aplicativo Android com duas frentes principais:
+
+- **Mural de Oportunidades:** reúne num só lugar editais, bolsas, hackathons e eventos, mostrando apenas os que ainda estão dentro do prazo.
+- **Hub de Projetos:** quem tem uma ideia cria um projeto com vagas e as tags de que precisa; quem quer participar encontra projetos pelas suas áreas de interesse e pede para entrar.
+
+Quando o dono do projeto aceita uma solicitação, passa a ver o e-mail institucional do solicitante, e o contato continua fora do app.
+
+### 5.1 Como o ÁgoraHub responde aos problemas
+
+| Problema identificado                                                 | Como o ÁgoraHub responde                                                                                                 |
+|-----------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| Oportunidades espalhadas em e-mails, murais e grupos; prazos perdidos | Mural de Oportunidades com todas as oportunidades num só lugar, mostrando apenas as que ainda estão dentro do prazo      |
+| Dificuldade de encontrar colegas para formar equipe                   | Hub de Projetos com projetos que mostram as vagas e as tags necessárias, com filtro por tag                              |
+| Receio de abordar desconhecidos                                       | Pedido de participação com um toque, sem conversa pública; a recusa vem com um motivo pronto, sem exposição              |
+| Pouco tempo no campus                                                 | Tudo acontece pelo celular, no tempo de cada estudante                                                                   |
+| Excesso de informação nos grupos de mensagens                         | Mural só com oportunidades cadastradas pela equipe, sem bate-papo e sem postagens livres                                 |
+| Ferramentas pouco acessíveis                                          | Telas compatíveis com leitor de tela, com bom contraste e respeitando o tamanho de fonte do celular                      |
+| Exposição de dados pessoais                                           | O e-mail do solicitante só é mostrado ao dono depois do aceite, e o solicitante é avisado disso antes de enviar o pedido |
+
+### 5.2 Principais funcionalidades do MVP
+
+1. Cadastro e entrada no app com e-mail institucional.
+2. Perfil com curso e de 3 a 5 tags, que o estudante pode editar depois.
+3. Mural de Oportunidades, com os detalhes de cada oportunidade.
+4. Criação de projetos.
+5. Hub de Projetos, com filtro por tag e os detalhes de cada projeto.
+6. Pedido de participação num projeto, com aviso sobre o compartilhamento do e-mail.
+7. Resposta às solicitações recebidas (aceitar ou recusar com motivo) e acesso ao e-mail dos aceitos.
+8. Acompanhamento das solicitações enviadas e dos projetos criados, incluindo encerrar um projeto.
+
+### 5.3 O que fica para a versão completa
+
+Notificações no celular, recuperação de senha, publicação de oportunidades por administradores e professores, vínculo entre um projeto e uma oportunidade do mural, cancelamento de pedidos, saída e remoção de membros de um projeto, e apoio para tirar dúvidas e formar grupos de estudo. Os detalhes estão na seção 7.
 
 ## 6. Requisitos do MVP
 
