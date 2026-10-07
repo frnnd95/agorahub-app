@@ -1,15 +1,16 @@
 # Documento de Requisitos — ÁgoraHub
 
-| Versão | Responsável     | Data       | Alterações                                        |
-|--------|-----------------|------------|---------------------------------------------------|
-| 1.0    | Equipe ÁgoraHub | 06/10/2026 | Criação do documento (seções 1 e 2)               |
-| 1.1    | Equipe ÁgoraHub | 06/10/2026 | Seção 3: tipos de usuário, papéis e protopersonas |
-| 1.2    | Equipe ÁgoraHub | 06/10/2026 | Seção 4: glossário                                |
-| 1.3    | Equipe ÁgoraHub | 06/10/2026 | Seção 5: solução proposta                         |
-| 1.4    | Equipe ÁgoraHub | 06/10/2026 | Seção 6: requisitos funcionais                    |
-| 1.5    | Equipe ÁgoraHub | 06/10/2026 | Seção 6.2: regras de negócio                      |
-| 1.6    | Equipe ÁgoraHub | 06/10/2026 | Seção 6.3: requisitos não funcionais              |
-| 1.7    | Equipe ÁgoraHub | 06/10/2026 | Seção 7: versão completa                          |
+| Versão | Responsável     | Data       | Alterações                                                                 |
+|--------|-----------------|------------|----------------------------------------------------------------------------|
+| 1.0    | Equipe ÁgoraHub | 06/10/2026 | Criação do documento (seções 1 e 2)                                        |
+| 1.1    | Equipe ÁgoraHub | 06/10/2026 | Seção 3: tipos de usuário, papéis e protopersonas                          |
+| 1.2    | Equipe ÁgoraHub | 06/10/2026 | Seção 4: glossário                                                         |
+| 1.3    | Equipe ÁgoraHub | 06/10/2026 | Seção 5: solução proposta                                                  |
+| 1.4    | Equipe ÁgoraHub | 06/10/2026 | Seção 6: requisitos funcionais                                             |
+| 1.5    | Equipe ÁgoraHub | 06/10/2026 | Seção 6.2: regras de negócio                                               |
+| 1.6    | Equipe ÁgoraHub | 06/10/2026 | Seção 6.3: requisitos não funcionais                                       |
+| 1.7    | Equipe ÁgoraHub | 06/10/2026 | Seção 7: versão completa                                                   |
+| 1.8    | Equipe ÁgoraHub | 06/10/2026 | Edição de título e descrição do projeto no MVP; papéis do dono atualizados |
 
 ## 1. Introdução
 
@@ -55,10 +56,10 @@ A pesquisa também mostrou que 17 respondentes têm dificuldade para tirar dúvi
 
 O mesmo estudante pode assumir dois papéis, dependendo da situação:
 
-| Papel           | Quando                                                    | O que pode fazer                                                                                  |
-|-----------------|-----------------------------------------------------------|---------------------------------------------------------------------------------------------------|
-| Dono do projeto | Quando cria um projeto                                    | Ver as solicitações recebidas, aceitar ou recusar, ver o e-mail dos aceitos e encerrar o projeto. |
-| Solicitante     | Quando pede para participar do projeto de outro estudante | Enviar a solicitação e acompanhar o status.                                                       |
+| Papel           | Quando                                                    | O que pode fazer                                                                                                                                           |
+|-----------------|-----------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Dono do projeto | Quando cria um projeto                                    | Ver as solicitações recebidas, aceitar ou recusar, ver o e-mail dos membros, editar o título e a descrição, remover membros, reabrir e encerrar o projeto. |
+| Solicitante     | Quando pede para participar do projeto de outro estudante | Enviar a solicitação e acompanhar o status.                                                                                                                |
 
 ### 3.3 Protopersonas
 
@@ -131,7 +132,7 @@ Quando o dono do projeto aceita uma solicitação, passa a ver o e-mail instituc
 5. Hub de Projetos, com filtro por tag e os detalhes de cada projeto.
 6. Pedido de participação num projeto, com aviso sobre o compartilhamento do e-mail.
 7. Resposta às solicitações recebidas (aceitar ou recusar com motivo) e acesso ao e-mail dos aceitos.
-8. Acompanhamento das solicitações enviadas e dos projetos criados, incluindo remover membros, reabrir e encerrar projetos.
+8. Acompanhamento das solicitações enviadas e dos projetos criados, incluindo editar o título e a descrição, remover membros, reabrir e encerrar projetos.
 
 ### 5.3 O que fica para a versão completa
 
@@ -166,6 +167,7 @@ Notificações no celular, recuperação de senha, filtro do mural por tipo de o
 | RF21 | Encerrar um projeto.                                                                                                                       | Média      | RF19       |
 | RF22 | Remover um membro de um projeto.                                                                                                           | Média      | RF20       |
 | RF23 | Reabrir um projeto fechado.                                                                                                                | Média      | RF19       |
+| RF24 | Editar o título e a descrição de um projeto.                                                                                               | Média      | RF19       |
 
 #### 6.1.1 Diagrama de dependências
 
@@ -186,6 +188,7 @@ flowchart LR
     RF19 --> RF21
     RF20 --> RF22
     RF19 --> RF23
+    RF19 --> RF24
 ```
 
 ### 6.2 Regras de negócio
@@ -216,6 +219,7 @@ A coluna **Relacionada a** indica os requisitos funcionais em que a regra se apl
 | RN20 | Ao encerrar um projeto, ele passa para o status Encerrado, e as solicitações pendentes dele são recusadas automaticamente com o motivo "Projeto encerrado". Um projeto Encerrado não pode ser reaberto.                                                                  | Média      | RF21                   |
 | RN21 | O e-mail institucional de um estudante só é mostrado ao dono de um projeto do qual esse estudante é membro.                                                                                                                                                              | Alta       | RF20                   |
 | RN22 | Solicitações não são apagadas: só mudam de status.                                                                                                                                                                                                                       | Baixa      | RF15, RF18             |
+| RN23 | Só projetos com status Aberto ou Fechado podem ser editados. O título e a descrição não podem ficar vazios.                                                                                                                                                              | Média      | RF24                   |
 
 ### 6.3 Requisitos não funcionais
 
@@ -265,7 +269,7 @@ Funcionalidades que fazem parte da visão do produto, mas não serão desenvolvi
 | VC10 | Cancelamento de uma solicitação pendente pelo solicitante.                                                                                | Acrescenta um novo status de solicitação.                                      |
 | VC11 | Saída de um membro do projeto por conta própria.                                                                                          | Acrescenta um novo status de solicitação.                                      |
 | VC12 | Justificativa ao remover um membro.                                                                                                       | Melhoria de comunicação; a remoção já funciona sem ela.                        |
-| VC13 | Edição de um projeto: título, descrição, vagas e tags.                                                                                    | Exige regras para quando o número de vagas fica menor que o número de membros. |
+| VC13 | Edição das vagas e das tags de um projeto.                                                                                                | Exige regras para quando o número de vagas fica menor que o número de membros. |
 | VC14 | Justificativa ao encerrar um projeto: não completou as vagas, desistência ou concluído, com link para o site ou repositório do resultado. | Ganha valor junto com o acompanhamento por professores (VC17).                 |
 | VC15 | Reabertura de um projeto encerrado.                                                                                                       | Depende de como ficarão os status com a VC14.                                  |
 
