@@ -14,6 +14,10 @@ O app abre na tela do Mural de Oportunidades, que por enquanto mostra apenas o t
 - Jetpack Compose
 - Android Studio
 
+## Documentação
+
+- [Requisitos](docs/requisitos.md): o que o app faz no MVP, o que fica para a versão completa e as decisões do projeto.
+
 ## Como rodar o projeto
 
 1. Clone o repositório:
