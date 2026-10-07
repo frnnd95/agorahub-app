@@ -9,6 +9,7 @@
 | 1.4    | Equipe ÁgoraHub | 06/10/2026 | Seção 6: requisitos funcionais                    |
 | 1.5    | Equipe ÁgoraHub | 06/10/2026 | Seção 6.2: regras de negócio                      |
 | 1.6    | Equipe ÁgoraHub | 06/10/2026 | Seção 6.3: requisitos não funcionais              |
+| 1.7    | Equipe ÁgoraHub | 06/10/2026 | Seção 7: versão completa                          |
 
 ## 1. Introdução
 
@@ -236,7 +237,56 @@ A coluna **Como verificar** indica como confirmar que o requisito foi atendido.
 
 ## 7. Requisitos da versão completa
 
-*Em construção.*
+Funcionalidades que fazem parte da visão do produto, mas não serão desenvolvidas no semestre. Esta lista não é um compromisso, e a ordem dos itens não indica prioridade. Se a equipe decidir trazer um item para o MVP, ele passa a ser um requisito da seção 6, com um novo identificador.
+
+### 7.1 Acesso e perfil
+
+| Id.  | Descrição                                                                                                               | Por que fica para depois                                              |
+|------|-------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------|
+| VC01 | Verificação do e-mail institucional por um link enviado no cadastro, para confirmar que o estudante é dono do endereço. | Depende de um serviço de envio de e-mails.                            |
+| VC02 | Recuperação de senha.                                                                                                   | Depende de um serviço de envio de e-mails.                            |
+| VC03 | Exclusão da própria conta e dos dados pessoais, conforme a LGPD.                                                        | Envolve apagar ou anonimizar dados ligados a projetos e solicitações. |
+| VC04 | Separação de usuários e conteúdo por curso, para que o app possa ser usado por outros cursos.                           | O MVP atende apenas Sistemas de Informação.                           |
+| VC05 | Disponibilidade de horários no perfil do estudante.                                                                     | Acrescenta campos e telas que não são essenciais ao fluxo principal.  |
+
+### 7.2 Mural de Oportunidades
+
+| Id.  | Descrição                                                       | Por que fica para depois                                        |
+|------|-----------------------------------------------------------------|-----------------------------------------------------------------|
+| VC06 | Filtro do mural por tipo de oportunidade.                       | Com poucas oportunidades, a ordenação pelo prazo já basta.      |
+| VC07 | Publicação de oportunidades por administradores, dentro do app. | Exige um novo tipo de usuário, com permissões e telas próprias. |
+
+### 7.3 Projetos e solicitações
+
+| Id.  | Descrição                                                                                                                                 | Por que fica para depois                                                       |
+|------|-------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
+| VC08 | Vínculo entre um projeto e uma oportunidade do mural ("procuro equipe para este hackathon").                                              | Liga as duas frentes do app, mas amplia o modelo de dados.                     |
+| VC09 | Horário de encontro no projeto e o motivo de recusa "Horários incompatíveis".                                                             | Depende da VC05.                                                               |
+| VC10 | Cancelamento de uma solicitação pendente pelo solicitante.                                                                                | Acrescenta um novo status de solicitação.                                      |
+| VC11 | Saída de um membro do projeto por conta própria.                                                                                          | Acrescenta um novo status de solicitação.                                      |
+| VC12 | Justificativa ao remover um membro.                                                                                                       | Melhoria de comunicação; a remoção já funciona sem ela.                        |
+| VC13 | Edição de um projeto: título, descrição, vagas e tags.                                                                                    | Exige regras para quando o número de vagas fica menor que o número de membros. |
+| VC14 | Justificativa ao encerrar um projeto: não completou as vagas, desistência ou concluído, com link para o site ou repositório do resultado. | Ganha valor junto com o acompanhamento por professores (VC17).                 |
+| VC15 | Reabertura de um projeto encerrado.                                                                                                       | Depende de como ficarão os status com a VC14.                                  |
+
+### 7.4 Comunicação
+
+| Id.  | Descrição                                                                                          | Por que fica para depois                        |
+|------|----------------------------------------------------------------------------------------------------|-------------------------------------------------|
+| VC16 | Notificações no celular: nova solicitação, mudança de status e lembrete de prazo de oportunidades. | Depende de um serviço de envio de notificações. |
+
+### 7.5 Comunidade e professores
+
+| Id.  | Descrição                                                                               | Por que fica para depois                                        |
+|------|-----------------------------------------------------------------------------------------|-----------------------------------------------------------------|
+| VC17 | Perfil de professor, para divulgar desafios e acompanhar a participação dos estudantes. | Exige um novo tipo de usuário, com permissões e telas próprias. |
+| VC18 | Apoio para tirar dúvidas e formar grupos de estudo.                                     | É outro problema da pesquisa, fora do foco do MVP.              |
+
+### 7.6 Acessibilidade
+
+| Id.  | Descrição                                                             | Por que fica para depois                                                                                                 |
+|------|-----------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| VC19 | Uso completo do app por teclado físico e pelo Acesso com Interruptor. | Exige testes com equipamentos e configurações específicas; o MVP cobre leitor de tela, contraste, fonte e área de toque. |
 
 ## 8. Principais funcionalidades
 
