@@ -14,6 +14,29 @@
 | 1.9    | Equipe ÁgoraHub | 06/10/2026 | Seção 8: funcionalidades e requisitos associados                           |
 | 1.10   | Equipe ÁgoraHub | 06/10/2026 | Seção 9: decisões; correções de glossário, prioridades e introdução        |
 
+## Sumário
+
+1. [Introdução](#1-introdução)
+2. [Propósito do sistema](#2-propósito-do-sistema)
+3. [Usuários](#3-usuários)
+    - [3.1 Tipos de usuário](#31-tipos-de-usuário)
+    - [3.2 Papéis do estudante](#32-papéis-do-estudante)
+    - [3.3 Protopersonas](#33-protopersonas)
+4. [Glossário](#4-glossário)
+5. [Solução proposta](#5-solução-proposta)
+    - [5.1 Como o ÁgoraHub responde aos problemas](#51-como-o-ágorahub-responde-aos-problemas)
+    - [5.2 Principais funcionalidades do MVP](#52-principais-funcionalidades-do-mvp)
+    - [5.3 O que fica para a versão completa](#53-o-que-fica-para-a-versão-completa)
+6. [Requisitos do MVP](#6-requisitos-do-mvp)
+    - [6.1 Requisitos funcionais](#61-requisitos-funcionais)
+    - [6.2 Regras de negócio](#62-regras-de-negócio)
+    - [6.3 Requisitos não funcionais](#63-requisitos-não-funcionais)
+7. [Requisitos da versão completa](#7-requisitos-da-versão-completa)
+8. [Principais funcionalidades](#8-principais-funcionalidades)
+9. [Decisões](#9-decisões)
+    - [9.1 Decisões em aberto](#91-decisões-em-aberto)
+    - [9.2 Decisões tomadas](#92-decisões-tomadas)
+
 ## 1. Introdução
 
 Este documento apresenta os requisitos do aplicativo **ÁgoraHub**, projeto acadêmico das disciplinas de Projeto Integrador e Programação para Dispositivos Móveis (Sistemas de Informação, IFAL Arapiraca, 2026.2).
