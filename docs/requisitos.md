@@ -11,6 +11,7 @@
 | 1.6    | Equipe ÁgoraHub | 06/10/2026 | Seção 6.3: requisitos não funcionais                                       |
 | 1.7    | Equipe ÁgoraHub | 06/10/2026 | Seção 7: versão completa                                                   |
 | 1.8    | Equipe ÁgoraHub | 06/10/2026 | Edição de título e descrição do projeto no MVP; papéis do dono atualizados |
+| 1.9    | Equipe ÁgoraHub | 06/10/2026 | Seção 8: funcionalidades e requisitos associados                           |
 
 ## 1. Introdução
 
@@ -131,7 +132,7 @@ Quando o dono do projeto aceita uma solicitação, passa a ver o e-mail instituc
 4. Criação de projetos.
 5. Hub de Projetos, com filtro por tag e os detalhes de cada projeto.
 6. Pedido de participação num projeto, com aviso sobre o compartilhamento do e-mail.
-7. Resposta às solicitações recebidas (aceitar ou recusar com motivo) e acesso ao e-mail dos aceitos.
+7. Resposta às solicitações recebidas (aceitar ou recusar com motivo) e acesso ao e-mail dos membros do projeto.
 8. Acompanhamento das solicitações enviadas e dos projetos criados, incluindo editar o título e a descrição, remover membros, reabrir e encerrar projetos.
 
 ### 5.3 O que fica para a versão completa
@@ -294,7 +295,21 @@ Funcionalidades que fazem parte da visão do produto, mas não serão desenvolvi
 
 ## 8. Principais funcionalidades
 
-*Em construção.*
+Relação entre as funcionalidades da seção 5.2 e os requisitos da seção 6.
+
+| Funcionalidade                                                     | Requisitos funcionais              | Regras de negócio                  | Requisitos não funcionais         |
+|--------------------------------------------------------------------|------------------------------------|------------------------------------|-----------------------------------|
+| 1. Cadastro e entrada no app                                       | RF01, RF02, RF03                   | RN01                               | RNF06, RNF07                      |
+| 2. Perfil com curso e tags                                         | RF04, RF05, RF06                   | RN02, RN03, RN04                   | —                                 |
+| 3. Mural de Oportunidades                                          | RF07, RF08, RF09                   | RN05, RN06, RN07                   | —                                 |
+| 4. Criação de projetos                                             | RF10                               | RN03, RN04, RN08                   | —                                 |
+| 5. Hub de Projetos                                                 | RF11, RF12, RF13                   | RN09, RN10                         | —                                 |
+| 6. Pedido de participação                                          | RF14                               | RN11, RN12, RN13                   | —                                 |
+| 7. Resposta às solicitações e contato com os membros               | RF15, RF16, RF17, RF20             | RN14, RN15, RN16, RN17, RN21, RN22 | —                                 |
+| 8. Acompanhamento das solicitações enviadas e dos projetos criados | RF18, RF19, RF21, RF22, RF23, RF24 | RN16, RN18, RN19, RN20, RN22, RN23 | —                                 |
+| Todas as telas                                                     | —                                  | —                                  | RNF01, RNF02, RNF03, RNF04, RNF05 |
+
+Os requisitos RNF08 a RNF11 se aplicam ao projeto como um todo: tecnologia, forma de desenvolvimento, repositório e prazo de entrega.
 
 ## 9. Decisões em aberto
 
