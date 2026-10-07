@@ -12,6 +12,7 @@
 | 1.7    | Equipe ÁgoraHub | 06/10/2026 | Seção 7: versão completa                                                   |
 | 1.8    | Equipe ÁgoraHub | 06/10/2026 | Edição de título e descrição do projeto no MVP; papéis do dono atualizados |
 | 1.9    | Equipe ÁgoraHub | 06/10/2026 | Seção 8: funcionalidades e requisitos associados                           |
+| 1.10   | Equipe ÁgoraHub | 06/10/2026 | Seção 9: decisões; correções de glossário, prioridades e introdução        |
 
 ## 1. Introdução
 
@@ -21,6 +22,8 @@ Os requisitos estão divididos em duas partes:
 
 - **MVP do semestre:** o que a equipe vai construir até dezembro de 2026, com o que aprende nas aulas.
 - **Versão completa:** o que o app precisaria ter para ser usado de verdade pelos estudantes. Fica registrado para não perder a visão do produto, mas não faz parte da entrega do semestre.
+
+O documento está organizado assim: a seção 2 descreve o propósito do sistema; a seção 3, os usuários; a seção 4, o glossário; a seção 5, a solução proposta; a seção 6, os requisitos do MVP; a seção 7, os requisitos da versão completa; a seção 8 relaciona funcionalidades e requisitos; e a seção 9 registra as decisões do projeto.
 
 ## 2. Propósito do sistema
 
@@ -100,7 +103,7 @@ Termos usados neste documento, em ordem alfabética.
 | Status da solicitação  | **Pendente** (aguardando resposta do dono), **Aceita**, **Recusada** (com o motivo informado pelo dono) ou **Removida** (o dono removeu o membro do projeto).                  |
 | Status do projeto      | **Aberto** (recebe solicitações), **Fechado** (todas as vagas foram preenchidas; o dono pode reabri-lo se uma vaga for liberada) ou **Encerrado** (o dono encerrou o projeto). |
 | Tag                    | Área de habilidade ou interesse, como Mobile, UX/UI ou Banco de Dados. Usada no perfil dos estudantes e nos projetos.                                                          |
-| Vagas disponíveis      | Número de vagas do projeto menos o número de solicitações aceitas.                                                                                                             |
+| Vagas disponíveis      | Número de vagas do projeto menos o número de membros.                                                                                                                          |                                                                                                            |
 | Versão completa        | Funcionalidades que fazem parte da visão do produto, mas ficam fora do MVP.                                                                                                    |
 
 ## 5. Solução proposta
@@ -127,7 +130,7 @@ Quando o dono do projeto aceita uma solicitação, passa a ver o e-mail instituc
 ### 5.2 Principais funcionalidades do MVP
 
 1. Cadastro e entrada no app com e-mail institucional.
-2. Perfil com curso e de 3 a 5 tags, que o estudante pode editar depois.
+2. Perfil com curso e de 3 a 5 tags; as tags podem ser alteradas depois.
 3. Mural de Oportunidades, com os detalhes de cada oportunidade.
 4. Criação de projetos.
 5. Hub de Projetos, com filtro por tag e os detalhes de cada projeto.
@@ -163,10 +166,10 @@ Notificações no celular, recuperação de senha, filtro do mural por tipo de o
 | RF16 | Aceitar uma solicitação pendente.                                                                                                          | Alta       | RF15       |
 | RF17 | Recusar uma solicitação pendente, informando o motivo.                                                                                     | Alta       | RF15       |
 | RF18 | Exibir ao estudante as solicitações que ele enviou, com o status de cada uma e o motivo, em caso de recusa.                                | Média      | RF14       |
-| RF19 | Exibir ao dono os projetos que ele criou (Meus Projetos), com status, vagas disponíveis e vagas preenchidas.                               | Média      | RF10       |
+| RF19 | Exibir ao dono os projetos que ele criou (Meus Projetos), com status, vagas disponíveis e vagas preenchidas.                               | Alta       | RF10       |
 | RF20 | Exibir ao dono os membros de um projeto dele, com nome, tags e e-mail institucional de cada um.                                            | Alta       | RF16, RF19 |
 | RF21 | Encerrar um projeto.                                                                                                                       | Média      | RF19       |
-| RF22 | Remover um membro de um projeto.                                                                                                           | Média      | RF20       |
+| RF22 | Remover um membro de um projeto.                                                                                                           | Alta       | RF20       |
 | RF23 | Reabrir um projeto fechado.                                                                                                                | Média      | RF19       |
 | RF24 | Editar o título e a descrição de um projeto.                                                                                               | Média      | RF19       |
 
@@ -199,7 +202,7 @@ A coluna **Relacionada a** indica os requisitos funcionais em que a regra se apl
 | Id.  | Descrição                                                                                                                                                                                                                                                                | Prioridade | Relacionada a          |
 |------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|------------------------|
 | RN01 | Só e-mails do domínio `@aluno.ifal.edu.br` podem ser cadastrados.                                                                                                                                                                                                        | Alta       | RF01                   |
-| RN02 | O estudante só acessa o Mural de Oportunidades, o Hub de Projetos e as solicitações depois de completar o perfil.                                                                                                                                                        | Alta       | RF04, RF07, RF11       |
+| RN02 | O estudante só acessa o Mural de Oportunidades, o Hub de Projetos e as solicitações depois de completar o perfil.                                                                                                                                                        | Alta       | RF04, RF07, RF11, RF14 |
 | RN03 | As tags são escolhidas da lista de tags. Estudantes não podem criar, editar ou apagar tags da lista.                                                                                                                                                                     | Alta       | RF04, RF06, RF10, RF12 |
 | RN04 | O perfil precisa ter de 3 a 5 tags, e o projeto, pelo menos 1 tag necessária.                                                                                                                                                                                            | Alta       | RF04, RF06, RF10       |
 | RN05 | As oportunidades são cadastradas pela Equipe ÁgoraHub. Estudantes não publicam oportunidades.                                                                                                                                                                            | Média      | RF07                   |
@@ -311,6 +314,40 @@ Relação entre as funcionalidades da seção 5.2 e os requisitos da seção 6.
 
 Os requisitos RNF08 a RNF11 se aplicam ao projeto como um todo: tecnologia, forma de desenvolvimento, repositório e prazo de entrega.
 
-## 9. Decisões em aberto
+## 9. Decisões
 
-*Em construção.*
+Cada decisão tem um identificador. Quando uma decisão em aberto é tomada, ela passa para a seção 9.2 e mantém o mesmo identificador.
+
+### 9.1 Decisões em aberto
+
+| Id. | Decisão                                  | Opções                                                                                                                                                                                                                                     | O que depende dela                                                                                                          | Decidir antes de                           |
+|-----|------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|--------------------------------------------|
+| D04 | Onde ficam guardados os dados do MVP.    | (a) No próprio celular, com Room: o fluxo é demonstrado num único aparelho, entrando com contas diferentes. (b) Num serviço na nuvem: os dados são compartilhados entre celulares, mas exige uma tecnologia ainda não vista na disciplina. | Cadastro e login (RF01, RF02), projetos e solicitações (RF10 a RF24) e a atualização do Mural de Oportunidades pela equipe. | Começar a implementar o RF01 ou o RF10.    |
+| D05 | Quais tags fazem parte da lista de tags. | A equipe define a lista, com base nas áreas citadas na pesquisa e nas protopersonas.                                                                                                                                                       | Perfil (RF04, RF06), criação de projetos (RF10) e filtro do Hub (RF12).                                                     | Começar a implementar o RF04.              |
+| D06 | Quais tipos de oportunidade existem.     | Por exemplo: Edital, Bolsa, Hackathon, Evento e Outro.                                                                                                                                                                                     | Mural (RF07) e o filtro por tipo da versão completa (VC06).                                                                 | Cadastrar as oportunidades reais do mural. |
+| D07 | Quais são as regras da senha.            | Por exemplo: no mínimo 8 caracteres.                                                                                                                                                                                                       | Cadastro (RF01).                                                                                                            | Começar a implementar o RF01.              |
+
+### 9.2 Decisões tomadas
+
+| Id. | Decisão                                                                                                                                                                                                               | Motivo                                                                                                                                     | Data       |
+|-----|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| D01 | O MVP se limita ao que a equipe consegue construir com os conceitos vistos na disciplina. O que exige tecnologias ainda não vistas, ou só faz sentido para um produto em uso real, fica na versão completa (seção 7). | O planejamento inicial não pôde ser executado na primeira iteração. Detalhes abaixo.                                                       | 06/10/2026 |
+| D02 | A documentação fica em arquivos Markdown na pasta `docs` do repositório.                                                                                                                                              | Fica junto do código, abre formatada no GitHub e guarda o histórico de mudanças.                                                           | 06/10/2026 |
+| D03 | O app é criado com o modelo Empty Activity do Android Studio, em Kotlin com Jetpack Compose, com `minSdk` 24 e `compileSdk` 37.                                                                                       | Segue a configuração usada na disciplina. O `compileSdk` 37 é exigido pelas bibliotecas que o próprio Android Studio adicionou ao projeto. | 06/10/2026 |
+
+#### Detalhamento da D01 — Escopo do MVP
+
+O planejamento inicial do ÁgoraHub descrevia um produto pronto para uso real, com serviços em nuvem, lógica executada em servidor, notificações push, painel administrativo e um processo de desenvolvimento com várias etapas de aprovação. A primeira iteração (29/09 a 06/10/2026) previa configurar toda essa estrutura, além do login e do primeiro acesso.
+
+Essa iteração não pôde ser executada: as tarefas dependiam de tecnologias que ainda não tinham sido vistas na disciplina, e a equipe não conseguiu transformá-las em trabalho concreto. Em 06/10/2026, a equipe decidiu replanejar o escopo:
+
+| Aspecto               | Planejamento inicial                                                         | Decisão atual                                                                                 |
+|-----------------------|------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
+| Objetivo              | Um produto pronto para uso real.                                             | Um MVP que demonstra o aprendizado da disciplina e atende ao fluxo principal.                 |
+| Funcionalidades       | Todas, incluindo notificações, administração e verificação de e-mail.        | As da seção 6; as demais ficam registradas na seção 7.                                        |
+| Tecnologia            | Definida antes do desenvolvimento, incluindo serviços em nuvem e plano pago. | Os conceitos vistos na disciplina; uma tecnologia nova só entra se for indispensável (RNF09). |
+| Organização do código | Camadas e padrões definidos antes de existir código.                         | A estrutura cresce conforme a necessidade de cada iteração.                                   |
+| Processo              | Várias etapas de aprovação por história e ferramentas de gestão.             | Uma branch por tarefa, revisão por um colega e README fiel ao repositório (RNF10).            |
+| Primeira iteração     | Configuração completa dos serviços, login e primeiro acesso.                 | Documento de requisitos refeito, repositório criado e primeira tela do app.                   |
+
+A decisão sobre usar ou não um serviço na nuvem continua em aberto (D04). A D01 não descarta essa possibilidade: ela define que uma tecnologia só entra quando for necessária e compreendida pela equipe.
