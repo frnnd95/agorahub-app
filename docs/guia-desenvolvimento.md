@@ -76,6 +76,15 @@ O `Closes #N` (com o número da issue) fecha a issue automaticamente quando o pu
 - [ ] O checklist de acessibilidade foi seguido.
 - [ ] Não há código de outras issues misturado.
 
+Para rodar o app da branch do colega:
+
+```shell
+git fetch origin
+git checkout feature/<branch-do-colega>
+```
+
+Depois da revisão, volte com `git checkout main`.
+
 Se precisar de mudanças, o revisor comenta no pull request. Quem fez a issue corrige na mesma branch e faz um novo commit e um novo `git push`.
 
 Depois da aprovação, clique em **Merge pull request** e depois em **Delete branch**. A issue fecha sozinha e vai para **Concluído** no quadro; se não for, mova manualmente.
