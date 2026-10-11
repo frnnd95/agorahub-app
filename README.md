@@ -18,7 +18,8 @@ O app abre na tela do Mural de Oportunidades, que por enquanto mostra apenas o t
 
 - [Requisitos](docs/requisitos.md): o que o app faz no MVP, o que fica para a versão completa e as decisões do projeto.
 - [Iterações](docs/iteracoes.md): o que foi planejado e entregue em cada iteração.
-
+- [Guia de desenvolvimento](docs/guia-desenvolvimento.md): passo a passo para trabalhar numa issue.
+- 
 ## Como rodar o projeto
 
 1. Clone o repositório:
