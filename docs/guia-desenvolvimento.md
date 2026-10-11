@@ -110,7 +110,75 @@ As decisões já tomadas estão na [seção 8 do documento de requisitos](requis
 - Todo `@Preview` fica dentro do `AgoraHubTheme`, para mostrar as cores do app.
 - As cores nas telas vêm do tema (`MaterialTheme.colorScheme.primary`, `.error` e assim por diante), nunca de um `Color(0xFF...)` escrito na tela. Assim o tema escuro funciona sozinho (RNF06).
 - Use as palavras do documento de requisitos: "interesse" (não "tag"), "responsável" (não "dono"), "Mural de Oportunidades", "Hub de Projetos" (D11).
+- Ícones vêm do `Icons.Default`, sem importar SVG (D13). Veja a seção 9.
 
-## 9. Se travar
+## 9. Como usar ícones
+
+Os ícones do app são os Material Icons (D13). A biblioteca já está no projeto, e quem desenvolve a tela escolhe o ícone.
+
+### Escolher o ícone
+
+1. No Android Studio, clique com o botão direito em `app` e escolha **New › Vector Asset**.
+2. Clique no ícone ao lado de **Clip art** para ver a lista. Pesquise em inglês, como `home`, `edit` ou `mail`.
+3. Anote o nome e clique em **Cancel**. A janela serve só para consulta: não crie nenhum arquivo.
+
+O nome muda de formato no código: `open_in_new` vira `OpenInNew`, e `campaign` vira `Campaign`.
+
+Ícones já separados pela equipe:
+
+| Ícone        | No código                              |
+|--------------|----------------------------------------|
+| Casa         | `Icons.Default.Home`                   |
+| Megafone     | `Icons.Default.Campaign`               |
+| Pasta        | `Icons.Default.Folder`                 |
+| Perfil       | `Icons.Default.Person`                 |
+| Pessoas      | `Icons.Default.People`                 |
+| Adicionar    | `Icons.Default.Add`                    |
+| Editar       | `Icons.Default.Edit`                   |
+| E-mail       | `Icons.Default.Email`                  |
+| Abrir link   | `Icons.Default.OpenInNew`              |
+| Enviar       | `Icons.Default.Send`                   |
+| Seta direita | `Icons.Default.ChevronRight`           |
+| Voltar       | `Icons.AutoMirrored.Filled.ArrowBack`  |
+| Sair         | `Icons.AutoMirrored.Filled.Logout`     |
+
+Voltar e Sair usam `AutoMirrored`: são setas que se espelham sozinhas em idiomas escritos da direita para a esquerda.
+
+### Colocar na tela
+
+```kotlin
+Icon(
+    imageVector = Icons.Default.Campaign,
+    contentDescription = null
+)
+```
+
+Ao digitar o nome, aperte **Alt+Enter** para importar. Cada ícone tem o seu import, como `androidx.compose.material.icons.filled.Campaign`.
+
+- **Tamanho:** 24 dp por padrão. Para mudar, use `modifier = Modifier.size(28.dp)`.
+- **Cor:** por padrão segue a cor do texto ao redor. Para mudar, use uma cor do tema, como `tint = MaterialTheme.colorScheme.primary`, nunca `Color(0xFF...)` (seção 8).
+
+### Acessibilidade (RNF01)
+
+- Se o ícone **informa algo sozinho**, sem texto ao lado, escreva o que ele significa: `contentDescription = "Abrir link"`.
+- Se o ícone está **junto de um texto** que já diz a mesma coisa, ou é **só decorativo**, use `contentDescription = null`. Assim o TalkBack não lê a mesma coisa duas vezes.
+- Nunca deixe `contentDescription = ""`.
+
+### Ícone que funciona como botão
+
+Se tocar no ícone faz alguma coisa, coloque-o dentro de um `IconButton`. Ele garante a área de toque de 48 dp (RNF04), e o TalkBack anuncia que é um botão:
+
+```kotlin
+IconButton(onClick = { /* o que acontece ao tocar */ }) {
+    Icon(
+        imageVector = Icons.Default.Edit,
+        contentDescription = "Editar perfil"
+    )
+}
+```
+
+O `IconButton` não aparece nas aulas: ele entra por causa da RNF04.
+
+## 10. Se travar
 
 Escreva um comentário na issue explicando onde travou e avise no grupo. Travar faz parte; ficar parado sem avisar atrasa a equipe.
