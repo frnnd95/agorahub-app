@@ -13,16 +13,32 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 import br.edu.ifal.agorahub.ui.screen.MuralScreen
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import br.edu.ifal.agorahub.ui.screen.PerfilScreen
+import br.edu.ifal.agorahub.ui.screen.ProjetosScreen
+import br.edu.ifal.agorahub.ui.components.BarraNavegacao
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             AgoraHubTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                   MuralScreen(
-                       modifier = Modifier.padding(innerPadding)
-                   )
+                val navController = rememberNavController()
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    bottomBar = { BarraNavegacao(navController) }
+                ) { innerPadding ->
+                    NavHost(
+                        navController = navController,
+                        startDestination = "mural",
+                        modifier = Modifier.padding(innerPadding)
+                    ) {
+                        composable("mural") { MuralScreen() }
+                        composable("projetos") { ProjetosScreen() }
+                        composable("perfil") { PerfilScreen() }
+                    }
                 }
             }
         }
