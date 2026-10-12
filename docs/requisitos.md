@@ -5,7 +5,7 @@
 | 1.0    | Equipe ÁgoraHub | 06/10/2026 | Primeira versão: propósito, usuários, glossário, solução proposta, requisitos do MVP e da versão completa, relação entre funcionalidades e requisitos, e decisões |
 | 2.0    | Equipe ÁgoraHub | 07/10/2026 | Revisão completa: requisitos organizados por funcionalidade, com novos identificadores; vocabulário das telas; decisões D04 a D12                                 |
 | 2.1    | Equipe ÁgoraHub | 11/10/2026 | Decisão D13 (ícones das telas)                                                                                                                                    |
-| 2.2    | Equipe ÁgoraHub | 11/10/2026 | Decisão D13: datas com `LocalDate` e desugaring                                                                                                                   |
+| 2.2    | Equipe ÁgoraHub | 11/10/2026 | Decisão D14: datas com `LocalDate` e desugaring                                                                                                                   |
 
 
 ## Sumário
