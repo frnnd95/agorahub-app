@@ -51,6 +51,8 @@ Mural de Oportunidades funcionando com dados de exemplo, com a barra de navegaç
 | Paleta de cores nos temas claro e escuro                      | D09, RNF06           | Equipe      | —     | Concluído |
 | Registro das iterações (`iteracoes.md`)                       | D01                  | Equipe      | —     | Concluído |
 | Guia de desenvolvimento para a equipe                         | RNF11, RNF13         | Fernanda    | #27   | Concluído |
+| Ícone do app                                                  | D09                  | Fernanda    | —     | Concluído |
+| Ícones do Material: dependência e tutorial no guia            | D13                  | Fernanda    | —     | Concluído |
 | Classe `Oportunidade` e dados de exemplo                      | RF10, RF11           | Fernanda    |       | A fazer   |
 | Mural de Oportunidades                                        | RF10, RN11 a RN15    | Fernanda    |       | A fazer   |
 | Barra de navegação com as abas Mural, Projetos e Perfil       | D08                  | Jhully      |       | A fazer   |
