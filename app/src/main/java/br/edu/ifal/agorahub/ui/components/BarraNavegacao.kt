@@ -31,7 +31,7 @@ fun BarraNavegacao(navController: NavController) {
 
     NavigationBar {
         NavigationBarItem(
-            selected = rotaAtual == "mural",
+            selected = rotaAtual == "mural" || rotaAtual?.startsWith("detalhes") == true,
             onClick = { irPara("mural") },
             icon = { Icon(Icons.Default.Campaign, contentDescription = null) },
             label = { Text("Mural") }
