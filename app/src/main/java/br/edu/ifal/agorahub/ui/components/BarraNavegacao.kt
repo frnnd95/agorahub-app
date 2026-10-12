@@ -48,7 +48,7 @@ fun BarraNavegacao(navController: NavController) {
             icon = { Icon(Icons.Default.Person, contentDescription = null) },
             label = { Text("Perfil") }
         )
-    }git
+    }
 }
 
 @Preview(showBackground = true)
