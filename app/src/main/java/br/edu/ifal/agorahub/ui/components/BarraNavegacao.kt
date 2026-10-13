@@ -5,8 +5,10 @@ import androidx.compose.material.icons.filled.Campaign
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,25 +30,34 @@ fun BarraNavegacao(navController: NavController) {
             launchSingleTop = true
         }
     }
-
+    val cores = NavigationBarItemDefaults.colors(
+        indicatorColor = MaterialTheme.colorScheme.primaryContainer,
+        selectedIconColor = MaterialTheme.colorScheme.onSurface,
+        selectedTextColor = MaterialTheme.colorScheme.onSurface,
+        unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant
+    )
     NavigationBar {
         NavigationBarItem(
             selected = rotaAtual == "mural",
             onClick = { irPara("mural") },
             icon = { Icon(Icons.Default.Campaign, contentDescription = null) },
-            label = { Text("Mural") }
+            label = { Text("Mural") },
+            colors = cores
         )
         NavigationBarItem(
             selected = rotaAtual == "projetos",
             onClick = { irPara("projetos") },
             icon = { Icon(Icons.Default.Folder, contentDescription = null) },
-            label = { Text("Projetos") }
+            label = { Text("Projetos") },
+            colors = cores
         )
         NavigationBarItem(
             selected = rotaAtual == "perfil",
             onClick = { irPara("perfil") },
             icon = { Icon(Icons.Default.Person, contentDescription = null) },
-            label = { Text("Perfil") }
+            label = { Text("Perfil") },
+            colors = cores
         )
     }
 }
