@@ -17,10 +17,25 @@ import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 import java.time.format.DateTimeFormatter
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.BorderStroke
+import java.time.LocalDate
+import java.time.temporal.ChronoUnit
 
 @Composable
 fun CardOportunidade(oportunidade: Oportunidade) {
-    val prazo = oportunidade.prazo.format(DateTimeFormatter.ofPattern("dd/MM"))
+    val diasRestantes = ChronoUnit.DAYS.between(LocalDate.now(), oportunidade.prazo).toInt()
+
+    val textoPrazo = when (diasRestantes) {
+        0 -> "Encerra hoje"
+        1 -> "Falta 1 dia"
+        2, 3 -> "Faltam $diasRestantes dias"
+        else -> "Prazo: " + oportunidade.prazo.format(DateTimeFormatter.ofPattern("dd/MM"))
+    }
+
+    val corPrazo = if (diasRestantes <= 3) {
+        MaterialTheme.colorScheme.error
+    } else {
+        MaterialTheme.colorScheme.onSurfaceVariant
+    }
 
     Surface(
         modifier = Modifier
@@ -43,9 +58,9 @@ fun CardOportunidade(oportunidade: Oportunidade) {
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
-                text = "Prazo: $prazo",
+                text = textoPrazo,
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = corPrazo
             )
         }
     }
@@ -55,6 +70,6 @@ fun CardOportunidade(oportunidade: Oportunidade) {
 @Composable
 fun CardOportunidadePreview() {
     AgoraHubTheme {
-        CardOportunidade(oportunidadesExemplo[0])
+        CardOportunidade(oportunidadesExemplo[1])
     }
 }
