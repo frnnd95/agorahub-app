@@ -15,6 +15,8 @@ import br.edu.ifal.agorahub.data.oportunidadesExemplo
 import br.edu.ifal.agorahub.domain.Oportunidade
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 import java.time.format.DateTimeFormatter
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.BorderStroke
 
 @Composable
 fun CardOportunidade(oportunidade: Oportunidade) {
@@ -23,9 +25,12 @@ fun CardOportunidade(oportunidade: Oportunidade) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        shape = RoundedCornerShape(16.dp),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
     ) {
         Column(
+            modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             Text(
