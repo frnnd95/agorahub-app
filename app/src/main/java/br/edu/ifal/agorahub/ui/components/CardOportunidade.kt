@@ -19,6 +19,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.BorderStroke
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
+import androidx.compose.foundation.layout.height
+import androidx.compose.ui.layout.ContentScale
+import coil.compose.AsyncImage
 
 @Composable
 fun CardOportunidade(oportunidade: Oportunidade) {
@@ -44,24 +47,36 @@ fun CardOportunidade(oportunidade: Oportunidade) {
         shape = RoundedCornerShape(16.dp),
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            Text(
-                text = oportunidade.tipo,
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.primary
-            )
-            Text(
-                text = oportunidade.titulo,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = textoPrazo,
-                style = MaterialTheme.typography.bodyMedium,
-                color = corPrazo
-            )
+        Column {
+            if (oportunidade.imagemUrl != null) {
+                AsyncImage(
+                    model = oportunidade.imagemUrl,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(120.dp),
+                    contentScale = ContentScale.Crop
+                )
+            }
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    text = oportunidade.tipo,
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Text(
+                    text = oportunidade.titulo,
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = textoPrazo,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = corPrazo
+                )
+            }
         }
     }
 }
