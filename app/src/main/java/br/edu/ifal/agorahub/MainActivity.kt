@@ -16,9 +16,12 @@ import br.edu.ifal.agorahub.ui.screen.MuralScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import br.edu.ifal.agorahub.data.OportunidadeDados
 import br.edu.ifal.agorahub.ui.screen.PerfilScreen
 import br.edu.ifal.agorahub.ui.screen.ProjetosScreen
 import br.edu.ifal.agorahub.ui.components.BarraNavegacao
+import br.edu.ifal.agorahub.ui.screen.DetalhesOportunidadeScreen
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +38,16 @@ class MainActivity : ComponentActivity() {
                         startDestination = "mural",
                         modifier = Modifier.padding(innerPadding)
                     ) {
-                        composable("mural") { MuralScreen() }
+                        composable("mural") { MuralScreen(navController) }
                         composable("projetos") { ProjetosScreen() }
                         composable("perfil") { PerfilScreen() }
+                        composable("detalhes/{id}") { backStackEntry ->
+                            val id = backStackEntry.arguments?.getString("id")
+                            val oportunidade = OportunidadeDados().buscarPorId(id)
+                            if (oportunidade != null) {
+                                DetalhesOportunidadeScreen(oportunidade = oportunidade)
+                            }
+                        }
                     }
                 }
             }
