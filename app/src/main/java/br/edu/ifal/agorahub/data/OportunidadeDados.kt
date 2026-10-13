@@ -14,4 +14,8 @@ class OportunidadeDados {
                 .thenByDescending { it.dataPublicacao }
         )
     }
+
+    fun buscarPorId(id: String?): Oportunidade? {
+        return oportunidadesExemplo.find { it.id == id }
+    }
 }
