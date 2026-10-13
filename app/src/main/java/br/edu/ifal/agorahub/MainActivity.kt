@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                         startDestination = "mural",
                         modifier = Modifier.padding(innerPadding)
                     ) {
-                        composable("mural") { MuralScreen() }
+                        composable("mural") { MuralScreen(navController) }
                         composable("projetos") { ProjetosScreen() }
                         composable("perfil") { PerfilScreen() }
                         composable("detalhes/{id}") { backStackEntry ->

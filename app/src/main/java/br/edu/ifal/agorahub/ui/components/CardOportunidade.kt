@@ -17,14 +17,18 @@ import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 import java.time.format.DateTimeFormatter
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 import androidx.compose.foundation.layout.height
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 
 @Composable
-fun CardOportunidade(oportunidade: Oportunidade) {
+fun CardOportunidade(oportunidade: Oportunidade, navController: NavController)  {
     val diasRestantes = ChronoUnit.DAYS.between(LocalDate.now(), oportunidade.prazo).toInt()
 
     val textoPrazo = when (diasRestantes) {
@@ -43,7 +47,11 @@ fun CardOportunidade(oportunidade: Oportunidade) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .clip(RoundedCornerShape(16.dp))
+            .clickable(onClickLabel = "Ver detalhes") {
+                navController.navigate("detalhes/${oportunidade.id}")
+            },
         shape = RoundedCornerShape(16.dp),
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
     ) {
@@ -85,6 +93,6 @@ fun CardOportunidade(oportunidade: Oportunidade) {
 @Composable
 fun CardOportunidadePreview() {
     AgoraHubTheme {
-        CardOportunidade(oportunidadesExemplo[1])
+        CardOportunidade(oportunidadesExemplo[1], rememberNavController())
     }
 }

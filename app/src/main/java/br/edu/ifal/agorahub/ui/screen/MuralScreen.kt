@@ -12,9 +12,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun MuralScreen(modifier: Modifier = Modifier) {
+fun MuralScreen(navController: NavController, modifier: Modifier = Modifier)  {
     val oportunidades = OportunidadeDados().listarMural()
 
     LazyColumn(modifier = modifier) {
@@ -26,7 +28,7 @@ fun MuralScreen(modifier: Modifier = Modifier) {
             )
         }
         items(oportunidades) { oportunidade ->
-            CardOportunidade(oportunidade)
+            CardOportunidade(oportunidade, navController)
         }
     }
 }
@@ -35,6 +37,6 @@ fun MuralScreen(modifier: Modifier = Modifier) {
 @Composable
 fun MuralScreenPreview() {
     AgoraHubTheme() {
-        MuralScreen()
+        MuralScreen(rememberNavController())
     }
 }
