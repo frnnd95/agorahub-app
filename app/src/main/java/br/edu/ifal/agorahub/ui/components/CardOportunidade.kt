@@ -50,6 +50,6 @@ fun CardOportunidade(oportunidade: Oportunidade) {
 @Composable
 fun CardOportunidadePreview() {
     AgoraHubTheme {
-        CardOportunidade(oportunidadesExemplo[1])
+        CardOportunidade(oportunidadesExemplo[0])
     }
 }
