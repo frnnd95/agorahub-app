@@ -79,6 +79,8 @@ O `Closes #N` (com o número da issue) fecha a issue automaticamente quando o pu
 - [ ] O checklist de acessibilidade foi seguido.
 - [ ] Não há código de outras issues misturado.
 
+A Jousiclécia também testa a acessibilidade instalando o APK no celular (seção 10).
+
 Para rodar o app da branch do colega:
 
 ```shell
@@ -184,6 +186,26 @@ IconButton(onClick = { /* o que acontece ao tocar */ }) {
 
 O `IconButton` não aparece nas aulas: ele entra por causa da RNF04.
 
-## 10. Se travar
+## 10. Gerar o APK e testes de acessibilidade
+
+A Jousiclécia testa a acessibilidade instalando o app no celular dela. Para isso, ela recebe o APK pelo WhatsApp.
+
+**Como gerar o APK:**
+
+1. No painel **Build Variants**, confira se o módulo `app` está em **debug**.
+2. No menu, clique em **Build › Generate Bundle(s) / APK(s) › Generate APK(s)**.
+3. No aviso que aparece no canto inferior direito, clique em **locate**. O arquivo é `app/build/outputs/apk/debug/app-debug.apk`.
+
+Não envie o APK gerado pelo botão **Run**: ele só instala pelo cabo, e no celular de outra pessoa aparece "Como o pacote parece ser inválido, o app não foi instalado". Como o Run sobrescreve o mesmo arquivo, gere o APK e envie logo em seguida, sem rodar o app no meio.
+
+Ao instalar, o Play Protect avisa que o app é desconhecido. É esperado, porque o app não vem da Play Store: basta escolher instalar mesmo assim.
+
+**Como funciona o teste:**
+
+1. Quem abriu o pull request gera o APK da própria branch e envia para a Jousiclécia, junto com o **Como testar** da descrição do pull request.
+2. A Jousiclécia testa e relata ao Lucas o que testou e os problemas que encontrou.
+3. O Lucas registra o relato como comentário no pull request.
+
+## 11. Se travar
 
 Escreva um comentário na issue explicando onde travou e avise no grupo. Travar faz parte; ficar parado sem avisar atrasa a equipe.
