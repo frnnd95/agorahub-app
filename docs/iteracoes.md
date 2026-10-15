@@ -6,7 +6,7 @@ Registro das iterações do Projeto Integrador: o que foi planejado, o que foi e
 |----------|--------------------|---------|-------------------------------|
 | 1        | 29/09 a 06/10/2026 | 7 dias  | Concluída, com replanejamento |
 | 2        | 06/10 a 13/10/2026 | 7 dias  | Concluída                     |
-| 3        | 13/10 a 27/10/2026 | 15 dias | A planejar                    |
+| 3        | 13/10 a 27/10/2026 | 15 dias | Em andamento                  |
 
 ## Iteração 1 — 29/09 a 06/10/2026
 
@@ -105,3 +105,49 @@ A iteração foi concluída em 13/10/2026, com os oito itens planejados entregue
 - Não houve reunião síncrona nem validação do PO.
 - O registro das iterações ficou desatualizado em relação ao GitHub.
 - Uma das revisoras não tem conta no GitHub.
+
+## Iteração 3 — 13/10 a 27/10/2026
+
+### Objetivo
+
+- Concluir o Mural de Oportunidades com as oportunidades reais, vindas do Firebase.
+- Permitir que o estudante crie a conta, entre no app e complete o perfil.
+- Testar as telas com leitor de tela e validá-las com o PO.
+
+### Itens do backlog
+
+- Mural de Oportunidades concluído: oportunidades reais cadastradas no Firebase, tela de detalhes e link aberto no navegador (RF10 a RF12).
+- Tela de abertura e Privacidade e dados (RF06).
+- Acesso do estudante: criar conta com e-mail institucional, confirmar o e-mail, entrar, recuperar a senha e sair (RF01 a RF05).
+- Perfil do estudante: completar o perfil no primeiro acesso e visualizá-lo na aba Perfil (RF07 e RF08).
+- Telas testadas com leitor de tela e entregas validadas pelo PO.
+
+Se sobrar tempo: editar o perfil (RF09) e criar um projeto (RF13).
+
+### Timeline
+
+| Data            | Responsável            | Tarefa                                                         |
+|-----------------|------------------------|----------------------------------------------------------------|
+| 14/10           | Fernanda               | Recriar a branch `develop` e proteger a `main`                 |
+| 14 a 15/10      | Fernanda               | Corrigir a documentação do repositório                         |
+| 14 a 16/10      | Samuel                 | Abrir o link da oportunidade no navegador (RF12)               |
+| 14 a 17/10      | Jhully                 | Criar o projeto Firebase e conectar o Firestore ao app (RNF12) |
+| 14 a 17/10      | Fernanda               | Tela de abertura e tela Privacidade e dados (RF06)             |
+| 14 a 26/10      | Lucas                  | Revisar os pull requests                                       |
+| 15 a 16/10      | Jousiclécia            | Testar com leitor de tela as telas da Iteração 2               |
+| 17 a 19/10      | Samuel                 | Aba Perfil com dados de exemplo (RF08)                         |
+| 18 a 22/10      | Jhully                 | Mural lendo as oportunidades do Firestore (RN10)               |
+| 18 a 22/10      | Fernanda               | Criar conta e Entrar (RF01 e RF03)                             |
+| 20/10           | Equipe                 | Reunião online de acompanhamento                               |
+| 20 a 21/10      | Samuel                 | Cadastrar as oportunidades reais no console do Firebase (RN10) |
+| 22 a 24/10      | Samuel                 | Recuperar a senha (RF04)                                       |
+| 23 a 25/10      | Fernanda               | Confirmação do e-mail institucional (RF02)                     |
+| 23 a 26/10      | Jhully                 | Completar o perfil no primeiro acesso (RF07)                   |
+| 24 a 25/10      | Samuel                 | Sair da conta (RF05)                                           |
+| 26/10           | Samuel                 | Aba Perfil com os dados reais (RF08)                           |
+| 26/10           | Jousiclécia            | Testar com leitor de tela as telas novas                       |
+| 26/10           | Samuel                 | Validar as entregas como PO                                    |
+| 27/10           | Equipe                 | Apresentar o resultado da Iteração 3 e o plano da Iteração 4   |
+| Se sobrar tempo | Quem terminar primeiro | Editar o perfil (RF09) e criar um projeto (RF13)               |
+
+Os pull requests são revisados pelo Lucas ou, se ele não puder, por outro dev. Quem abriu o pull request nunca revisa o próprio. A Jousiclécia testa a acessibilidade instalando o APK no celular (guia de desenvolvimento, seção 10).
