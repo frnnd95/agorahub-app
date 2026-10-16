@@ -6,20 +6,25 @@ Projeto acadêmico das disciplinas de Projeto Integrador e Programação para Di
 
 ## Situação atual
 
-O app abre na tela do Mural de Oportunidades, que por enquanto mostra apenas o título.
+O app abre no Mural de Oportunidades, que mostra uma lista de oportunidades de exemplo (os dados ainda não vêm do Firestore). As vencidas não aparecem, a lista é ordenada pelo prazo mais próximo e o prazo fica em vermelho quando faltam 3 dias ou menos. Tocar numa oportunidade abre os detalhes dela.
 
+A barra de navegação tem as abas Mural, Projetos e Perfil. Projetos e Perfil mostram, por enquanto, só o título.
 ## Tecnologias
 
 - Kotlin
 - Jetpack Compose
 - Android Studio
+- Navigation Compose: navegação entre as telas (Aula 06)
+- Coil: imagens das oportunidades carregadas da internet (Aula 01)
+- Material Icons: ícones das telas (Aula 05, D13)
+- Desugaring de bibliotecas do Java: datas com `LocalDate` no Android 7 (D14)
 
 ## Documentação
 
 - [Requisitos](docs/requisitos.md): o que o app faz no MVP, o que fica para a versão completa e as decisões do projeto.
 - [Iterações](docs/iteracoes.md): o que foi planejado e entregue em cada iteração.
 - [Guia de desenvolvimento](docs/guia-desenvolvimento.md): passo a passo para trabalhar numa issue.
-- 
+
 ## Como rodar o projeto
 
 1. Clone o repositório:
@@ -31,7 +36,7 @@ O app abre na tela do Mural de Oportunidades, que por enquanto mostra apenas o t
 4. Conecte um celular com a **Depuração USB** ativada ou inicie um emulador.
 5. Clique em **Run ▶**.
 
-**Resultado esperado:** o app abre mostrando "Mural de Oportunidades".
+**Resultado esperado:** o app abre no Mural de Oportunidades, com a lista de oportunidades de exemplo e a barra de navegação embaixo. Tocar numa oportunidade abre os detalhes.
 
 Se aparecer o erro `INSTALL_FAILED_USER_RESTRICTED`, ative **Instalar via USB** nas Opções do desenvolvedor.
 
@@ -39,8 +44,11 @@ Se aparecer o erro `INSTALL_FAILED_USER_RESTRICTED`, ative **Instalar via USB** 
 
 ```
 app/src/main/java/br/edu/ifal/agorahub/
-├── MainActivity.kt   → abre o app e mostra a tela inicial
+├── MainActivity.kt   → abre o app, mostra a barra de navegação e define as rotas das telas
+├── data/             → classes que entregam os dados às telas (D10) e os dados de exemplo
+├── domain/           → classes que representam os dados do app, como Oportunidade
 └── ui/
+    ├── components/   → partes usadas dentro das telas, como o cartão da oportunidade e a barra de navegação
     ├── screen/       → telas do app (uma por arquivo)
     └── theme/        → cores, fontes e tema
 ```
