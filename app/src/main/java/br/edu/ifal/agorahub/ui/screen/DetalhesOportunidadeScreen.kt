@@ -37,7 +37,9 @@ private val formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy")
 fun DetalhesOportunidadeScreen(
     oportunidade: Oportunidade,
     modifier: Modifier = Modifier
-) {
+)
+
+{
     val uriHandler = LocalUriHandler.current
     Column(
         modifier = modifier
