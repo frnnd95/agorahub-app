@@ -21,6 +21,14 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import br.edu.ifal.agorahub.R
+import androidx.compose.ui.draw.shadow
 
 @Composable
 fun AberturaScreen(navController: NavController, modifier: Modifier = Modifier) {
@@ -31,6 +39,20 @@ fun AberturaScreen(navController: NavController, modifier: Modifier = Modifier) 
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Image(
+            painter = painterResource(R.drawable.ic_launcher_foreground),
+            contentDescription = null,
+            modifier = Modifier
+                .size(88.dp)
+                .shadow(
+                    elevation = 8.dp,
+                    shape = RoundedCornerShape(24.dp)
+                )
+                .background(
+                    color = colorResource(R.color.ic_launcher_background),
+                    shape = RoundedCornerShape(24.dp)
+                )
+        )
         Text(
             text = "ÁgoraHub",
             style = MaterialTheme.typography.headlineLarge,
