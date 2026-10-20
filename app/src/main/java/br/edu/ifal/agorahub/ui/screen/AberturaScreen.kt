@@ -29,6 +29,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import br.edu.ifal.agorahub.R
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.text.style.TextDecoration
 
 @Composable
 fun AberturaScreen(navController: NavController, modifier: Modifier = Modifier) {
@@ -70,7 +71,10 @@ fun AberturaScreen(navController: NavController, modifier: Modifier = Modifier) 
                 .fillMaxWidth()
                 .heightIn(min = 48.dp)
         ) {
-            Text("Entrar")
+            Text(
+                text = "Entrar",
+                style = MaterialTheme.typography.titleMedium
+            )
         }
         OutlinedButton(
             onClick = { navController.navigate("cadastro") },
@@ -78,13 +82,21 @@ fun AberturaScreen(navController: NavController, modifier: Modifier = Modifier) 
                 .fillMaxWidth()
                 .heightIn(min = 48.dp)
         ) {
-            Text("Criar conta")
+            Text(
+                text = "Criar conta",
+                style = MaterialTheme.typography.titleMedium
+            )
         }
         TextButton(
             onClick = { navController.navigate("privacidade") },
             modifier = Modifier.heightIn(min = 48.dp)
         ) {
-            Text("Ver privacidade e dados")
+            Text(
+                text = "Ver privacidade e dados",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.secondary,
+                textDecoration = TextDecoration.Underline
+            )
         }
     }
 }
