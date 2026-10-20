@@ -59,7 +59,7 @@ fun AberturaScreen(navController: NavController, modifier: Modifier = Modifier) 
             Text("Criar conta")
         }
         TextButton(
-            onClick = { },
+            onClick = { navController.navigate("privacidade") },
             modifier = Modifier.heightIn(min = 48.dp)
         ) {
             Text("Ver privacidade e dados")

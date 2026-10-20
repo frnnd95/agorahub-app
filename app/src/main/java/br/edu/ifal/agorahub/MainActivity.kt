@@ -21,6 +21,7 @@ import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 import androidx.compose.runtime.getValue
 import androidx.navigation.compose.currentBackStackEntryAsState
 import br.edu.ifal.agorahub.ui.screen.AberturaScreen
+import br.edu.ifal.agorahub.ui.screen.PrivacidadeScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +35,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = {
-                        if (rotaAtual != "abertura") {
+                        if (rotaAtual != "abertura" && rotaAtual != "privacidade") {
                             BarraNavegacao(navController)
                         }
                     }
@@ -45,6 +46,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         composable("abertura") { AberturaScreen(navController) }
+                        composable("privacidade") { PrivacidadeScreen() }
                         composable("mural") { MuralScreen(navController) }
                         composable("projetos") { ProjetosScreen() }
                         composable("perfil") { PerfilScreen() }
