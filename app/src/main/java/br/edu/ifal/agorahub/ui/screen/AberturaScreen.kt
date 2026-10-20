@@ -18,10 +18,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 
 @Composable
-fun AberturaScreen(modifier: Modifier = Modifier) {
+fun AberturaScreen(navController: NavController, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -41,7 +43,7 @@ fun AberturaScreen(modifier: Modifier = Modifier) {
             textAlign = TextAlign.Center
         )
         Button(
-            onClick = { },
+            onClick = { navController.navigate("mural") },
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(min = 48.dp)
@@ -69,6 +71,6 @@ fun AberturaScreen(modifier: Modifier = Modifier) {
 @Composable
 fun AberturaScreenPreview() {
     AgoraHubTheme {
-        AberturaScreen()
+        AberturaScreen(rememberNavController())
     }
 }
