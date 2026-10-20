@@ -51,7 +51,7 @@ fun AberturaScreen(navController: NavController, modifier: Modifier = Modifier) 
             Text("Entrar")
         }
         OutlinedButton(
-            onClick = { },
+            onClick = { navController.navigate("cadastro") },
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(min = 48.dp)
