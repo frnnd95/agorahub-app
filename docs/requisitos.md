@@ -6,7 +6,7 @@
 | 2.0    | Equipe ÁgoraHub | 07/10/2026 | Revisão completa: requisitos organizados por funcionalidade, com novos identificadores; vocabulário das telas; decisões D04 a D12                                 |
 | 2.1    | Equipe ÁgoraHub | 11/10/2026 | Decisão D13 (ícones das telas)                                                                                                                                    |
 | 2.2    | Equipe ÁgoraHub | 11/10/2026 | Decisão D14: datas com `LocalDate` e desugaring                                                                                                                   |
-
+| 2.3    | Equipe ÁgoraHub | 20/10/2026 | Decisão D17: regra provisória do Firestore |
 
 ## Sumário
 
@@ -440,3 +440,4 @@ Não há decisões em aberto.
 | D12 | A confirmação do e-mail (RF02) e a recuperação de senha (RF04) fazem parte do MVP.                                                                                                                                                         | São oferecidas pelo próprio Firebase Authentication (D04), sem outra tecnologia.                                                                                                                            | 07/10/2026 |
 | D13 | Os ícones das telas são os Material Icons, usados com `Icons.Default`, pela biblioteca `material-icons-extended`, sem importar arquivos SVG. Quem desenvolve a tela escolhe o ícone. Complementa a D09: o PO define a paleta e o logotipo. | Os SVGs de ícones recebidos pela equipe são os próprios Material Icons, os mesmos usados nas aulas. Assim não é preciso importar arquivos nem usar outro recurso (RNF11).                                   | 11/10/2026 |
 | D14 | O prazo e a data de publicação das oportunidades usam a classe `LocalDate`, com o desugaring de bibliotecas do Java ativado no `app/build.gradle.kts`.                                                                                     | O `LocalDate` facilita comparar datas e contar dias (RN12 a RN14), mas só existe a partir do Android 8. O desugaring inclui essas classes no app e mantém o suporte ao Android 7 (RNF10), conforme a RNF11. | 11/10/2026 |
+| D17 | Enquanto não existe login (RF03), as regras do Firestore permitem ler a coleção `oportunidades` sem login e não permitem escrita pelo app (etapa 1). As oportunidades são cadastradas pelo console do Firebase, que não passa pelas regras (RN10). | O app lê as oportunidades antes de existir login. Isso contraria a RNF08 até o RF03. | dd/mm/2026 |
