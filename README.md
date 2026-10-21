@@ -40,6 +40,16 @@ A barra de navegação tem as abas Mural, Projetos e Perfil. Projetos e Perfil m
 
 Se aparecer o erro `INSTALL_FAILED_USER_RESTRICTED`, ative **Instalar via USB** nas Opções do desenvolvedor.
 
+### Firebase
+
+O app usa o Firebase, no plano gratuito Spark, com o Authentication (e-mail e senha) e o Cloud Firestore. Para rodar o projeto:
+
+- O arquivo `google-services.json` já está na pasta `app` do repositório. Não é preciso criar nem baixar outro.
+- Na primeira sincronização, o Gradle baixa as bibliotecas do Firebase, então o computador precisa estar conectado à internet.
+- Para ver ou alterar os dados, entre no [console do Firebase](https://console.firebase.google.com) com a sua conta Google. O acesso é dado pela equipe.
+- As regras do Firestore ficam no console, não no repositório. A regra provisória está registrada na decisão D17 do [documento de requisitos](docs/requisitos.md).
+- O Mural ainda usa dados de exemplo. A leitura das oportunidades no Firestore fica para a Iteração 3.
+
 ## Estrutura de pastas
 
 ```
