@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "663419625040",
+    "project_id": "agorahub-2e87b",
+    "storage_bucket": "agorahub-2e87b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663419625040:android:8f9ede20c228de5cb8bb55",
+        "android_client_info": {
+          "package_name": "br.edu.ifal.agorahub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYpg4FhD7-KNRXKMWxzbPZIPazoa_hnMc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
