@@ -46,7 +46,7 @@ O app usa o Firebase, no plano gratuito Spark, com o Authentication (e-mail e se
 
 - O arquivo `google-services.json` já está na pasta `app` do repositório. Não é preciso criar nem baixar outro.
 - Na primeira sincronização, o Gradle baixa as bibliotecas do Firebase, então o computador precisa estar conectado à internet.
-- Para ver ou alterar os dados, entre no [console do Firebase](https://console.firebase.google.com) com a sua conta Google. O acesso é dado pela equipe.
+- Para ver ou alterar os dados, entre no [console do Firebase](https://console.firebase.google.com) com o email do AgoraHub.
 - As regras do Firestore ficam no console, não no repositório. A regra provisória está registrada na decisão D17 do [documento de requisitos](docs/requisitos.md).
 - O Mural ainda usa dados de exemplo. A leitura das oportunidades no Firestore fica para a Iteração 3.
 
