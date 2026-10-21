@@ -48,7 +48,7 @@ O app usa o Firebase, no plano gratuito Spark, com o Authentication (e-mail e se
 - Na primeira sincronização, o Gradle baixa as bibliotecas do Firebase, então o computador precisa estar conectado à internet.
 - Para ver ou alterar os dados, entre no [console do Firebase](https://console.firebase.google.com) com o email do AgoraHub.
 - As regras do Firestore ficam no console, não no repositório. A regra provisória está registrada na decisão D17 do [documento de requisitos](docs/requisitos.md).
-- O Mural ainda usa dados de exemplo. A leitura das oportunidades no Firestore fica para a Iteração 3.
+- O Mural ainda usa dados de exemplo. A leitura das oportunidades no Firestore fica na issue [RN10 Mural lendo as oportunidades do Firestore](https://github.com/frnnd95/agorahub-app/issues/45).
 
 ## Estrutura de pastas
 
