@@ -7,20 +7,22 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
-import br.edu.ifal.agorahub.ui.screen.MuralScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import br.edu.ifal.agorahub.data.OportunidadeDados
-import br.edu.ifal.agorahub.ui.screen.PerfilScreen
-import br.edu.ifal.agorahub.ui.screen.ProjetosScreen
 import br.edu.ifal.agorahub.ui.components.BarraNavegacao
 import br.edu.ifal.agorahub.ui.screen.DetalhesOportunidadeScreen
+import br.edu.ifal.agorahub.ui.screen.MuralScreen
+import br.edu.ifal.agorahub.ui.screen.PerfilScreen
+import br.edu.ifal.agorahub.ui.screen.ProjetosScreen
+import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
+import androidx.compose.runtime.getValue
+import androidx.navigation.compose.currentBackStackEntryAsState
+import br.edu.ifal.agorahub.ui.screen.AberturaScreen
+import br.edu.ifal.agorahub.ui.screen.PrivacidadeScreen
+import br.edu.ifal.agorahub.ui.screen.CadastroScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,15 +31,27 @@ class MainActivity : ComponentActivity() {
         setContent {
             AgoraHubTheme {
                 val navController = rememberNavController()
+                val entradaAtual by navController.currentBackStackEntryAsState()
+                val rotaAtual = entradaAtual?.destination?.route
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
-                    bottomBar = { BarraNavegacao(navController) }
+                    bottomBar = {
+                        if (rotaAtual != "abertura" &&
+                            rotaAtual != "privacidade" &&
+                            rotaAtual != "cadastro"
+                        ) {
+                            BarraNavegacao(navController)
+                        }
+                    }
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = "mural",
+                        startDestination = "abertura",
                         modifier = Modifier.padding(innerPadding)
                     ) {
+                        composable("abertura") { AberturaScreen(navController) }
+                        composable("privacidade") { PrivacidadeScreen() }
+                        composable("cadastro") { CadastroScreen() }
                         composable("mural") { MuralScreen(navController) }
                         composable("projetos") { ProjetosScreen() }
                         composable("perfil") { PerfilScreen() }
