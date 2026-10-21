@@ -26,7 +26,7 @@ import br.edu.ifal.agorahub.data.PerfilDados
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 
 @Composable
-fun PerfilScreen(modifier: Modifier = Modifier) {
+fun PerfilScreen(navController: NavController, modifier: Modifier = Modifier) {
     val perfil = PerfilDados().buscarPerfil()
 
     Column(
@@ -35,7 +35,7 @@ fun PerfilScreen(modifier: Modifier = Modifier) {
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
-    ){
+    ) {
         Text(
             text = "Perfil",
             style = MaterialTheme.typography.titleLarge
@@ -58,13 +58,22 @@ fun PerfilScreen(modifier: Modifier = Modifier) {
             Surface(
                 shape = RoundedCornerShape(8.dp),
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
-            ){
+            ) {
                 Text(
                     text = interesse,
                     style = MaterialTheme.typography.labelLarge,
                     modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
                 )
             }
+        }
+        Spacer(Modifier.height(8.dp))
+        OutlinedButton(
+            onClick = { navController.navigate("privacidade") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = 48.dp)
+        ) {
+            Text("Privacidade e dados")
         }
     }
 }
@@ -73,7 +82,7 @@ fun PerfilScreen(modifier: Modifier = Modifier) {
 @Composable
 fun PerfilScreenPreview() {
     AgoraHubTheme {
-        PerfilScreen()
+        PerfilScreen(rememberNavController())
     }
 }
 
