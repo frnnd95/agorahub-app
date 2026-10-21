@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="br.edu.ifal.agorahub" />
+                  <option name="mobileSdkAppId" value="1:663419625040:android:8f9ede20c228de5cb8bb55" />
+                  <option name="projectId" value="agorahub-2e87b" />
+                  <option name="projectNumber" value="663419625040" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
