@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
                         composable("cadastro") { CadastroScreen() }
                         composable("mural") { MuralScreen(navController) }
                         composable("projetos") { ProjetosScreen() }
-                        composable("perfil") { PerfilScreen() }
+                        composable("perfil") { PerfilScreen(navController) }
                         composable("detalhes/{id}") { backStackEntry ->
                             val id = backStackEntry.arguments?.getString("id")
                             val oportunidade = OportunidadeDados().buscarPorId(id)
