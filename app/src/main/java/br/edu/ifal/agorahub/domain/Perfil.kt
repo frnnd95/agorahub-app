@@ -1,7 +1,6 @@
 package br.edu.ifal.agorahub.domain
 
-class Perfil (
-
+class Perfil(
     val nome: String,
     val curso: String,
     val interesses: List<String>

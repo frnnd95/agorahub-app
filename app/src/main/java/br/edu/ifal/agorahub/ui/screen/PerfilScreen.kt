@@ -131,17 +131,15 @@ fun PerfilScreen(navController: NavController, modifier: Modifier = Modifier) {
                     texto = "Privacidade e dados",
                     onClick = { navController.navigate("privacidade") }
                 )
-                // Próximas opções entram aqui, uma ItemOpcao por linha.
-                // Ex.: Sair (RF05), com comSeta = false.
             }
         }
     }
 }
+
 @Composable
 private fun ItemOpcao(
     icone: ImageVector,
     texto: String,
-    comSeta: Boolean = true,
     onClick: () -> Unit
 ) {
     Row(
@@ -162,12 +160,10 @@ private fun ItemOpcao(
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.weight(1f)
         )
-        if (comSeta) {
-            Icon(
-                imageVector = Icons.Default.ChevronRight,
-                contentDescription = null
-            )
-        }
+        Icon(
+            imageVector = Icons.Default.ChevronRight,
+            contentDescription = null
+        )
     }
 }
 
@@ -178,3 +174,4 @@ fun PerfilScreenPreview() {
         PerfilScreen(rememberNavController())
     }
 }
+
