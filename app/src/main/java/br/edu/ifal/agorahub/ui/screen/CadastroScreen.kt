@@ -8,14 +8,67 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 
 @Composable
 fun CadastroScreen(modifier: Modifier = Modifier) {
-    Text(
-        text = "Criar conta",
-        style = MaterialTheme.typography.titleLarge,
-        modifier = modifier.padding(16.dp)
-    )
+    var email by remember {mutableStateOf("")}
+    var senha  by remember {mutableStateOf("")}
+    var confirmacaoSenha by remember {mutableStateOf("")}
+
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Text(
+            text = "Criar conta",
+            style = MaterialTheme.typography.titleLarge
+        )
+        OutlinedTextField(
+            value = email,
+            onValueChange = {email = it},
+            label = {Text("E-mail")},
+            modifier = Modifier.fillMaxWidth()
+        )
+        OutlinedTextField(
+            value = senha,
+            onValueChange = {senha = it},
+            label = {Text("Senha")},
+            modifier = Modifier.fillMaxWidth()
+        )
+        OutlinedTextField(
+            value = confirmacaoSenha,
+            onValueChange = {confirmacaoSenha = it},
+            label = {Text("Confirmar senha")},
+            modifier = Modifier.fillMaxWidth()
+        )
+        Button(
+            onClick = { },
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = 48.dp)
+        ) {
+            Text(
+                text = "Criar conta",
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
+    }
 }
 
 @Preview(showBackground = true)
