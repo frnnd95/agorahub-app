@@ -21,9 +21,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.material3.TextButton
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun CadastroScreen(modifier: Modifier = Modifier) {
+fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) {
     var email by remember {mutableStateOf("")}
     var senha  by remember {mutableStateOf("")}
     var confirmacaoSenha by remember {mutableStateOf("")}
@@ -68,6 +72,17 @@ fun CadastroScreen(modifier: Modifier = Modifier) {
                 style = MaterialTheme.typography.titleMedium
             )
         }
+        TextButton(
+            onClick = { navController.navigate("privacidade") },
+            modifier = Modifier.heightIn(min = 48.dp)
+        ) {
+            Text(
+                text = "Ver privacidade e dados",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.secondary,
+                textDecoration = TextDecoration.Underline
+            )
+        }
     }
 }
 
@@ -75,6 +90,6 @@ fun CadastroScreen(modifier: Modifier = Modifier) {
 @Composable
 fun CadastroScreenPreview() {
     AgoraHubTheme {
-        CadastroScreen()
+        CadastroScreen(rememberNavController())
     }
 }
