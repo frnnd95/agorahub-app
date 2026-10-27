@@ -67,6 +67,17 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
+        TextButton(
+            onClick = { navController.navigate("privacidade") },
+            modifier = Modifier.heightIn(min = 48.dp)
+        ) {
+            Text(
+                text = "Ver privacidade e dados",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.secondary,
+                textDecoration = TextDecoration.Underline
+            )
+        }
         Button(
             onClick = { },
             modifier = Modifier
@@ -79,14 +90,14 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
             )
         }
         TextButton(
-            onClick = { navController.navigate("privacidade") },
-            modifier = Modifier.heightIn(min = 48.dp)
+            onClick = { navController.navigate("entrar") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = 48.dp)
         ) {
             Text(
-                text = "Ver privacidade e dados",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.secondary,
-                textDecoration = TextDecoration.Underline
+                text = "Já tenho conta",
+                style = MaterialTheme.typography.titleMedium
             )
         }
     }
