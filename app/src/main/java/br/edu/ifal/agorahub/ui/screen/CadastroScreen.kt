@@ -17,6 +17,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,6 +40,8 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
     var email by remember {mutableStateOf("")}
     var senha  by remember {mutableStateOf("")}
     var confirmacaoSenha by remember {mutableStateOf("")}
+    var senhaVisivel by remember { mutableStateOf(false) }
+    var confirmacaoVisivel by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier
@@ -59,8 +67,16 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
             onValueChange = { senha = it },
             label = { Text("Senha") },
             singleLine = true,
-            visualTransformation = PasswordVisualTransformation(),
+            visualTransformation = if (senhaVisivel) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            trailingIcon = {
+                IconButton(onClick = { senhaVisivel = !senhaVisivel }) {
+                    Icon(
+                        imageVector = if (senhaVisivel) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                        contentDescription = if (senhaVisivel) "Ocultar senha" else "Mostrar senha"
+                    )
+                }
+            },
             modifier = Modifier.fillMaxWidth()
         )
         OutlinedTextField(
@@ -68,8 +84,16 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
             onValueChange = { confirmacaoSenha = it },
             label = { Text("Confirmar senha") },
             singleLine = true,
-            visualTransformation = PasswordVisualTransformation(),
+            visualTransformation = if (confirmacaoVisivel) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            trailingIcon = {
+                IconButton(onClick = { confirmacaoVisivel = !confirmacaoVisivel }) {
+                    Icon(
+                        imageVector = if (confirmacaoVisivel) Icons.Default.VisibilityOff else Icons.Default.Visibility,
+                        contentDescription = if (confirmacaoVisivel) "Ocultar confirmação da senha" else "Mostrar confirmação da senha"
+                    )
+                }
+            },
             modifier = Modifier.fillMaxWidth()
         )
         Text(
