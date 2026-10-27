@@ -34,6 +34,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.foundation.layout.imePadding
 
 @Composable
 fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) {
@@ -49,6 +50,7 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
     Column(
         modifier = modifier
             .fillMaxSize()
+            .imePadding()
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
