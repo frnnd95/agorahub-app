@@ -43,6 +43,8 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
     var senhaVisivel by remember { mutableStateOf(false) }
     var confirmacaoVisivel by remember { mutableStateOf(false) }
     var erroEmail by remember { mutableStateOf("") }
+    var erroSenha by remember { mutableStateOf("") }
+    var erroConfirmacao by remember { mutableStateOf("") }
 
     Column(
         modifier = modifier
@@ -72,6 +74,16 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
             singleLine = true,
             visualTransformation = if (senhaVisivel) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            isError = erroSenha != "",
+            supportingText = {
+                Column {
+                    if (erroSenha != "") Text(erroSenha)
+                    Text(
+                        text = "De 8 a 64 caracteres, com letras e números.",
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            },
             trailingIcon = {
                 IconButton(onClick = { senhaVisivel = !senhaVisivel }) {
                     Icon(
@@ -89,6 +101,8 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
             singleLine = true,
             visualTransformation = if (confirmacaoVisivel) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            isError = erroConfirmacao != "",
+            supportingText = { if (erroConfirmacao != "") Text(erroConfirmacao) },
             trailingIcon = {
                 IconButton(onClick = { confirmacaoVisivel = !confirmacaoVisivel }) {
                     Icon(
@@ -119,6 +133,8 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
             onClick = {
                 val emailLimpo = email.trim().lowercase()
                 erroEmail = mensagemErroEmail(emailLimpo)
+                erroSenha = mensagemErroSenha(senha, emailLimpo)
+                erroConfirmacao = mensagemErroConfirmacao(confirmacaoSenha, senha)
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -148,6 +164,26 @@ private fun mensagemErroEmail(email: String): String {
         email == "" -> "Preencha este campo."
         !email.endsWith("@aluno.ifal.edu.br") -> "Use seu e-mail institucional (@aluno.ifal.edu.br)."
         email.substringBefore("@") == "" -> "Use seu e-mail institucional (@aluno.ifal.edu.br)."
+        else -> ""
+    }
+}
+
+private fun mensagemErroSenha(senha: String, email: String): String {
+    val parteEmail = email.substringBefore("@")
+    return when {
+        senha == "" -> "Preencha este campo."
+        senha.length < 8 -> "A senha precisa ter pelo menos 8 caracteres."
+        senha.length > 64 -> "A senha pode ter no máximo 64 caracteres."
+        !senha.any { it.isLetter() } || !senha.any { it.isDigit() } -> "A senha precisa ter letras e números."
+        parteEmail != "" && senha.contains(parteEmail, ignoreCase = true) -> "A senha não pode conter a parte do seu e-mail antes do @."
+        else -> ""
+    }
+}
+
+private fun mensagemErroConfirmacao(confirmacao: String, senha: String): String {
+    return when {
+        confirmacao == "" -> "Preencha este campo."
+        confirmacao != senha -> "As senhas não são iguais."
         else -> ""
     }
 }
