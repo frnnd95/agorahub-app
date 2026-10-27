@@ -36,6 +36,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.foundation.layout.imePadding
 import br.edu.ifal.agorahub.data.ContaDados
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 
 @Composable
 fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) {
@@ -152,7 +154,16 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
                         email = emailLimpo,
                         senha = senha,
                         aoCriar = { navController.navigate("verificacao") },
-                        aoFalhar = { erroGeral = "Não foi possível criar a conta. Tente de novo." }
+                        aoFalhar = { erro ->
+                            when (erro) {
+                                is FirebaseAuthUserCollisionException ->
+                                    erroEmail = "Já existe uma conta com este e-mail. Entre ou recupere sua senha."
+                                is FirebaseNetworkException ->
+                                    erroGeral = "Sem conexão com a internet. Tente de novo."
+                                else ->
+                                    erroGeral = "Não foi possível criar a conta. Tente de novo."
+                            }
+                        }
                     )
                 }
             },
