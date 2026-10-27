@@ -25,6 +25,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 
 @Composable
 fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) {
@@ -46,20 +49,27 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
         OutlinedTextField(
             value = email,
             onValueChange = {email = it},
-            label = {Text("E-mail")},
+            label = { Text("E-mail institucional") },
+            singleLine = true,
             placeholder = { Text("nome@aluno.ifal.edu.br") },
             modifier = Modifier.fillMaxWidth()
         )
         OutlinedTextField(
             value = senha,
-            onValueChange = {senha = it},
-            label = {Text("Senha")},
+            onValueChange = { senha = it },
+            label = { Text("Senha") },
+            singleLine = true,
+            visualTransformation = PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             modifier = Modifier.fillMaxWidth()
         )
         OutlinedTextField(
             value = confirmacaoSenha,
-            onValueChange = {confirmacaoSenha = it},
-            label = {Text("Confirmar senha")},
+            onValueChange = { confirmacaoSenha = it },
+            label = { Text("Confirmar senha") },
+            singleLine = true,
+            visualTransformation = PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             modifier = Modifier.fillMaxWidth()
         )
         Text(
