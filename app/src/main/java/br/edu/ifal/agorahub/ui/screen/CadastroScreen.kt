@@ -42,6 +42,7 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
     var confirmacaoSenha by remember {mutableStateOf("")}
     var senhaVisivel by remember { mutableStateOf(false) }
     var confirmacaoVisivel by remember { mutableStateOf(false) }
+    var erroEmail by remember { mutableStateOf("") }
 
     Column(
         modifier = modifier
@@ -56,10 +57,12 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
         )
         OutlinedTextField(
             value = email,
-            onValueChange = {email = it},
+            onValueChange = { email = it },
             label = { Text("E-mail institucional") },
             singleLine = true,
             placeholder = { Text("nome@aluno.ifal.edu.br") },
+            isError = erroEmail != "",
+            supportingText = { if (erroEmail != "") Text(erroEmail) },
             modifier = Modifier.fillMaxWidth()
         )
         OutlinedTextField(
@@ -113,7 +116,9 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
             )
         }
         Button(
-            onClick = { },
+            onClick = {
+                erroEmail = if (email == "") "Preencha este campo." else ""
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(min = 48.dp)
