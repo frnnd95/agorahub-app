@@ -41,9 +41,9 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 
 @Composable
 fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) {
-    var email by remember {mutableStateOf("")}
-    var senha  by remember {mutableStateOf("")}
-    var confirmacaoSenha by remember {mutableStateOf("")}
+    var email by remember { mutableStateOf("") }
+    var senha by remember { mutableStateOf("") }
+    var confirmacaoSenha by remember { mutableStateOf("") }
     var senhaVisivel by remember { mutableStateOf(false) }
     var confirmacaoVisivel by remember { mutableStateOf(false) }
     var erroEmail by remember { mutableStateOf("") }
@@ -164,9 +164,12 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
                             criandoConta = false
                             when (erro) {
                                 is FirebaseAuthUserCollisionException ->
-                                    erroEmail = "Já existe uma conta com este e-mail. Entre ou recupere sua senha."
+                                    erroEmail =
+                                        "Já existe uma conta com este e-mail. Entre ou recupere sua senha."
+
                                 is FirebaseNetworkException ->
                                     erroGeral = "Sem conexão com a internet. Tente de novo."
+
                                 else ->
                                     erroGeral = "Não foi possível criar a conta. Tente de novo."
                             }
@@ -214,7 +217,11 @@ private fun mensagemErroSenha(senha: String, email: String): String {
         senha.length < 8 -> "A senha precisa ter pelo menos 8 caracteres."
         senha.length > 64 -> "A senha pode ter no máximo 64 caracteres."
         !senha.any { it.isLetter() } || !senha.any { it.isDigit() } -> "A senha precisa ter letras e números."
-        parteEmail != "" && senha.contains(parteEmail, ignoreCase = true) -> "A senha não pode conter a parte do seu e-mail antes do @."
+        parteEmail != "" && senha.contains(
+            parteEmail,
+            ignoreCase = true
+        ) -> "A senha não pode conter a parte do seu e-mail antes do @."
+
         else -> ""
     }
 }
