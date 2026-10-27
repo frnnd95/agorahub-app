@@ -47,6 +47,7 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
             value = email,
             onValueChange = {email = it},
             label = {Text("E-mail")},
+            placeholder = { Text("nome@aluno.ifal.edu.br") },
             modifier = Modifier.fillMaxWidth()
         )
         OutlinedTextField(
@@ -60,6 +61,11 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
             onValueChange = {confirmacaoSenha = it},
             label = {Text("Confirmar senha")},
             modifier = Modifier.fillMaxWidth()
+        )
+        Text(
+            text = "Usamos seu e-mail apenas para login e, se você autorizar, para contato em projetos.",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Button(
             onClick = { },
