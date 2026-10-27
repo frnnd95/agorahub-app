@@ -117,7 +117,8 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
         }
         Button(
             onClick = {
-                erroEmail = if (email == "") "Preencha este campo." else ""
+                val emailLimpo = email.trim().lowercase()
+                erroEmail = mensagemErroEmail(emailLimpo)
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -139,6 +140,15 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
                 style = MaterialTheme.typography.titleMedium
             )
         }
+    }
+}
+
+private fun mensagemErroEmail(email: String): String {
+    return when {
+        email == "" -> "Preencha este campo."
+        !email.endsWith("@aluno.ifal.edu.br") -> "Use seu e-mail institucional (@aluno.ifal.edu.br)."
+        email.substringBefore("@") == "" -> "Use seu e-mail institucional (@aluno.ifal.edu.br)."
+        else -> ""
     }
 }
 
