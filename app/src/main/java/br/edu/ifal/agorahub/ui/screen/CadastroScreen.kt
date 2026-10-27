@@ -50,6 +50,7 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
     var erroSenha by remember { mutableStateOf("") }
     var erroConfirmacao by remember { mutableStateOf("") }
     var erroGeral by remember { mutableStateOf("") }
+    var criandoConta by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier
@@ -150,11 +151,17 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
                 erroConfirmacao = mensagemErroConfirmacao(confirmacaoSenha, senha)
                 erroGeral = ""
                 if (erroEmail == "" && erroSenha == "" && erroConfirmacao == "") {
+                    criandoConta = true
                     ContaDados().criarConta(
                         email = emailLimpo,
                         senha = senha,
-                        aoCriar = { navController.navigate("verificacao") },
+                        aoCriar = {
+                            navController.navigate("verificacao") {
+                                popUpTo("abertura")
+                            }
+                        },
                         aoFalhar = { erro ->
+                            criandoConta = false
                             when (erro) {
                                 is FirebaseAuthUserCollisionException ->
                                     erroEmail = "Já existe uma conta com este e-mail. Entre ou recupere sua senha."
@@ -167,12 +174,13 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
                     )
                 }
             },
+            enabled = !criandoConta,
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(min = 48.dp)
         ) {
             Text(
-                text = "Criar conta",
+                text = if (criandoConta) "Criando conta…" else "Criar conta",
                 style = MaterialTheme.typography.titleMedium
             )
         }
