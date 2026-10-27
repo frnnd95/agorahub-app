@@ -35,6 +35,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.foundation.layout.imePadding
+import br.edu.ifal.agorahub.data.ContaDados
 
 @Composable
 fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) {
@@ -46,6 +47,7 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
     var erroEmail by remember { mutableStateOf("") }
     var erroSenha by remember { mutableStateOf("") }
     var erroConfirmacao by remember { mutableStateOf("") }
+    var erroGeral by remember { mutableStateOf("") }
 
     Column(
         modifier = modifier
@@ -131,12 +133,28 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
                 textDecoration = TextDecoration.Underline
             )
         }
+        if (erroGeral != "") {
+            Text(
+                text = erroGeral,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.error
+            )
+        }
         Button(
             onClick = {
                 val emailLimpo = email.trim().lowercase()
                 erroEmail = mensagemErroEmail(emailLimpo)
                 erroSenha = mensagemErroSenha(senha, emailLimpo)
                 erroConfirmacao = mensagemErroConfirmacao(confirmacaoSenha, senha)
+                erroGeral = ""
+                if (erroEmail == "" && erroSenha == "" && erroConfirmacao == "") {
+                    ContaDados().criarConta(
+                        email = emailLimpo,
+                        senha = senha,
+                        aoCriar = { navController.navigate("verificacao") },
+                        aoFalhar = { erroGeral = "Não foi possível criar a conta. Tente de novo." }
+                    )
+                }
             },
             modifier = Modifier
                 .fillMaxWidth()

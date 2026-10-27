@@ -24,6 +24,7 @@ import br.edu.ifal.agorahub.ui.screen.AberturaScreen
 import br.edu.ifal.agorahub.ui.screen.PrivacidadeScreen
 import br.edu.ifal.agorahub.ui.screen.CadastroScreen
 import br.edu.ifal.agorahub.ui.screen.EntrarScreen
+import br.edu.ifal.agorahub.ui.screen.VerificacaoScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +41,8 @@ class MainActivity : ComponentActivity() {
                         if (rotaAtual != "abertura" &&
                             rotaAtual != "privacidade" &&
                             rotaAtual != "cadastro" &&
-                            rotaAtual != "entrar"
+                            rotaAtual != "entrar" &&
+                            rotaAtual != "verificacao"
                         ) {
                             BarraNavegacao(navController)
                         }
@@ -55,6 +57,7 @@ class MainActivity : ComponentActivity() {
                         composable("privacidade") { PrivacidadeScreen() }
                         composable("cadastro") { CadastroScreen(navController) }
                         composable("entrar") { EntrarScreen() }
+                        composable("verificacao") { VerificacaoScreen() }
                         composable("mural") { MuralScreen(navController) }
                         composable("projetos") { ProjetosScreen() }
                         composable("perfil") { PerfilScreen(navController) }
