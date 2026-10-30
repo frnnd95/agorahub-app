@@ -4,15 +4,17 @@ import br.edu.ifal.agorahub.domain.Oportunidade
 import java.time.LocalDate
 
 class OportunidadeDados {
-    fun listarMural(): List<Oportunidade> {
+    fun listarMural(aoCarregar: (List<Oportunidade>) -> Unit) {
         val hoje = LocalDate.now()
 
         val dentroDoPrazo = oportunidadesExemplo.filter { it.prazo >= hoje }
 
-        return dentroDoPrazo.sortedWith(
+        val ordenadas = dentroDoPrazo.sortedWith(
             compareBy<Oportunidade> { it.prazo }
                 .thenByDescending { it.dataPublicacao }
         )
+        // Entrega a lista para quem pediu (por enquanto, na hora)
+        aoCarregar(ordenadas)
     }
 
     fun buscarPorId(id: String?): Oportunidade? {
