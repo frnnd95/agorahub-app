@@ -8,7 +8,7 @@
 | 2.2    | Equipe ÁgoraHub | 11/10/2026 | Decisão D14: datas com `LocalDate` e desugaring                                                                                                                   |
 | 2.3    | Jhully          | 20/10/2026 | Decisão D17: regra provisória do Firestore                                                                                                                        |
 | 2.4    | Fernanda        | 27/10/2026 | RN01 e RN02 completadas: espaços, letras maiúsculas e e-mail sem nada antes do @; decisão D18 (recursos do cadastro)                                              |
-| 2.6    | Fernanda        | 30/10/2026 | Decisões D19 (Retrofit e coroutines), D20 (API fake) e D21 (coleção `projetos`); RNF12 complementada                                                              |
+| 2.6    | Fernanda        | 30/10/2026 | Decisões D19 (Retrofit e coroutines), D20 (API fake) e D21 (coleção `projetos`); RNF12 complementada; seção 5.3 com as telas da D20                               |
 
 ## Sumário
 
@@ -168,11 +168,11 @@ Quando o responsável pelo projeto aceita uma solicitação, passa a ver o e-mai
 
 Antes de entrar, o app mostra a tela de abertura, com as opções Entrar, Criar conta e Ver privacidade e dados. A partir dela, o estudante chega ao cadastro, à confirmação do e-mail, à entrada e à recuperação de senha. Depois do primeiro acesso, o app abre no Mural e passa a ter uma barra inferior com três abas:
 
-| Aba      | O que reúne                                                                                                                         |
-|----------|-------------------------------------------------------------------------------------------------------------------------------------|
-| Mural    | Mural de Oportunidades e os detalhes de cada oportunidade.                                                                          |
-| Projetos | Hub de Projetos, com o botão Novo projeto, e os detalhes de cada projeto.                                                           |
-| Perfil   | Perfil do estudante, Editar perfil, Solicitações recebidas, Minhas solicitações, Meus projetos, Privacidade e dados e Sair.         |
+| Aba      | O que reúne                                                                                                                                                                                     |
+|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Mural    | Mural de Oportunidades e os detalhes de cada oportunidade.                                                                                                                                      |
+| Projetos | Hub de Projetos, com o botão Novo projeto, e os detalhes de cada projeto.                                                                                                                       |
+| Perfil   | Perfil do estudante, Editar perfil, Solicitações recebidas, Minhas solicitações, Meus projetos, Perguntas frequentes, Calendário acadêmico e Equipe ÁgoraHub (D20), Privacidade e dados e Sair. |
 
 ### 5.4 O que fica para a versão completa
 
