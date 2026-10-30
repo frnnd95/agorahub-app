@@ -25,6 +25,14 @@ import br.edu.ifal.agorahub.ui.screen.PrivacidadeScreen
 import br.edu.ifal.agorahub.ui.screen.CadastroScreen
 import br.edu.ifal.agorahub.ui.screen.EntrarScreen
 import br.edu.ifal.agorahub.ui.screen.VerificacaoScreen
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.unit.dp
+import br.edu.ifal.agorahub.domain.Oportunidade
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,9 +71,31 @@ class MainActivity : ComponentActivity() {
                         composable("perfil") { PerfilScreen(navController) }
                         composable("detalhes/{id}") { backStackEntry ->
                             val id = backStackEntry.arguments?.getString("id")
-                            val oportunidade = OportunidadeDados().buscarPorId(id)
-                            if (oportunidade != null) {
-                                DetalhesOportunidadeScreen(oportunidade = oportunidade)
+                            var carregando by remember { mutableStateOf(true) }
+                            var oportunidade by remember { mutableStateOf<Oportunidade?>(null) }
+
+                            LaunchedEffect(Unit) {
+                                OportunidadeDados().buscarPorId(id) { encontrada ->
+                                    oportunidade = encontrada
+                                    carregando = false
+                                }
+                            }
+
+                            val atual = oportunidade
+                            if (carregando) {
+                                Text(
+                                    text = "Carregando oportunidade...",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    modifier = Modifier.padding(16.dp)
+                                )
+                            } else if (atual != null) {
+                                DetalhesOportunidadeScreen(oportunidade = atual)
+                            } else {
+                                Text(
+                                    text = "Oportunidade não encontrada.",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    modifier = Modifier.padding(16.dp)
+                                )
                             }
                         }
                     }
