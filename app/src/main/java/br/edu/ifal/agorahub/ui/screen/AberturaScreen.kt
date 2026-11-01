@@ -66,7 +66,7 @@ fun AberturaScreen(navController: NavController, modifier: Modifier = Modifier) 
             textAlign = TextAlign.Center
         )
         Button(
-            onClick = { navController.navigate("mural") },
+            onClick = { navController.navigate("entrar") },
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(min = 48.dp)
