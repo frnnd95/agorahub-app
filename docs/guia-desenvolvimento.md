@@ -206,6 +206,43 @@ Ao instalar, o Play Protect avisa que o app é desconhecido. É esperado, porque
 2. A Jousiclécia testa e relata ao Lucas o que testou e os problemas que encontrou.
 3. O Lucas registra o relato como comentário no pull request.
 
-## 11. Se travar
+## 11. Como cadastrar uma oportunidade no Firestore
+
+As oportunidades do Mural são cadastradas pela Equipe ÁgoraHub direto no console do Firebase (RN10). Não precisa mexer no código.
+
+**Passo a passo:**
+
+1. Abra o [console do Firebase](https://console.firebase.google.com) e entre no projeto do ÁgoraHub.
+2. No menu da esquerda, clique em **Firestore Database**.
+3. Clique na coleção **oportunidades**.
+4. Clique em **+ Adicionar documento**.
+5. Em **ID do documento**, clique em **ID automático**. Não digite nada.
+6. Adicione os campos abaixo, um de cada vez, clicando em **+ Adicionar campo**. Escreva o nome **exatamente** como está na tabela: sem acento e com a mesma letra maiúscula.
+7. Clique em **Salvar**.
+8. Abra o app e confira se a oportunidade apareceu no Mural com os dados certos.
+
+| Campo | Tipo no console | O que escrever |
+|---|---|---|
+| `titulo` | string | Nome da oportunidade. |
+| `tipo` | string | Só um destes: `Edital`, `Estágio`, `Competição`, `Evento` ou `Outro` (RN11). |
+| `descricao` | string | Explicação curta: o que é, quem pode participar e, se houver, o valor da bolsa. |
+| `prazo` | timestamp | Último dia para se inscrever. Em evento sem inscrição, a data do evento. Se o edital não disser a hora, use 23:59. |
+| `dataPublicacao` | timestamp | A data de hoje, ou seja, a data do cadastro (RN10). |
+| `link` | string | Endereço completo da página oficial, começando com `https://`. |
+| `imagemUrl` | string | **Só se houver imagem.** Endereço da imagem na internet. |
+| `descricaoImagem` | string | **Obrigatório se houver imagem.** Frase de até 200 caracteres dizendo o que a imagem mostra. É o que o leitor de tela lê nos detalhes (RN15). |
+
+**Cuidados:**
+
+- Não crie um campo `id`. O identificador do documento já é o `id` da oportunidade (D15).
+- `prazo` e `dataPublicacao` precisam ser do tipo **timestamp**. Salvos como string, o app não consegue ler a data.
+- Se faltar um campo obrigatório ou o nome estiver errado (por exemplo, `dataPublicação`), a oportunidade **não aparece** no app (D15). Compare o documento com a tabela.
+- Sem imagem, não crie `imagemUrl` nem `descricaoImagem`. Não deixe esses campos vazios.
+- Antes de salvar uma imagem, abra o endereço no navegador para conferir se ela carrega.
+- O Mural só mostra as oportunidades dentro do prazo (RN12). Uma oportunidade vencida fica no Firestore, mas não aparece no app. Isso não é erro.
+- O console mostra as datas no fuso do seu computador (UTC-3). Se testar num emulador, ajuste o fuso dele para Brasília (**Configurações › Sistema › Data e hora**). Em UTC, os prazos aparecem um dia depois.
+- Errou alguma coisa? Clique no campo, edite e salve. Não precisa apagar o documento.
+
+## 12. Se travar
 
 Escreva um comentário na issue explicando onde travou e avise no grupo. Travar faz parte; ficar parado sem avisar atrasa a equipe.
