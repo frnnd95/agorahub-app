@@ -6,7 +6,7 @@ Projeto acadêmico das disciplinas de Projeto Integrador e Programação para Di
 
 ## Situação atual
 
-O app abre no Mural de Oportunidades, que mostra uma lista de oportunidades de exemplo (os dados ainda não vêm do Firestore). As vencidas não aparecem, a lista é ordenada pelo prazo mais próximo e o prazo fica em vermelho quando faltam 3 dias ou menos. Tocar numa oportunidade abre os detalhes dela.
+O app abre no Mural de Oportunidades, que mostra as oportunidades cadastradas pela equipe no Firestore (veja a seção 11 do guia de desenvolvimento). As vencidas não aparecem, a lista é ordenada pelo prazo mais próximo e o prazo fica em vermelho quando faltam 3 dias ou menos. Tocar numa oportunidade abre os detalhes dela.
 
 A barra de navegação tem as abas Mural, Projetos e Perfil. Projetos e Perfil mostram, por enquanto, só o título.
 ## Tecnologias
