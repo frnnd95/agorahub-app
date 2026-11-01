@@ -14,4 +14,15 @@ class ContaDados {
             .addOnSuccessListener { aoCriar() }
             .addOnFailureListener { erro -> aoFalhar(erro) }
     }
+    fun entrar(
+        email: String,
+        senha: String,
+        aoEntrar: () -> Unit,
+        aoFalhar: (Exception) -> Unit
+    ) {
+        FirebaseAuth.getInstance()
+            .signInWithEmailAndPassword(email, senha)
+            .addOnSuccessListener { aoEntrar() }
+            .addOnFailureListener { erro -> aoFalhar(erro) }
+    }
 }

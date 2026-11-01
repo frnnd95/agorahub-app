@@ -31,9 +31,12 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import br.edu.ifal.agorahub.data.ContaDados
 
 @Composable
-fun EntrarScreen(modifier: Modifier = Modifier) {
+fun EntrarScreen(navController: NavController, modifier: Modifier = Modifier) {
     var email by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
     var senhaVisivel by remember { mutableStateOf(false) }
@@ -81,7 +84,21 @@ fun EntrarScreen(modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxWidth()
         )
         Button(
-            onClick = { },
+            onClick = {
+                val emailLimpo = email.trim().lowercase()
+                if (emailLimpo != "" && senha != "") {
+                    ContaDados().entrar(
+                        email = emailLimpo,
+                        senha = senha,
+                        aoEntrar = {
+                            navController.navigate("mural") {
+                                popUpTo("abertura") { inclusive = true }
+                            }
+                        },
+                        aoFalhar = { }
+                    )
+                }
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(min = 48.dp)
@@ -98,6 +115,6 @@ fun EntrarScreen(modifier: Modifier = Modifier) {
 @Composable
 fun EntrarScreenPreview() {
     AgoraHubTheme {
-        EntrarScreen()
+        EntrarScreen(rememberNavController())
     }
 }
