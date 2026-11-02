@@ -25,4 +25,7 @@ class ContaDados {
             .addOnSuccessListener { aoEntrar() }
             .addOnFailureListener { erro -> aoFalhar(erro) }
     }
+    fun estaLogado(): Boolean {
+        return FirebaseAuth.getInstance().currentUser != null
+    }
 }

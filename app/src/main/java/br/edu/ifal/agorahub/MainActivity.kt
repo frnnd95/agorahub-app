@@ -33,6 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import br.edu.ifal.agorahub.domain.Oportunidade
+import br.edu.ifal.agorahub.data.ContaDados
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +42,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             AgoraHubTheme {
                 val navController = rememberNavController()
+                val telaInicial = remember {
+                    if (ContaDados().estaLogado()) "mural" else "abertura"
+                }
                 val entradaAtual by navController.currentBackStackEntryAsState()
                 val rotaAtual = entradaAtual?.destination?.route
                 Scaffold(
@@ -58,7 +62,7 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     NavHost(
                         navController = navController,
-                        startDestination = "abertura",
+                        startDestination = telaInicial,
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         composable("abertura") { AberturaScreen(navController) }
