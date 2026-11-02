@@ -34,12 +34,19 @@ import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import br.edu.ifal.agorahub.data.ContaDados
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 
 @Composable
 fun EntrarScreen(navController: NavController, modifier: Modifier = Modifier) {
     var email by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
     var senhaVisivel by remember { mutableStateOf(false) }
+    var erroEmail by remember { mutableStateOf("") }
+    var erroSenha by remember { mutableStateOf("") }
+    var erroGeral by remember { mutableStateOf("") }
+    var entrando by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier
@@ -58,12 +65,21 @@ fun EntrarScreen(navController: NavController, modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
+        if (erroGeral != "") {
+            Text(
+                text = erroGeral,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.error
+            )
+        }
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
             label = { Text("E-mail institucional") },
             singleLine = true,
             placeholder = { Text("nome@aluno.ifal.edu.br") },
+            isError = erroEmail != "",
+            supportingText = { if (erroEmail != "") Text(erroEmail) },
             modifier = Modifier.fillMaxWidth()
         )
         OutlinedTextField(
@@ -73,6 +89,8 @@ fun EntrarScreen(navController: NavController, modifier: Modifier = Modifier) {
             singleLine = true,
             visualTransformation = if (senhaVisivel) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            isError = erroSenha != "",
+            supportingText = { if (erroSenha != "") Text(erroSenha) },
             trailingIcon = {
                 IconButton(onClick = { senhaVisivel = !senhaVisivel }) {
                     Icon(
@@ -86,7 +104,11 @@ fun EntrarScreen(navController: NavController, modifier: Modifier = Modifier) {
         Button(
             onClick = {
                 val emailLimpo = email.trim().lowercase()
-                if (emailLimpo != "" && senha != "") {
+                erroEmail = if (emailLimpo == "") "Preencha este campo." else ""
+                erroSenha = if (senha == "") "Preencha este campo." else ""
+                erroGeral = ""
+                if (erroEmail == "" && erroSenha == "") {
+                    entrando = true
                     ContaDados().entrar(
                         email = emailLimpo,
                         senha = senha,
@@ -95,16 +117,30 @@ fun EntrarScreen(navController: NavController, modifier: Modifier = Modifier) {
                                 popUpTo("abertura") { inclusive = true }
                             }
                         },
-                        aoFalhar = { }
+                        aoFalhar = { erro ->
+                            entrando = false
+                            erroGeral = when (erro) {
+                                is FirebaseAuthInvalidCredentialsException,
+                                is FirebaseAuthInvalidUserException ->
+                                    "E-mail ou senha incorretos. Confira e tente de novo."
+
+                                is FirebaseNetworkException ->
+                                    "Sem conexão com a internet. Tente de novo."
+
+                                else ->
+                                    "Não foi possível entrar. Tente de novo."
+                            }
+                        }
                     )
                 }
             },
+            enabled = !entrando,
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(min = 48.dp)
         ) {
             Text(
-                text = "Entrar",
+                text = if (entrando) "Entrando…" else "Entrar",
                 style = MaterialTheme.typography.titleMedium
             )
         }
