@@ -33,6 +33,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import br.edu.ifal.agorahub.data.PerfilDados
 import br.edu.ifal.agorahub.domain.Perfil
+import br.edu.ifal.agorahub.ui.components.CartaoPerfil
 import br.edu.ifal.agorahub.ui.components.SeletorInteresses
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 import kotlinx.coroutines.launch
@@ -61,7 +62,7 @@ fun CompletarPerfilScreen(navController: NavController, modifier: Modifier = Mod
         Text(text = "Complete seu perfil", style = MaterialTheme.typography.titleLarge)
         Text(
             text = "Seu nome, seu curso e seus interesses aparecem para os outros estudantes no app.",
-                    style = MaterialTheme.typography.bodyMedium,
+            style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         OutlinedTextField(
@@ -73,7 +74,7 @@ fun CompletarPerfilScreen(navController: NavController, modifier: Modifier = Mod
             supportingText = { if (erroNome != "") Text(erroNome) },
             modifier = Modifier.fillMaxWidth()
         )
-        Text(text = "Curso", style = MaterialTheme.typography.titleMedium)
+        Text(text = "Curso", style = MaterialTheme.typography.titleSmall)
         Column(modifier = Modifier.selectableGroup()) {
             OpcaoCurso(
                 texto = "Sistemas de Informação",
@@ -97,7 +98,6 @@ fun CompletarPerfilScreen(navController: NavController, modifier: Modifier = Mod
                 modifier = Modifier.fillMaxWidth()
             )
         }
-        Text(text = "Interesses", style = MaterialTheme.typography.titleMedium)
         SeletorInteresses(
             escolhidos = escolhidos,
             aoMudar = { nova ->
@@ -112,6 +112,24 @@ fun CompletarPerfilScreen(navController: NavController, modifier: Modifier = Mod
                 color = MaterialTheme.colorScheme.error
             )
         }
+        // Prévia do perfil, como os colegas vão ver (RN05)
+        Text(
+            text = "COMO OS OUTROS VEEM",
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Text(
+            text = "É isso que o responsável por um projeto vê quando você pede para participar. Seu e-mail não aparece.",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        CartaoPerfil(
+            nome = if (nome.trim() == "") "Seu nome" else nome.trim(),
+            curso = if (!outroCurso) "Sistemas de Informação"
+            else if (nomeCurso.trim() == "") "Seu curso"
+            else nomeCurso.trim(),
+            interesses = escolhidos
+        )
         if (erroGeral != "") {
             Text(
                 text = erroGeral,
@@ -125,8 +143,7 @@ fun CompletarPerfilScreen(navController: NavController, modifier: Modifier = Mod
                 val curso = if (outroCurso) nomeCurso.trim() else "Sistemas de Informação"
                 erroNome = if (nomeLimpo == "") "Preencha este campo." else ""
                 erroCurso = if (curso == "") "Informe o nome do curso." else ""
-                erroInteresses = if (escolhidos.size < 3) "Escolha pelo menos 3 interesses." else
-                    ""
+                erroInteresses = if (escolhidos.size < 3) "Escolha pelo menos 3 interesses." else ""
                 erroGeral = if (erroNome != "" || erroCurso != "") "Confira os campos no início da tela." else ""
                 if (erroNome == "" && erroCurso == "" && erroInteresses == "") {
                     salvando = true
@@ -165,7 +182,8 @@ private fun OpcaoCurso(texto: String, selecionada: Boolean, aoEscolher: () -> Un
             .fillMaxWidth()
             .heightIn(min = 48.dp)
             .selectable(selected = selecionada, role = Role.RadioButton, onClick = aoEscolher),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         RadioButton(selected = selecionada, onClick = null)
         Text(text = texto, style = MaterialTheme.typography.bodyLarge)
