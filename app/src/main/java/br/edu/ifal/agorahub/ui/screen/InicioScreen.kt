@@ -1,5 +1,6 @@
 package br.edu.ifal.agorahub.ui.screen
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,6 +33,7 @@ fun InicioScreen(navController: NavController, modifier: Modifier = Modifier) {
             }
         } catch (e: Exception) {
             erro = true
+            Log.e("CarregamentoPerfil", "Erro ao carregar perfil", e)
         }
     }
 
