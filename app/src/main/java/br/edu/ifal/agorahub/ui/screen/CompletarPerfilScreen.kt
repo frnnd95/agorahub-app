@@ -141,7 +141,7 @@ fun CompletarPerfilScreen(navController: NavController, modifier: Modifier = Mod
                         } catch (e: Exception) {
                             salvando = false
                             erroGeral = "Não foi possível salvar o perfil. Confira a internet e tente de novo."
-                            Log.e("SeletorInteresses", "Erro ao salvar perfil", e)
+                            Log.e("CompletarPerfil", "Erro ao salvar perfil", e)
                         }
                     }
                 }

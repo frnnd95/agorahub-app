@@ -24,91 +24,91 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import br.edu.ifal.agorahub.data.InteresseDados
 
-    @Composable
-    fun SeletorInteresses(
-        escolhidos: List<String>,
-        aoMudar: (List<String>) -> Unit,
-        modifier: Modifier = Modifier
-    ) {
-        val categorias = remember {
-            InteresseDados().listarCategorias()
-        }
+@Composable
+fun SeletorInteresses(
+    escolhidos: List<String>,
+    aoMudar: (List<String>) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val categorias = remember {
+        InteresseDados().listarCategorias()
+    }
 
-        var avisoEm by remember { mutableStateOf("") }
+    var avisoEm by remember { mutableStateOf("") }
 
-        Column(modifier = modifier) {
+    Column(modifier = modifier) {
+
+        Text(
+            text = "Escolha de 3 a 5. Escolhidos: ${escolhidos.size}.",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+
+        categorias.forEach { categoria ->
 
             Text(
-                text = "Escolha de 3 a 5. Escolhidos: ${escolhidos.size}.",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                text = categoria.nome,
+                style = MaterialTheme.typography.titleSmall,
+                modifier = Modifier
+                    .padding(top = 16.dp, bottom = 4.dp)
+                    .semantics { heading() }
             )
 
-            categorias.forEach { categoria ->
+            categoria.interesses.forEach { interesse ->
 
-                Text(
-                    text = categoria.nome,
-                    style = MaterialTheme.typography.titleSmall,
+                val marcado = interesse in escolhidos
+
+                Row(
                     modifier = Modifier
-                        .padding(top = 16.dp, bottom = 4.dp)
-                        .semantics { heading() }
-                )
+                        .fillMaxWidth()
+                        .heightIn(min = 48.dp)
+                        .toggleable(
+                            value = marcado,
+                            role = Role.Checkbox,
+                            onValueChange = { marcar ->
 
-                categoria.interesses.forEach { interesse ->
+                                if (!marcar) {
+                                    avisoEm = ""
+                                    aoMudar(escolhidos - interesse)
 
-                    val marcado = interesse in escolhidos
+                                } else if (escolhidos.size < 5) {
+                                    avisoEm = ""
+                                    aoMudar(
+                                        (escolhidos + interesse).distinct()
+                                    )
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .heightIn(min = 48.dp)
-                            .toggleable(
-                                value = marcado,
-                                role = Role.Checkbox,
-                                onValueChange = { marcar ->
-
-                                    if (!marcar) {
-                                        avisoEm = ""
-                                        aoMudar(escolhidos - interesse)
-
-                                    } else if (escolhidos.size < 5) {
-                                        avisoEm = ""
-                                        aoMudar(
-                                            (escolhidos + interesse).distinct()
-                                        )
-
-                                    } else {
-                                        avisoEm = interesse
-                                    }
+                                } else {
+                                    avisoEm = interesse
                                 }
-                            ),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-
-                        Checkbox(
-                            checked = marcado,
-                            onCheckedChange = null
-                        )
-
-                        Text(
-                            text = interesse,
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                    }
-
-                    if (avisoEm == interesse) {
-                        Text(
-                            text = "Você já escolheu 5 interesses, o máximo. Desmarque um para escolher outro.",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.error,
-                            modifier = Modifier.semantics {
-                                liveRegion = LiveRegionMode.Polite
                             }
-                        )
-                    }
+                        ),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    Checkbox(
+                        checked = marcado,
+                        onCheckedChange = null
+                    )
+
+                    Text(
+                        text = interesse,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+
+                if (avisoEm == interesse) {
+                    Text(
+                        text = "Você já escolheu 5 interesses, o máximo. Desmarque um para escolher outro.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.semantics {
+                            liveRegion = LiveRegionMode.Polite
+                        }
+                    )
                 }
             }
         }
     }
+}
 
 
