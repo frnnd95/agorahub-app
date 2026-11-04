@@ -113,7 +113,7 @@ fun EntrarScreen(navController: NavController, modifier: Modifier = Modifier) {
                         email = emailLimpo,
                         senha = senha,
                         aoEntrar = {
-                            navController.navigate("mural") {
+                            navController.navigate("inicio") {
                                 popUpTo("abertura") { inclusive = true }
                             }
                         },

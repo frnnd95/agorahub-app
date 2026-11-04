@@ -25,6 +25,8 @@ import br.edu.ifal.agorahub.ui.screen.PrivacidadeScreen
 import br.edu.ifal.agorahub.ui.screen.CadastroScreen
 import br.edu.ifal.agorahub.ui.screen.EntrarScreen
 import br.edu.ifal.agorahub.ui.screen.VerificacaoScreen
+import br.edu.ifal.agorahub.ui.screen.InicioScreen
+import br.edu.ifal.agorahub.ui.screen.CompletarPerfilScreen
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
@@ -43,19 +45,22 @@ class MainActivity : ComponentActivity() {
             AgoraHubTheme {
                 val navController = rememberNavController()
                 val telaInicial = remember {
-                    if (ContaDados().estaLogado()) "mural" else "abertura"
+                    if (ContaDados().estaLogado()) "inicio" else "abertura"
                 }
                 val entradaAtual by navController.currentBackStackEntryAsState()
                 val rotaAtual = entradaAtual?.destination?.route
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = {
-                        if (rotaAtual != "abertura" &&
+                        if (
+                            rotaAtual != "abertura" &&
                             rotaAtual != "privacidade" &&
                             rotaAtual != "cadastro" &&
                             rotaAtual != "entrar" &&
-                            rotaAtual != "verificacao"
-                        ) {
+                            rotaAtual != "verificacao" &&
+                            rotaAtual != "inicio" &&
+                            rotaAtual != "completar-perfil"
+                        ){
                             BarraNavegacao(navController)
                         }
                     }
@@ -70,6 +75,8 @@ class MainActivity : ComponentActivity() {
                         composable("cadastro") { CadastroScreen(navController) }
                         composable("entrar") { EntrarScreen(navController) }
                         composable("verificacao") { VerificacaoScreen() }
+                        composable("inicio") { InicioScreen(navController) }
+                        composable("completar-perfil") { CompletarPerfilScreen(navController) }
                         composable("mural") { MuralScreen(navController) }
                         composable("projetos") { ProjetosScreen() }
                         composable("perfil") { PerfilScreen(navController) }
