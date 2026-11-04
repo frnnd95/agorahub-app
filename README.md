@@ -18,6 +18,8 @@ A barra de navegação tem as abas Mural, Projetos e Perfil. Projetos e Perfil m
 - Coil: imagens das oportunidades carregadas da internet (Aula 01)
 - Material Icons: ícones das telas (Aula 05, D13)
 - Desugaring de bibliotecas do Java: datas com `LocalDate` no Android 7 (D14)
+- Retrofit com Moshi: configurado para ler a API fake do repositório `agorahub-api` (Aula 09, D19 e D20)
+- Coroutines: chamadas à internet sem travar a tela (Aulas 08 e 09, D19)
 
 ## Documentação
 
