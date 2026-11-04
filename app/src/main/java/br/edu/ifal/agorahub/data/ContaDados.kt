@@ -14,6 +14,7 @@ class ContaDados {
             .addOnSuccessListener { aoCriar() }
             .addOnFailureListener { erro -> aoFalhar(erro) }
     }
+
     fun entrar(
         email: String,
         senha: String,
@@ -25,7 +26,12 @@ class ContaDados {
             .addOnSuccessListener { aoEntrar() }
             .addOnFailureListener { erro -> aoFalhar(erro) }
     }
+
     fun estaLogado(): Boolean {
         return FirebaseAuth.getInstance().currentUser != null
+    }
+
+    fun sair() {
+        FirebaseAuth.getInstance().signOut()
     }
 }

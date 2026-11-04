@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.Icon
@@ -35,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import br.edu.ifal.agorahub.data.ContaDados
 import br.edu.ifal.agorahub.data.PerfilDados
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 
@@ -130,6 +132,18 @@ fun PerfilScreen(navController: NavController, modifier: Modifier = Modifier) {
                     icone = Icons.Default.Shield,
                     texto = "Privacidade e dados",
                     onClick = { navController.navigate("privacidade") }
+                )
+                ItemOpcao(
+                    icone = Icons.AutoMirrored.Filled.Logout,
+                    texto = "Sair",
+                    onClick = {
+                        ContaDados().sair()
+                        navController.navigate("abertura") {
+                            popUpTo(navController.graph.id) {
+                                inclusive = true
+                            }
+                        }
+                    }
                 )
             }
         }
