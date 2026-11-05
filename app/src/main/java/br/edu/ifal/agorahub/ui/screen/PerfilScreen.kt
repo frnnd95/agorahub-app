@@ -47,6 +47,7 @@ import br.edu.ifal.agorahub.data.PerfilDados
 import br.edu.ifal.agorahub.data.perfilExemplo
 import br.edu.ifal.agorahub.domain.Perfil
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
+
 @Composable
 fun PerfilScreen(navController: NavController, modifier: Modifier = Modifier) {
     var carregando by remember { mutableStateOf(true) }
@@ -59,6 +60,16 @@ fun PerfilScreen(navController: NavController, modifier: Modifier = Modifier) {
         }
         carregando = false
     }
+    PerfilConteudo(carregando, perfil, navController, modifier)
+}
+
+@Composable
+private fun PerfilConteudo(
+    carregando: Boolean,
+    perfil: Perfil?,
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -70,20 +81,19 @@ fun PerfilScreen(navController: NavController, modifier: Modifier = Modifier) {
             text = "Perfil",
             style = MaterialTheme.typography.titleLarge
         )
-        val atual = perfil
         if (carregando) {
             Text(
                 text = "Carregando perfil...",
                 style = MaterialTheme.typography.bodyLarge
             )
-        } else if (atual == null) {
+        } else if (perfil == null) {
             Text(
                 text = "Não foi possível carregar o perfil. Confira a conexão com a internet.",
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.error
             )
         } else {
-            CartaoPerfil(atual)
+            CartaoPerfil(perfil)
         }
         // Cartão das opções
         Surface(
@@ -221,7 +231,11 @@ private fun ItemOpcao(
 @Composable
 fun PerfilScreenPreview() {
     AgoraHubTheme {
-        PerfilScreen(rememberNavController())
+        PerfilConteudo(
+            carregando = false,
+            perfil = perfilExemplo,
+            navController = rememberNavController()
+        )
     }
 }
 
