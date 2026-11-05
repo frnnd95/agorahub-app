@@ -6,8 +6,19 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
 class PerfilDados {
-    fun buscarPerfil(): Perfil {
-        return perfilExemplo
+    suspend fun buscarPerfil(): Perfil? {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return null
+        val documento = FirebaseFirestore.getInstance()
+            .collection("estudantes")
+            .document(uid)
+            .get()
+            .await()
+        val interesses = documento.get("interesses") as? List<*> ?: return null
+        return Perfil(
+            nome = documento.getString("nome") ?: return null,
+            curso = documento.getString("curso") ?: return null,
+            interesses = interesses.filterIsInstance<String>()
+        )
     }
     suspend fun perfilCompleto(): Boolean {
         val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return false
