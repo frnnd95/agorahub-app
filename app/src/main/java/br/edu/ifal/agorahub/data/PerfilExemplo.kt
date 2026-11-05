@@ -2,8 +2,7 @@ package br.edu.ifal.agorahub.data
 
 import br.edu.ifal.agorahub.domain.Perfil
 
-// Dados de teste. Serão substituídos pela leitura do Firestore depois do RF07.
-
+// Dados de teste, usados só no Preview do CartaoPerfil (PerfilScreen).
 val perfilExemplo = Perfil(
     nome = "Maria Clara Santos",
     curso = "Sistemas de Informação",
