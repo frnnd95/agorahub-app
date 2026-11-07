@@ -27,6 +27,17 @@ class ContaDados {
             .addOnFailureListener { erro -> aoFalhar(erro) }
     }
 
+    fun enviarLinkSenha(
+        email: String,
+        aoEnviar: () -> Unit,
+        aoFalhar: (Exception) -> Unit
+    ) {
+        FirebaseAuth.getInstance()
+            .sendPasswordResetEmail(email)
+            .addOnSuccessListener { aoEnviar() }
+            .addOnFailureListener { erro -> aoFalhar(erro) }
+    }
+
     fun estaLogado(): Boolean {
         return FirebaseAuth.getInstance().currentUser != null
     }
