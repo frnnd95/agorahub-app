@@ -90,7 +90,7 @@ private fun CalendarioConteudo(
                 )
             }
         } else {
-            items(eventos) { evento ->
+            items(eventos, key = { it.id }) { evento ->
                 ItemEvento(evento)
             }
         }
