@@ -30,6 +30,8 @@ import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 @Composable
 fun RecuperarSenhaScreen(modifier: Modifier = Modifier) {
     var email by remember { mutableStateOf("") }
+    var erroEmail by remember { mutableStateOf("") }
+    var mensagem by remember { mutableStateOf("") }
 
     Column(
         modifier = modifier
@@ -54,15 +56,37 @@ fun RecuperarSenhaScreen(modifier: Modifier = Modifier) {
             label = { Text("E-mail institucional") },
             singleLine = true,
             placeholder = { Text("nome@aluno.ifal.edu.br") },
+            isError = erroEmail != "",
+            supportingText = { if (erroEmail != "") Text(erroEmail) },
             modifier = Modifier.fillMaxWidth()
         )
         Button(
-            onClick = { }, // envio vem no Incremento 4
+            onClick = {
+                val emailLimpo = email.trim().lowercase()
+                erroEmail = if (emailLimpo == "") "Preencha este campo." else ""
+                mensagem = ""
+                if (erroEmail == "") {
+                    ContaDados().enviarLinkSenha(
+                        email = emailLimpo,
+                        aoEnviar = {
+                            mensagem = "Se houver uma conta vinculada a esse e-mail, enviamos um link para criar uma nova senha. Confira a caixa de entrada e o spam."
+                        },
+                        aoFalhar = { mensagem = "Não foi possível enviar o link. Tente de novo." }
+                    )
+                }
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(min = 48.dp)
         ) {
             Text(text = "Enviar link", style = MaterialTheme.typography.titleMedium)
+        }
+        if (mensagem != "") {
+            Text(
+                text = mensagem,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.semantics { liveRegion = LiveRegionMode.Polite }
+            )
         }
     }
 }
