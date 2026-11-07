@@ -23,6 +23,8 @@ import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import br.edu.ifal.agorahub.data.ContaDados
+import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
@@ -32,6 +34,9 @@ fun RecuperarSenhaScreen(modifier: Modifier = Modifier) {
     var email by remember { mutableStateOf("") }
     var erroEmail by remember { mutableStateOf("") }
     var mensagem by remember { mutableStateOf("") }
+    var enviando by remember { mutableStateOf(false) }
+    // RN04: o mesmo texto com ou sem conta
+    val mensagemEnvio = "Se houver uma conta vinculada a esse e-mail, enviamos um link para criar uma nova senha. Confira a caixa de entrada e o spam."
 
     Column(
         modifier = modifier
@@ -66,20 +71,34 @@ fun RecuperarSenhaScreen(modifier: Modifier = Modifier) {
                 erroEmail = if (emailLimpo == "") "Preencha este campo." else ""
                 mensagem = ""
                 if (erroEmail == "") {
+                    enviando = true
                     ContaDados().enviarLinkSenha(
                         email = emailLimpo,
                         aoEnviar = {
-                            mensagem = "Se houver uma conta vinculada a esse e-mail, enviamos um link para criar uma nova senha. Confira a caixa de entrada e o spam."
+                            enviando = false
+                            mensagem = mensagemEnvio
                         },
-                        aoFalhar = { mensagem = "Não foi possível enviar o link. Tente de novo." }
+                        aoFalhar = { erro ->
+                            enviando = false
+                            mensagem = when (erro) {
+                                is FirebaseAuthInvalidUserException -> mensagemEnvio
+                                is FirebaseNetworkException ->
+                                    "Sem conexão com a internet. Tente de novo."
+                                else -> "Não foi possível enviar o link. Tente de novo."
+                            }
+                        }
                     )
                 }
             },
+            enabled = !enviando,
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(min = 48.dp)
         ) {
-            Text(text = "Enviar link", style = MaterialTheme.typography.titleMedium)
+            Text(
+                text = if (enviando) "Enviando…" else "Enviar link",
+                style = MaterialTheme.typography.titleMedium
+            )
         }
         if (mensagem != "") {
             Text(
