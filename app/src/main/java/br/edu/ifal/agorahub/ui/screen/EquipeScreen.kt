@@ -21,16 +21,30 @@ import br.edu.ifal.agorahub.domain.Integrante
 
 @Composable
 fun EquipeScreen(modifier: Modifier = Modifier) {
+    var carregando by remember { mutableStateOf(true) }
+    var falhou by remember { mutableStateOf(false) }
     var integrantes by remember { mutableStateOf(listOf<Integrante>()) }
 
+    // Pede a lista uma vez, quando a tela abre
     LaunchedEffect(Unit) {
         try {
             integrantes = EquipeDados().listarIntegrantes()
         } catch (e: Exception) {
             Log.e("CarregamentoEquipe", "Erro ao carregar a equipe", e)
+            falhou = true
         }
+        carregando = false
     }
+    EquipeConteudo(carregando, falhou, integrantes, modifier)
+}
 
+@Composable
+private fun EquipeConteudo(
+    carregando: Boolean,
+    falhou: Boolean,
+    integrantes: List<Integrante>,
+    modifier: Modifier = Modifier
+) {
     LazyColumn(modifier = modifier) {
         item {
             Text(
@@ -38,6 +52,32 @@ fun EquipeScreen(modifier: Modifier = Modifier) {
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(16.dp)
             )
+        }
+        if (carregando) {
+            item {
+                Text(
+                    text = "Carregando a equipe...",
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        } else if (falhou) {
+            item {
+                Text(
+                    text = "Não foi possível carregar a equipe. Confira a conexão com a internet.",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        } else if (integrantes.isEmpty()) {
+            item {
+                Text(
+                    text = "Nenhum integrante cadastrado.",
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
         }
         // Provisório: só para conferir a leitura
         items(integrantes) { integrante ->
@@ -53,6 +93,14 @@ fun EquipeScreen(modifier: Modifier = Modifier) {
 @Composable
 fun EquipeScreenPreview() {
     AgoraHubTheme {
-        EquipeScreen()
+        EquipeConteudo(
+            carregando = false,
+            falhou = false,
+            // Dados de teste
+            integrantes = listOf(
+                Integrante(id = "1", nome = "Maria Clara Santos", foto = null, papel = "Dev"),
+                Integrante(id = "2", nome = "João Pedro Lima", foto = null, papel = "Testes de acessibilidade"),
+            )
+        )
     }
 }
