@@ -25,13 +25,17 @@ import br.edu.ifal.agorahub.domain.Oportunidade
 fun MuralScreen(navController: NavController, modifier: Modifier = Modifier)  {
     var carregando by remember { mutableStateOf(true) }
     var oportunidades by remember { mutableStateOf(listOf<Oportunidade>()) }
+    var falhou by remember { mutableStateOf(false) }
 
     // Pede a lista uma vez, quando a tela abre
+    // Pede a lista uma vez, quando a tela abre
     LaunchedEffect(Unit) {
-        OportunidadeDados().listarMural { lista ->
-            oportunidades = lista
-            carregando = false
+        try {
+            oportunidades = OportunidadeDados().listarMural()
+        } catch (e: Exception) {
+            falhou = true
         }
+        carregando = false
     }
 
     LazyColumn(modifier = modifier) {
@@ -47,6 +51,15 @@ fun MuralScreen(navController: NavController, modifier: Modifier = Modifier)  {
                 Text(
                     text = "Carregando oportunidades...",
                     style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        } else if (falhou) {
+            item {
+                Text(
+                    text = "Não foi possível carregar as oportunidades. Confira a conexão com a internet.",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.error,
                     modifier = Modifier.padding(16.dp)
                 )
             }
