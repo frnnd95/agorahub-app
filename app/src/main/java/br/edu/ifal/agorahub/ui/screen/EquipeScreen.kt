@@ -18,6 +18,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import br.edu.ifal.agorahub.data.EquipeDados
 import br.edu.ifal.agorahub.domain.Integrante
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
+import coil.compose.AsyncImage
 
 @Composable
 fun EquipeScreen(modifier: Modifier = Modifier) {
@@ -79,12 +94,50 @@ private fun EquipeConteudo(
                 )
             }
         }
-        // Provisório: só para conferir a leitura
         items(integrantes) { integrante ->
-            Text(
-                text = "${integrante.nome}: ${integrante.papel} (foto: ${integrante.foto})",
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-            )
+            ItemIntegrante(integrante)
+        }
+    }
+}
+
+@Composable
+private fun ItemIntegrante(integrante: Integrante) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .semantics(mergeDescendants = true) {},
+        shape = RoundedCornerShape(16.dp),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+    ) {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (integrante.foto != null) {
+                // Foto decorativa: o nome ao lado já identifica a pessoa
+                AsyncImage(
+                    model = integrante.foto,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(56.dp)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop
+                )
+            }
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = integrante.nome,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = integrante.papel,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
         }
     }
 }
