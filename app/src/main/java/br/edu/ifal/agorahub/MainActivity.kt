@@ -56,6 +56,7 @@ class MainActivity : ComponentActivity() {
                         if (
                             rotaAtual != "abertura" &&
                             rotaAtual != "privacidade" &&
+                            rotaAtual != "perguntas" &&
                             rotaAtual != "cadastro" &&
                             rotaAtual != "entrar" &&
                             rotaAtual != "verificacao" &&
