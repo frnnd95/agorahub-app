@@ -9,4 +9,6 @@ class RetrofitHelper {
         .baseUrl("https://raw.githubusercontent.com/frnnd95/agorahub-api/main/")
         .addConverterFactory(MoshiConverterFactory.create())
         .build()
+
+        val perguntaApi: PerguntaApi = client.create(PerguntaApi::class.java)
 }

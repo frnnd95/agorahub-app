@@ -10,10 +10,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import android.util.Log
+import androidx.compose.runtime.LaunchedEffect
+import br.edu.ifal.agorahub.data.PerguntaDados
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
+
 
 @Composable
 fun PerguntasScreen(modifier: Modifier = Modifier) {
+    LaunchedEffect(Unit) {
+        try {
+            val perguntas = PerguntaDados().listarPerguntas()
+            Log.i("Perguntas", "Recebidas: ${perguntas.size}, primeira: ${perguntas.firstOrNull()?.pergunta}")
+        } catch (e: Exception) {
+            Log.e("Perguntas", "Erro ao carregar perguntas", e)
+        }
+    }
     Column(
         modifier = modifier
             .fillMaxSize()
