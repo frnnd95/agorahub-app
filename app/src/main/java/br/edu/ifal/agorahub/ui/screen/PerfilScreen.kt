@@ -47,6 +47,7 @@ import br.edu.ifal.agorahub.data.PerfilDados
 import br.edu.ifal.agorahub.data.perfilExemplo
 import br.edu.ifal.agorahub.domain.Perfil
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
+import androidx.compose.material.icons.filled.Groups
 
 @Composable
 fun PerfilScreen(navController: NavController, modifier: Modifier = Modifier) {
@@ -102,6 +103,11 @@ private fun PerfilConteudo(
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
         ) {
             Column {
+                ItemOpcao(
+                    icone = Icons.Default.Groups,
+                    texto = "Equipe ÁgoraHub",
+                    onClick = { navController.navigate("equipe") }
+                )
                 ItemOpcao(
                     icone = Icons.Default.Shield,
                     texto = "Privacidade e dados",
