@@ -17,10 +17,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import br.edu.ifal.agorahub.data.ProjetoDados
+import br.edu.ifal.agorahub.data.projetosExemplo
 import br.edu.ifal.agorahub.domain.Projeto
 
 @Composable
 fun ProjetosScreen(modifier: Modifier = Modifier) {
+    var carregando by remember { mutableStateOf(true) }
+    var falhou by remember { mutableStateOf(false) }
     var projetos by remember { mutableStateOf(listOf<Projeto>()) }
 
     // Pede a lista uma vez, quando a tela abre
@@ -29,9 +32,20 @@ fun ProjetosScreen(modifier: Modifier = Modifier) {
             projetos = ProjetoDados().listarHub()
         } catch (e: Exception) {
             Log.e("CarregamentoProjetos", "Erro ao carregar projetos", e)
+            falhou = true
         }
+        carregando = false
     }
+    ProjetosConteudo(carregando, falhou, projetos, modifier)
+}
 
+@Composable
+private fun ProjetosConteudo(
+    carregando: Boolean,
+    falhou: Boolean,
+    projetos: List<Projeto>,
+    modifier: Modifier = Modifier
+) {
     LazyColumn(modifier = modifier) {
         item {
             Text(
@@ -39,6 +53,32 @@ fun ProjetosScreen(modifier: Modifier = Modifier) {
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(16.dp)
             )
+        }
+        if (carregando) {
+            item {
+                Text(
+                    text = "Carregando projetos...",
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        } else if (falhou) {
+            item {
+                Text(
+                    text = "Não foi possível carregar os projetos. Confira a conexão com a internet.",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        } else if (projetos.isEmpty()) {
+            item {
+                Text(
+                    text = "Nenhum projeto com vagas no momento.",
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
         }
         // Provisório: só para conferir a leitura
         items(projetos) { projeto ->
@@ -54,6 +94,10 @@ fun ProjetosScreen(modifier: Modifier = Modifier) {
 @Composable
 fun ProjetosScreenPreview() {
     AgoraHubTheme {
-        ProjetosScreen()
+        ProjetosConteudo(
+            carregando = false,
+            falhou = false,
+            projetos = projetosExemplo
+        )
     }
 }
