@@ -12,7 +12,10 @@ class ProjetoDados {
             .get()
             .await()
         // Converte cada documento; os incompletos ficam de fora
-        return resultado.documents.mapNotNull { converter(it) }
+        val todos = resultado.documents.mapNotNull { converter(it) }
+        // RN19: só Aberto com vagas, do mais recente para o mais antigo
+        val abertos = todos.filter { it.status == "Aberto" && it.vagasDisponiveis > 0 }
+        return abertos.sortedByDescending { it.criadoEm }
     }
 
     // Documento do Firestore para Projeto (estrutura da D21)
