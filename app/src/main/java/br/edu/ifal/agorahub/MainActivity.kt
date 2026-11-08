@@ -22,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.compose.currentBackStackEntryAsState
 import br.edu.ifal.agorahub.ui.screen.AberturaScreen
 import br.edu.ifal.agorahub.ui.screen.PrivacidadeScreen
+import br.edu.ifal.agorahub.ui.screen.PerguntasScreen
 import br.edu.ifal.agorahub.ui.screen.CadastroScreen
 import br.edu.ifal.agorahub.ui.screen.EntrarScreen
 import br.edu.ifal.agorahub.ui.screen.VerificacaoScreen
@@ -72,6 +73,7 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable("abertura") { AberturaScreen(navController) }
                         composable("privacidade") { PrivacidadeScreen() }
+                        composable("perguntas") { PerguntasScreen() }
                         composable("cadastro") { CadastroScreen(navController) }
                         composable("entrar") { EntrarScreen(navController) }
                         composable("verificacao") { VerificacaoScreen() }
