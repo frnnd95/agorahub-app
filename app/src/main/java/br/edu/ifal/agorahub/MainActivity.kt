@@ -84,12 +84,15 @@ class MainActivity : ComponentActivity() {
                             val id = backStackEntry.arguments?.getString("id")
                             var carregando by remember { mutableStateOf(true) }
                             var oportunidade by remember { mutableStateOf<Oportunidade?>(null) }
+                            var falhou by remember { mutableStateOf(false) }
 
                             LaunchedEffect(Unit) {
-                                OportunidadeDados().buscarPorId(id) { encontrada ->
-                                    oportunidade = encontrada
-                                    carregando = false
+                                try {
+                                    oportunidade = OportunidadeDados().buscarPorId(id)
+                                } catch (e: Exception) {
+                                    falhou = true
                                 }
+                                carregando = false
                             }
 
                             val atual = oportunidade
@@ -97,6 +100,13 @@ class MainActivity : ComponentActivity() {
                                 Text(
                                     text = "Carregando oportunidade...",
                                     style = MaterialTheme.typography.bodyLarge,
+                                    modifier = Modifier.padding(16.dp)
+                                )
+                            } else if (falhou) {
+                                Text(
+                                    text = "Não foi possível carregar a oportunidade. Confira a conexão com a internet.",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.error,
                                     modifier = Modifier.padding(16.dp)
                                 )
                             } else if (atual != null) {

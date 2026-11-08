@@ -27,19 +27,18 @@ class OportunidadeDados {
         )
     }
 
-    fun buscarPorId(id: String?, aoCarregar: (Oportunidade?) -> Unit) {
+    suspend fun buscarPorId(id: String?): Oportunidade? {
         if (id == null) {
-            aoCarregar(null)
-            return
+            return null
         }
-        FirebaseFirestore.getInstance()
+        // Espera o Firestore responder; se falhar, lança uma exceção
+        val doc = FirebaseFirestore.getInstance()
             .collection("oportunidades")
             .document(id)
             .get()
-            .addOnSuccessListener { doc ->
-                // Documento inexistente ou incompleto vira null
-                aoCarregar(converter(doc))
-            }
+            .await()
+        // Documento inexistente ou incompleto vira null
+        return converter(doc)
     }
 
     // Documento do Firestore -> Oportunidade (estrutura da D15)
