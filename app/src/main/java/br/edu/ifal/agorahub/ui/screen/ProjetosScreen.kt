@@ -19,6 +19,7 @@ import androidx.compose.runtime.setValue
 import br.edu.ifal.agorahub.data.ProjetoDados
 import br.edu.ifal.agorahub.data.projetosExemplo
 import br.edu.ifal.agorahub.domain.Projeto
+import br.edu.ifal.agorahub.ui.components.CardProjeto
 
 @Composable
 fun ProjetosScreen(modifier: Modifier = Modifier) {
@@ -80,12 +81,8 @@ private fun ProjetosConteudo(
                 )
             }
         }
-        // Provisório: só para conferir a leitura
         items(projetos) { projeto ->
-            Text(
-                text = "${projeto.titulo} (${projeto.vagasDisponiveis} vagas, ${projeto.status})",
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-            )
+            CardProjeto(projeto)
         }
     }
 }
