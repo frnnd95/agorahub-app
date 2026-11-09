@@ -1,5 +1,6 @@
 package br.edu.ifal.agorahub.ui.screen
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,24 +21,35 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import br.edu.ifal.agorahub.domain.Oportunidade
+import java.time.LocalDate
 
 @Composable
-fun MuralScreen(navController: NavController, modifier: Modifier = Modifier)  {
+fun MuralScreen(navController: NavController, modifier: Modifier = Modifier) {
     var carregando by remember { mutableStateOf(true) }
     var oportunidades by remember { mutableStateOf(listOf<Oportunidade>()) }
     var falhou by remember { mutableStateOf(false) }
 
-    // Pede a lista uma vez, quando a tela abre
     // Pede a lista uma vez, quando a tela abre
     LaunchedEffect(Unit) {
         try {
             oportunidades = OportunidadeDados().listarMural()
         } catch (e: Exception) {
             falhou = true
+            Log.e("CarregamentoMural", "Erro ao carregar o mural", e)
         }
         carregando = false
     }
+    MuralConteudo(carregando, falhou, oportunidades, navController, modifier)
+}
 
+@Composable
+private fun MuralConteudo(
+    carregando: Boolean,
+    falhou: Boolean,
+    oportunidades: List<Oportunidade>,
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
     LazyColumn(modifier = modifier) {
         item {
             Text(
@@ -81,7 +93,24 @@ fun MuralScreen(navController: NavController, modifier: Modifier = Modifier)  {
 @Preview(showBackground = true)
 @Composable
 fun MuralScreenPreview() {
-    AgoraHubTheme() {
-        MuralScreen(rememberNavController())
+    AgoraHubTheme {
+        MuralConteudo(
+            carregando = false,
+            falhou = false,
+            oportunidades = listOf(
+                Oportunidade(
+                    id = "1",
+                    titulo = "Maratona de Programação do IFAL",
+                    tipo = "Competição",
+                    descricao = "Competição em equipes de três estudantes.",
+                    prazo = LocalDate.now().plusDays(3),
+                    dataPublicacao = LocalDate.now(),
+                    link = "https://www.ifal.edu.br",
+                    imagemUrl = null,
+                    descricaoImagem = null
+                )
+            ),
+            navController = rememberNavController()
+        )
     }
 }
