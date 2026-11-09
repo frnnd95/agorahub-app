@@ -9,5 +9,10 @@ class RetrofitHelper {
         .baseUrl("https://raw.githubusercontent.com/frnnd95/agorahub-api/main/")
         .addConverterFactory(MoshiConverterFactory.create())
         .build()
-        val equipeApi: EquipeApi = client.create(EquipeApi::class.java)
+
+    val perguntaApi: PerguntaApi = client.create(PerguntaApi::class.java)
+
+    val calendarioApi: CalendarioApi = client.create(CalendarioApi::class.java)
+
+    val equipeApi: EquipeApi = client.create(EquipeApi::class.java)
 }

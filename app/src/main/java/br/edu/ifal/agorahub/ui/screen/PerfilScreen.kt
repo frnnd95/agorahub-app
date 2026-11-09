@@ -20,7 +20,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.QuestionAnswer
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -103,6 +105,16 @@ private fun PerfilConteudo(
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
         ) {
             Column {
+                ItemOpcao(
+                    icone = Icons.Default.QuestionAnswer,
+                    texto = "Perguntas frequentes",
+                    onClick = { navController.navigate("perguntas") }
+                )
+                ItemOpcao(
+                    icone = Icons.Default.CalendarMonth,
+                    texto = "Calendário acadêmico",
+                    onClick = { navController.navigate("calendario") }
+                )
                 ItemOpcao(
                     icone = Icons.Default.Groups,
                     texto = "Equipe ÁgoraHub",

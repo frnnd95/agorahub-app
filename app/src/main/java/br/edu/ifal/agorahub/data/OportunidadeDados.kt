@@ -6,39 +6,39 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import java.time.LocalDate
 import java.time.ZoneId
+import kotlinx.coroutines.tasks.await
 
 class OportunidadeDados {
-    fun listarMural(aoCarregar: (List<Oportunidade>) -> Unit) {
-        FirebaseFirestore.getInstance()
+    suspend fun listarMural(): List<Oportunidade> {
+        // Espera o Firestore responder; se falhar, lança uma exceção
+        val resultado = FirebaseFirestore.getInstance()
             .collection("oportunidades")
             .get()
-            .addOnSuccessListener { resultado ->
-                val hoje = LocalDate.now()
-                // Converte cada documento; os incompletos ficam de fora
-                val todas = resultado.documents.mapNotNull { converter(it) }
-                val dentroDoPrazo = todas.filter { it.prazo >= hoje }
+            .await()
 
-                val ordenadas = dentroDoPrazo.sortedWith(
-                    compareBy<Oportunidade> { it.prazo }
-                        .thenByDescending { it.dataPublicacao }
-                )
-                aoCarregar(ordenadas)
-            }
+        val hoje = LocalDate.now()
+        // Converte cada documento; os incompletos ficam de fora
+        val todas = resultado.documents.mapNotNull { converter(it) }
+        val dentroDoPrazo = todas.filter { it.prazo >= hoje }
+
+        return dentroDoPrazo.sortedWith(
+            compareBy<Oportunidade> { it.prazo }
+                .thenByDescending { it.dataPublicacao }
+        )
     }
 
-    fun buscarPorId(id: String?, aoCarregar: (Oportunidade?) -> Unit) {
+    suspend fun buscarPorId(id: String?): Oportunidade? {
         if (id == null) {
-            aoCarregar(null)
-            return
+            return null
         }
-        FirebaseFirestore.getInstance()
+        // Espera o Firestore responder; se falhar, lança uma exceção
+        val doc = FirebaseFirestore.getInstance()
             .collection("oportunidades")
             .document(id)
             .get()
-            .addOnSuccessListener { doc ->
-                // Documento inexistente ou incompleto vira null
-                aoCarregar(converter(doc))
-            }
+            .await()
+        // Documento inexistente ou incompleto vira null
+        return converter(doc)
     }
 
     // Documento do Firestore -> Oportunidade (estrutura da D15)
