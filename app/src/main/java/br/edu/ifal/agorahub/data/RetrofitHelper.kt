@@ -10,5 +10,7 @@ class RetrofitHelper {
         .addConverterFactory(MoshiConverterFactory.create())
         .build()
 
+    val perguntaApi: PerguntaApi = client.create(PerguntaApi::class.java)
+
     val calendarioApi: CalendarioApi = client.create(CalendarioApi::class.java)
 }

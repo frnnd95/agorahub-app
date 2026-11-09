@@ -22,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.compose.currentBackStackEntryAsState
 import br.edu.ifal.agorahub.ui.screen.AberturaScreen
 import br.edu.ifal.agorahub.ui.screen.PrivacidadeScreen
+import br.edu.ifal.agorahub.ui.screen.PerguntasScreen
 import br.edu.ifal.agorahub.ui.screen.CadastroScreen
 import br.edu.ifal.agorahub.ui.screen.EntrarScreen
 import br.edu.ifal.agorahub.ui.screen.RecuperarSenhaScreen
@@ -57,6 +58,7 @@ class MainActivity : ComponentActivity() {
                         if (
                             rotaAtual != "abertura" &&
                             rotaAtual != "privacidade" &&
+                            rotaAtual != "perguntas" &&
                             rotaAtual != "calendario" &&
                             rotaAtual != "cadastro" &&
                             rotaAtual != "entrar" &&
@@ -76,6 +78,8 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable("abertura") { AberturaScreen(navController) }
                         composable("privacidade") { PrivacidadeScreen() }
+                        composable("perguntas") { PerguntasScreen() }
+                        composable("calendario") { CalendarioScreen() }
                         composable("cadastro") { CadastroScreen(navController) }
                         composable("entrar") { EntrarScreen(navController) }
                         composable("recuperar-senha") { RecuperarSenhaScreen() }
@@ -85,7 +89,6 @@ class MainActivity : ComponentActivity() {
                         composable("mural") { MuralScreen(navController) }
                         composable("projetos") { ProjetosScreen() }
                         composable("perfil") { PerfilScreen(navController) }
-                        composable("calendario") { CalendarioScreen() }
                         composable("detalhes/{id}") { backStackEntry ->
                             val id = backStackEntry.arguments?.getString("id")
                             var carregando by remember { mutableStateOf(true) }
