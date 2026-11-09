@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.QuestionAnswer
 import androidx.compose.material.icons.filled.Shield
@@ -107,6 +108,11 @@ private fun PerfilConteudo(
                     icone = Icons.Default.QuestionAnswer,
                     texto = "Perguntas frequentes",
                     onClick = { navController.navigate("perguntas") }
+                )
+                ItemOpcao(
+                    icone = Icons.Default.CalendarMonth,
+                    texto = "Calendário acadêmico",
+                    onClick = { navController.navigate("calendario") }
                 )
                 ItemOpcao(
                     icone = Icons.Default.Shield,

@@ -19,6 +19,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -101,6 +103,17 @@ fun EntrarScreen(navController: NavController, modifier: Modifier = Modifier) {
             },
             modifier = Modifier.fillMaxWidth()
         )
+        TextButton(
+            onClick = { navController.navigate("recuperar-senha") },
+            modifier = Modifier.heightIn(min = 48.dp)
+        ) {
+            Text(
+                text = "Esqueci a senha",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.secondary,
+                textDecoration = TextDecoration.Underline
+            )
+        }
         Button(
             onClick = {
                 val emailLimpo = email.trim().lowercase()

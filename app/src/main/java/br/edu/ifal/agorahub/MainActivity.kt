@@ -25,9 +25,11 @@ import br.edu.ifal.agorahub.ui.screen.PrivacidadeScreen
 import br.edu.ifal.agorahub.ui.screen.PerguntasScreen
 import br.edu.ifal.agorahub.ui.screen.CadastroScreen
 import br.edu.ifal.agorahub.ui.screen.EntrarScreen
+import br.edu.ifal.agorahub.ui.screen.RecuperarSenhaScreen
 import br.edu.ifal.agorahub.ui.screen.VerificacaoScreen
 import br.edu.ifal.agorahub.ui.screen.InicioScreen
 import br.edu.ifal.agorahub.ui.screen.CompletarPerfilScreen
+import br.edu.ifal.agorahub.ui.screen.CalendarioScreen
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
@@ -57,8 +59,10 @@ class MainActivity : ComponentActivity() {
                             rotaAtual != "abertura" &&
                             rotaAtual != "privacidade" &&
                             rotaAtual != "perguntas" &&
+                            rotaAtual != "calendario" &&
                             rotaAtual != "cadastro" &&
                             rotaAtual != "entrar" &&
+                            rotaAtual != "recuperar-senha" &&
                             rotaAtual != "verificacao" &&
                             rotaAtual != "inicio" &&
                             rotaAtual != "completar-perfil"
@@ -75,8 +79,10 @@ class MainActivity : ComponentActivity() {
                         composable("abertura") { AberturaScreen(navController) }
                         composable("privacidade") { PrivacidadeScreen() }
                         composable("perguntas") { PerguntasScreen() }
+                        composable("calendario") { CalendarioScreen() }
                         composable("cadastro") { CadastroScreen(navController) }
                         composable("entrar") { EntrarScreen(navController) }
+                        composable("recuperar-senha") { RecuperarSenhaScreen() }
                         composable("verificacao") { VerificacaoScreen() }
                         composable("inicio") { InicioScreen(navController) }
                         composable("completar-perfil") { CompletarPerfilScreen(navController) }
@@ -87,12 +93,15 @@ class MainActivity : ComponentActivity() {
                             val id = backStackEntry.arguments?.getString("id")
                             var carregando by remember { mutableStateOf(true) }
                             var oportunidade by remember { mutableStateOf<Oportunidade?>(null) }
+                            var falhou by remember { mutableStateOf(false) }
 
                             LaunchedEffect(Unit) {
-                                OportunidadeDados().buscarPorId(id) { encontrada ->
-                                    oportunidade = encontrada
-                                    carregando = false
+                                try {
+                                    oportunidade = OportunidadeDados().buscarPorId(id)
+                                } catch (e: Exception) {
+                                    falhou = true
                                 }
+                                carregando = false
                             }
 
                             val atual = oportunidade
@@ -100,6 +109,13 @@ class MainActivity : ComponentActivity() {
                                 Text(
                                     text = "Carregando oportunidade...",
                                     style = MaterialTheme.typography.bodyLarge,
+                                    modifier = Modifier.padding(16.dp)
+                                )
+                            } else if (falhou) {
+                                Text(
+                                    text = "Não foi possível carregar a oportunidade. Confira a conexão com a internet.",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.error,
                                     modifier = Modifier.padding(16.dp)
                                 )
                             } else if (atual != null) {
