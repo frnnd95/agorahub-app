@@ -24,6 +24,7 @@ import br.edu.ifal.agorahub.ui.screen.AberturaScreen
 import br.edu.ifal.agorahub.ui.screen.PrivacidadeScreen
 import br.edu.ifal.agorahub.ui.screen.CadastroScreen
 import br.edu.ifal.agorahub.ui.screen.EntrarScreen
+import br.edu.ifal.agorahub.ui.screen.RecuperarSenhaScreen
 import br.edu.ifal.agorahub.ui.screen.VerificacaoScreen
 import br.edu.ifal.agorahub.ui.screen.InicioScreen
 import br.edu.ifal.agorahub.ui.screen.CompletarPerfilScreen
@@ -59,6 +60,7 @@ class MainActivity : ComponentActivity() {
                             rotaAtual != "calendario" &&
                             rotaAtual != "cadastro" &&
                             rotaAtual != "entrar" &&
+                            rotaAtual != "recuperar-senha" &&
                             rotaAtual != "verificacao" &&
                             rotaAtual != "inicio" &&
                             rotaAtual != "completar-perfil"
@@ -76,6 +78,7 @@ class MainActivity : ComponentActivity() {
                         composable("privacidade") { PrivacidadeScreen() }
                         composable("cadastro") { CadastroScreen(navController) }
                         composable("entrar") { EntrarScreen(navController) }
+                        composable("recuperar-senha") { RecuperarSenhaScreen() }
                         composable("verificacao") { VerificacaoScreen() }
                         composable("inicio") { InicioScreen(navController) }
                         composable("completar-perfil") { CompletarPerfilScreen(navController) }
