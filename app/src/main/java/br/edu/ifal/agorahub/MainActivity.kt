@@ -39,6 +39,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import br.edu.ifal.agorahub.domain.Oportunidade
 import br.edu.ifal.agorahub.data.ContaDados
+import br.edu.ifal.agorahub.ui.screen.EquipeScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +61,7 @@ class MainActivity : ComponentActivity() {
                             rotaAtual != "privacidade" &&
                             rotaAtual != "perguntas" &&
                             rotaAtual != "calendario" &&
+                            rotaAtual != "equipe" &&
                             rotaAtual != "cadastro" &&
                             rotaAtual != "entrar" &&
                             rotaAtual != "recuperar-senha" &&
@@ -80,6 +82,7 @@ class MainActivity : ComponentActivity() {
                         composable("privacidade") { PrivacidadeScreen() }
                         composable("perguntas") { PerguntasScreen() }
                         composable("calendario") { CalendarioScreen() }
+                        composable("equipe") { EquipeScreen() }
                         composable("cadastro") { CadastroScreen(navController) }
                         composable("entrar") { EntrarScreen(navController) }
                         composable("recuperar-senha") { RecuperarSenhaScreen() }

@@ -13,4 +13,6 @@ class RetrofitHelper {
     val perguntaApi: PerguntaApi = client.create(PerguntaApi::class.java)
 
     val calendarioApi: CalendarioApi = client.create(CalendarioApi::class.java)
+
+    val equipeApi: EquipeApi = client.create(EquipeApi::class.java)
 }
