@@ -68,6 +68,14 @@ private fun EquipeConteudo(
                 modifier = Modifier.padding(16.dp)
             )
         }
+        item {
+            Text(
+                text = "O ÁgoraHub é um projeto das disciplinas de Projeto Integrador e Programação para Dispositivos Móveis do IFAL Arapiraca (2026.2).",
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
+            )
+        }
         if (carregando) {
             item {
                 Text(
@@ -121,7 +129,7 @@ private fun ItemIntegrante(integrante: Integrante) {
                     model = integrante.foto,
                     contentDescription = null,
                     modifier = Modifier
-                        .size(56.dp)
+                        .size(72.dp)
                         .clip(CircleShape),
                     contentScale = ContentScale.Crop
                 )
