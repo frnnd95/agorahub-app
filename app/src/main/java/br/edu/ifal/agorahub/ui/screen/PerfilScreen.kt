@@ -22,6 +22,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.QuestionAnswer
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.Icon
@@ -98,7 +99,26 @@ private fun PerfilConteudo(
         } else {
             CartaoPerfil(perfil)
         }
-        // Cartão das opções
+        // Cartão do estudante: editar o perfil e o calendário
+        Surface(
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp),
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+        ) {
+            Column {
+                ItemOpcao(
+                    icone = Icons.Default.Edit,
+                    texto = "Editar perfil",
+                    onClick = { navController.navigate("editar-perfil") }
+                )
+                ItemOpcao(
+                    icone = Icons.Default.CalendarMonth,
+                    texto = "Calendário acadêmico",
+                    onClick = { navController.navigate("calendario") }
+                )
+            }
+        }
+        // Cartão das outras opções
         Surface(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
@@ -109,11 +129,6 @@ private fun PerfilConteudo(
                     icone = Icons.Default.QuestionAnswer,
                     texto = "Perguntas frequentes",
                     onClick = { navController.navigate("perguntas") }
-                )
-                ItemOpcao(
-                    icone = Icons.Default.CalendarMonth,
-                    texto = "Calendário acadêmico",
-                    onClick = { navController.navigate("calendario") }
                 )
                 ItemOpcao(
                     icone = Icons.Default.Groups,

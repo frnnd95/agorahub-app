@@ -19,6 +19,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,7 +40,11 @@ import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 import kotlinx.coroutines.launch
 
 @Composable
-fun CompletarPerfilScreen(navController: NavController, modifier: Modifier = Modifier) {
+fun CompletarPerfilScreen(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+    editar: Boolean = false
+) {
     var nome by remember { mutableStateOf("") }
     var outroCurso by remember { mutableStateOf(false) }
     var nomeCurso by remember { mutableStateOf("") }
@@ -50,7 +55,27 @@ fun CompletarPerfilScreen(navController: NavController, modifier: Modifier = Mod
     var erroGeral by remember { mutableStateOf("") }
     var salvando by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
-
+    var carregando by remember { mutableStateOf(editar) }
+    // No modo editar, preenche os campos com o perfil atual (RF09)
+    LaunchedEffect(Unit) {
+        if (editar) {
+            try {
+                val perfil = PerfilDados().buscarPerfil()
+                if (perfil != null) {
+                    nome = perfil.nome
+                    outroCurso = perfil.curso != "Sistemas de Informação"
+                    nomeCurso = if (outroCurso) perfil.curso else ""
+                    escolhidos = perfil.interesses
+                } else {
+                    erroGeral = "Não foi possível carregar o perfil. Confira a internet."
+                }
+            } catch (e: Exception) {
+                erroGeral = "Não foi possível carregar o perfil. Confira a internet."
+                Log.e("EditarPerfil", "Erro ao carregar perfil", e)
+            }
+            carregando = false
+        }
+    }
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -59,12 +84,18 @@ fun CompletarPerfilScreen(navController: NavController, modifier: Modifier = Mod
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(text = "Complete seu perfil", style = MaterialTheme.typography.titleLarge)
+        Text(
+            text = if (editar) "Editar perfil" else "Complete seu perfil",
+            style = MaterialTheme.typography.titleLarge
+        )
         Text(
             text = "Seu nome, seu curso e seus interesses aparecem para os outros estudantes no app.",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
+        if (carregando) {
+            Text(text = "Carregando seu perfil...", style = MaterialTheme.typography.bodyLarge)
+        }
         OutlinedTextField(
             value = nome,
             onValueChange = { nome = it },
@@ -144,7 +175,8 @@ fun CompletarPerfilScreen(navController: NavController, modifier: Modifier = Mod
                 erroNome = if (nomeLimpo == "") "Preencha este campo." else ""
                 erroCurso = if (curso == "") "Informe o nome do curso." else ""
                 erroInteresses = if (escolhidos.size < 3) "Escolha pelo menos 3 interesses." else ""
-                erroGeral = if (erroNome != "" || erroCurso != "") "Confira os campos no início da tela." else ""
+                erroGeral =
+                    if (erroNome != "" || erroCurso != "") "Confira os campos no início da tela." else ""
                 if (erroNome == "" && erroCurso == "" && erroInteresses == "") {
                     salvando = true
                     scope.launch {
@@ -152,29 +184,42 @@ fun CompletarPerfilScreen(navController: NavController, modifier: Modifier = Mod
                             PerfilDados().salvarPerfil(
                                 Perfil(nome = nomeLimpo, curso = curso, interesses = escolhidos)
                             )
-                            navController.navigate("mural") {
-                                popUpTo("completar-perfil") { inclusive = true }
+                            if (editar) {
+                                // Volta para a aba Perfil, que lê o Firestore de novo
+                                navController.popBackStack()
+                            } else {
+                                navController.navigate("mural") {
+                                    popUpTo("completar-perfil") { inclusive = true }
+                                }
                             }
                         } catch (e: Exception) {
                             salvando = false
-                            erroGeral = "Não foi possível salvar o perfil. Confira a internet e tente de novo."
-                            Log.e("CompletarPerfil", "Erro ao salvar perfil", e)
+                            erroGeral =
+                                "Não foi possível salvar o perfil. Confira a internet e tente de novo."
+                            Log.e(
+                                if (editar) "EditarPerfil" else "CompletarPerfil",
+                                "Erro ao salvar perfil",
+                                e
+                            )
                         }
                     }
                 }
             },
-            enabled = !salvando,
+            enabled = !salvando && !carregando,
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(min = 48.dp)
         ) {
             Text(
-                text = if (salvando) "Salvando…" else "Salvar e continuar",
+                text = if (salvando) "Salvando…"
+                else if (editar) "Salvar alterações"
+                else "Salvar e continuar",
                 style = MaterialTheme.typography.titleMedium
             )
         }
     }
 }
+
 @Composable
 private fun OpcaoCurso(texto: String, selecionada: Boolean, aoEscolher: () -> Unit) {
     Row(
@@ -195,5 +240,13 @@ private fun OpcaoCurso(texto: String, selecionada: Boolean, aoEscolher: () -> Un
 fun CompletarPerfilScreenPreview() {
     AgoraHubTheme {
         CompletarPerfilScreen(rememberNavController())
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun EditarPerfilScreenPreview() {
+    AgoraHubTheme {
+        CompletarPerfilScreen(rememberNavController(), editar = true)
     }
 }

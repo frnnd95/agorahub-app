@@ -1,6 +1,7 @@
 package br.edu.ifal.agorahub
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -67,7 +68,8 @@ class MainActivity : ComponentActivity() {
                             rotaAtual != "recuperar-senha" &&
                             rotaAtual != "verificacao" &&
                             rotaAtual != "inicio" &&
-                            rotaAtual != "completar-perfil"
+                            rotaAtual != "completar-perfil" &&
+                            rotaAtual != "editar-perfil"
                         ){
                             BarraNavegacao(navController)
                         }
@@ -89,6 +91,7 @@ class MainActivity : ComponentActivity() {
                         composable("verificacao") { VerificacaoScreen() }
                         composable("inicio") { InicioScreen(navController) }
                         composable("completar-perfil") { CompletarPerfilScreen(navController) }
+                        composable("editar-perfil") { CompletarPerfilScreen(navController, editar = true) }
                         composable("mural") { MuralScreen(navController) }
                         composable("projetos") { ProjetosScreen() }
                         composable("perfil") { PerfilScreen(navController) }
@@ -103,6 +106,7 @@ class MainActivity : ComponentActivity() {
                                     oportunidade = OportunidadeDados().buscarPorId(id)
                                 } catch (e: Exception) {
                                     falhou = true
+                                    Log.e("DetalhesOportunidade", "Erro ao carregar oportunidade", e)
                                 }
                                 carregando = false
                             }
