@@ -24,9 +24,11 @@ import br.edu.ifal.agorahub.ui.screen.AberturaScreen
 import br.edu.ifal.agorahub.ui.screen.PrivacidadeScreen
 import br.edu.ifal.agorahub.ui.screen.CadastroScreen
 import br.edu.ifal.agorahub.ui.screen.EntrarScreen
+import br.edu.ifal.agorahub.ui.screen.RecuperarSenhaScreen
 import br.edu.ifal.agorahub.ui.screen.VerificacaoScreen
 import br.edu.ifal.agorahub.ui.screen.InicioScreen
 import br.edu.ifal.agorahub.ui.screen.CompletarPerfilScreen
+import br.edu.ifal.agorahub.ui.screen.CalendarioScreen
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
@@ -55,8 +57,10 @@ class MainActivity : ComponentActivity() {
                         if (
                             rotaAtual != "abertura" &&
                             rotaAtual != "privacidade" &&
+                            rotaAtual != "calendario" &&
                             rotaAtual != "cadastro" &&
                             rotaAtual != "entrar" &&
+                            rotaAtual != "recuperar-senha" &&
                             rotaAtual != "verificacao" &&
                             rotaAtual != "inicio" &&
                             rotaAtual != "completar-perfil"
@@ -74,12 +78,14 @@ class MainActivity : ComponentActivity() {
                         composable("privacidade") { PrivacidadeScreen() }
                         composable("cadastro") { CadastroScreen(navController) }
                         composable("entrar") { EntrarScreen(navController) }
+                        composable("recuperar-senha") { RecuperarSenhaScreen() }
                         composable("verificacao") { VerificacaoScreen() }
                         composable("inicio") { InicioScreen(navController) }
                         composable("completar-perfil") { CompletarPerfilScreen(navController) }
                         composable("mural") { MuralScreen(navController) }
                         composable("projetos") { ProjetosScreen() }
                         composable("perfil") { PerfilScreen(navController) }
+                        composable("calendario") { CalendarioScreen() }
                         composable("detalhes/{id}") { backStackEntry ->
                             val id = backStackEntry.arguments?.getString("id")
                             var carregando by remember { mutableStateOf(true) }
