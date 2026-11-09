@@ -20,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import br.edu.ifal.agorahub.data.oportunidadesExemplo
 import br.edu.ifal.agorahub.domain.Oportunidade
 import java.time.LocalDate
 
@@ -97,19 +98,7 @@ fun MuralScreenPreview() {
         MuralConteudo(
             carregando = false,
             falhou = false,
-            oportunidades = listOf(
-                Oportunidade(
-                    id = "1",
-                    titulo = "Maratona de Programação do IFAL",
-                    tipo = "Competição",
-                    descricao = "Competição em equipes de três estudantes.",
-                    prazo = LocalDate.now().plusDays(3),
-                    dataPublicacao = LocalDate.now(),
-                    link = "https://www.ifal.edu.br",
-                    imagemUrl = null,
-                    descricaoImagem = null
-                )
-            ),
+            oportunidades = oportunidadesExemplo.filter { it.prazo >= LocalDate.now() },
             navController = rememberNavController()
         )
     }
