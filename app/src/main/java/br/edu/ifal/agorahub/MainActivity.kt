@@ -27,6 +27,7 @@ import br.edu.ifal.agorahub.ui.screen.EntrarScreen
 import br.edu.ifal.agorahub.ui.screen.VerificacaoScreen
 import br.edu.ifal.agorahub.ui.screen.InicioScreen
 import br.edu.ifal.agorahub.ui.screen.CompletarPerfilScreen
+import br.edu.ifal.agorahub.ui.screen.CalendarioScreen
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
@@ -55,6 +56,7 @@ class MainActivity : ComponentActivity() {
                         if (
                             rotaAtual != "abertura" &&
                             rotaAtual != "privacidade" &&
+                            rotaAtual != "calendario" &&
                             rotaAtual != "cadastro" &&
                             rotaAtual != "entrar" &&
                             rotaAtual != "verificacao" &&
@@ -80,6 +82,7 @@ class MainActivity : ComponentActivity() {
                         composable("mural") { MuralScreen(navController) }
                         composable("projetos") { ProjetosScreen() }
                         composable("perfil") { PerfilScreen(navController) }
+                        composable("calendario") { CalendarioScreen() }
                         composable("detalhes/{id}") { backStackEntry ->
                             val id = backStackEntry.arguments?.getString("id")
                             var carregando by remember { mutableStateOf(true) }
