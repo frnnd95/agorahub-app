@@ -6,7 +6,8 @@ Registro das iterações do Projeto Integrador: o que foi planejado, o que foi e
 |----------|--------------------|---------|-------------------------------|
 | 1        | 29/09 a 06/10/2026 | 7 dias  | Concluída, com replanejamento |
 | 2        | 06/10 a 13/10/2026 | 7 dias  | Concluída                     |
-| 3        | 13/10 a 27/10/2026 | 15 dias | Em andamento                  |
+| 3        | 13/10 a 27/10/2026 | 15 dias | Concluída, com itens passados para a Iteração 4 |
+| 4        | 27/10 a 10/11/2026 | 15 dias | Concluída, com o RF02 passado para a Iteração 5 |
 
 ## Iteração 1 — 29/09 a 06/10/2026
 
@@ -149,5 +150,78 @@ Se sobrar tempo: editar o perfil (RF09) e criar um projeto (RF13).
 | 26/10           | Samuel                 | Validar as entregas como PO                                    |
 | 27/10           | Equipe                 | Apresentar o resultado da Iteração 3 e o plano da Iteração 4   |
 | Se sobrar tempo | Quem terminar primeiro | Editar o perfil (RF09) e criar um projeto (RF13)               |
+
+### Resultado
+
+A iteração terminou em 27/10/2026. Até essa data, estavam concluídas as issues #40 (correção da documentação), #41 (projeto Firebase), #42 (link no navegador), #43 (abertura e Privacidade e dados), #44 (aba Perfil com dados de exemplo) e #46 (Criar conta).
+
+Ficaram para depois:
+
+- concluídas na Iteração 4, mas ainda no milestone da Iteração 3: #45 (Mural lendo o Firestore, em 31/10), #48 (cadastro das oportunidades reais, em 01/11) e #47 (Entrar, em 02/11);
+- passadas para o milestone da Iteração 4: #50 (RF02), #54 (RF04), #52 (RF05), #51 (RF07), #53 (RF08 com o Firestore) e, dos itens para quando sobrasse tempo, #49 (RF09). O RF13 não foi iniciado.
+
+**Revisão e validação:**
+
+- Revisaram os pull requests: Lucas (#57, #59 e #63) e Fernanda (#56, #60 e #61). Samuel aprovou, como PO, o texto da Privacidade e dados (#57). O #59 foi revertido pelo #61 e refeito no #62. O #55, só de documentação, e o #62 não têm revisão registrada.
+
+**Métricas:**
+
+- Progresso do projeto: 22% (6 de 27 requisitos funcionais: RF01, RF06, RF08, RF10, RF11 e RF12, com o RF08, o RF10 e o RF11 ainda com dados de exemplo).
+
+## Iteração 4 — 27/10 a 10/11/2026
+
+### Objetivo
+
+- Aplicar coroutines e Retrofit, como pede a disciplina de Programação para Dispositivos Móveis (D19 e D20): cada dev entrega uma tela que lê uma coleção do Firestore e uma tela que consome uma rota diferente da API fake.
+- Concluir as issues da Iteração 3 que passaram para esta iteração.
+
+### Itens
+
+| Item                                               | Requisito ou decisão | Responsável | Issue | Situação     |
+|----------------------------------------------------|----------------------|-------------|-------|--------------|
+| Coroutines, Retrofit e API fake                    | D19, D20             | Fernanda    | #65   | Concluído    |
+| Hub de Projetos com projetos de teste do Firestore | RF14                 | Fernanda    | #66   | Concluído    |
+| Tela Equipe ÁgoraHub                               | RF30                 | Fernanda    | #70   | Concluído    |
+| Confirmação do e-mail institucional                | RF02                 | Fernanda    | #50   | Passou para a Iteração 5 |
+| Mural com coroutines e mensagem de erro            | RN10, D19            | Jhully      | #67   | Concluído    |
+| Tela Perguntas frequentes                          | RF28                 | Jhully      | #68   | Concluído    |
+| Recuperar a senha                                  | RF04                 | Jhully      | #54   | Concluído    |
+| Completar o perfil no primeiro acesso              | RF07                 | Samuel      | #51   | Concluído    |
+| Sair da conta                                      | RF05                 | Samuel      | #52   | Concluído    |
+| Aba Perfil com os dados do Firestore               | RF08                 | Samuel      | #53   | Concluído    |
+| Tela Calendário acadêmico                          | RF29                 | Samuel      | #69   | Concluído    |
+| Editar o perfil                                    | RF09                 | Samuel      | #49   | Concluído    |
+
+Também foram concluídas nesta iteração as issues #45, #48 e #47, do milestone da Iteração 3.
+
+### Resultado
+
+**Mudanças durante a iteração:**
+
+- O My JSON Server saiu do ar em 01/11, e a API fake passou a ser lida pelo endereço raw do GitHub (D20, em 03/11).
+- A #50 (RF02) não foi concluída e passou para a Iteração 5.
+
+**Revisão e validação:**
+
+- Revisaram os pull requests: Lucas (#71 a #79, #81 e #82), Fernanda (#64, #80 e #83) e Samuel (#82).
+- A Jousiclécia não testou nesta iteração, porque a equipe não preparou os testes para ela.
+- Não houve validação direta pelo PO. Numa conversa informal, o Samuel disse que está gostando do que o app está se tornando e que está animado com os próximos incrementos.
+
+**Métricas:**
+
+- Entrega dos itens planejados: 92% (11 de 12; o RF02 passou para a Iteração 5).
+- Aceite dos itens entregues: 100% (11 de 11, todos com o pull request aprovado na revisão).
+- Progresso do projeto: 50% (15 de 30 requisitos funcionais, já com os RF28 a RF30 da versão 3.0 dos requisitos; na contagem anterior, 12 de 27).
+
+**Lições aprendidas:**
+
+- Issues que não dependem de outras pessoas andam mais rápido.
+- Mandar um APK a cada issue para a Jousiclécia não é viável para os devs.
+
+### Mudanças para as próximas iterações
+
+- Os testes da Jousiclécia passam a ser por iteração: ao fechar uma iteração, a `develop` vai para a `main`, a Fernanda gera o APK da `main` e envia com um passo a passo, e a Jousiclécia testa o app inteiro durante a iteração seguinte (guia de desenvolvimento, seção 10). O APK da Iteração 4 vai para ela no início da Iteração 5.
+- O `requisitos.md` passou para a versão 3.0, coerente com o código e com a seção de decisões mais curta: as decisões que descrevem o produto viraram requisitos, as telas de consulta viraram RF28 a RF30, a estrutura e as regras do Firestore foram para a seção 9, e a seção 8.4 mostra onde está cada decisão antiga. O README e o guia de desenvolvimento foram atualizados junto.
+- As issues da Iteração 5 partem da versão 3.0 e das decisões em aberto D23 a D25.
 
 Os pull requests são revisados pelo Lucas ou, se ele não puder, por outro dev. Quem abriu o pull request nunca revisa o próprio. A Jousiclécia testa a acessibilidade instalando o APK no celular (guia de desenvolvimento, seção 10).

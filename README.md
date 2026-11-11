@@ -6,9 +6,14 @@ Projeto acadêmico das disciplinas de Projeto Integrador e Programação para Di
 
 ## Situação atual
 
-O app abre no Mural de Oportunidades, que mostra as oportunidades cadastradas pela equipe no Firestore (veja a seção 11 do guia de desenvolvimento). As vencidas não aparecem, a lista é ordenada pelo prazo mais próximo e o prazo fica em vermelho quando faltam 3 dias ou menos. Tocar numa oportunidade abre os detalhes dela.
+O app abre na tela de abertura, com Entrar, Criar conta e Ver privacidade e dados. A conta usa o e-mail institucional, pelo Firebase Authentication, e a tela Entrar tem a recuperação de senha. No primeiro acesso, o estudante completa o perfil com nome, curso e de 3 a 5 interesses.
 
-A barra de navegação tem as abas Mural, Projetos e Perfil. Projetos e Perfil mostram, por enquanto, só o título.
+Depois disso, a barra de navegação tem três abas:
+
+- **Mural:** oportunidades cadastradas pela equipe no Firestore (seção 11 do guia de desenvolvimento). As vencidas não aparecem, a lista é ordenada pelo prazo mais próximo e o prazo fica em vermelho quando faltam 3 dias ou menos. Tocar numa oportunidade abre os detalhes, com o link para o navegador.
+- **Projetos:** projetos abertos e com vagas, lidos do Firestore. Por enquanto, são projetos de teste cadastrados pelo console.
+- **Perfil:** nome, curso e interesses do estudante, com as opções Editar perfil, Calendário acadêmico, Perguntas frequentes, Equipe ÁgoraHub, Privacidade e dados e Sair. Calendário, Perguntas e Equipe leem a API fake do repositório `agorahub-api`.
+
 ## Tecnologias
 
 - Kotlin
@@ -16,10 +21,11 @@ A barra de navegação tem as abas Mural, Projetos e Perfil. Projetos e Perfil m
 - Android Studio
 - Navigation Compose: navegação entre as telas (Aula 06)
 - Coil: imagens das oportunidades carregadas da internet (Aula 01)
-- Material Icons: ícones das telas (Aula 05, D13)
-- Desugaring de bibliotecas do Java: datas com `LocalDate` no Android 7 (D14)
-- Retrofit com Moshi: configurado para ler a API fake do repositório `agorahub-api` (Aula 09, D19 e D20)
+- Material Icons: ícones das telas (Aula 05)
+- Desugaring de bibliotecas do Java: datas com `LocalDate` no Android 7 (seção 8.3 dos requisitos)
+- Retrofit com Moshi: lê a API fake do repositório `agorahub-api` nas telas de consulta (Aula 09, D19 e D20)
 - Coroutines: chamadas à internet sem travar a tela (Aulas 08 e 09, D19)
+- Firebase Authentication e Cloud Firestore: contas e dados do app (RNF12)
 
 ## Documentação
 
@@ -38,7 +44,7 @@ A barra de navegação tem as abas Mural, Projetos e Perfil. Projetos e Perfil m
 4. Conecte um celular com a **Depuração USB** ativada ou inicie um emulador.
 5. Clique em **Run ▶**.
 
-**Resultado esperado:** o app abre no Mural de Oportunidades, com a lista de oportunidades de exemplo e a barra de navegação embaixo. Tocar numa oportunidade abre os detalhes.
+**Resultado esperado:** o app abre na tela de abertura. Depois de entrar e completar o perfil, ele abre no Mural de Oportunidades, com a barra de navegação embaixo.
 
 Se aparecer o erro `INSTALL_FAILED_USER_RESTRICTED`, ative **Instalar via USB** nas Opções do desenvolvedor.
 
@@ -49,15 +55,14 @@ O app usa o Firebase, no plano gratuito Spark, com o Authentication (e-mail e se
 - O arquivo `google-services.json` já está na pasta `app` do repositório. Não é preciso criar nem baixar outro.
 - Na primeira sincronização, o Gradle baixa as bibliotecas do Firebase, então o computador precisa estar conectado à internet.
 - Para ver ou alterar os dados, entre no [console do Firebase](https://console.firebase.google.com) com o email do AgoraHub.
-- As regras do Firestore ficam no console, não no repositório. A regra provisória está registrada na decisão D17 do [documento de requisitos](docs/requisitos.md).
-- O Mural ainda usa dados de exemplo. A leitura das oportunidades no Firestore fica na issue [RN10 Mural lendo as oportunidades do Firestore](https://github.com/frnnd95/agorahub-app/issues/45).
+- As regras do Firestore ficam no console, não no repositório. As regras em uso estão descritas na seção 9.4 do [documento de requisitos](docs/requisitos.md).
 
 ## Estrutura de pastas
 
 ```
 app/src/main/java/br/edu/ifal/agorahub/
 ├── MainActivity.kt   → abre o app, mostra a barra de navegação e define as rotas das telas
-├── data/             → classes que entregam os dados às telas (D10) e os dados de exemplo
+├── data/             → classes que entregam os dados às telas (RNF16) e os dados de exemplo dos Previews
 ├── domain/           → classes que representam os dados do app, como Oportunidade
 └── ui/
     ├── components/   → partes usadas dentro das telas, como o cartão da oportunidade e a barra de navegação

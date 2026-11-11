@@ -45,12 +45,13 @@ git merge develop
 
 Se o Git avisar de conflito, ele mostra os arquivos com problema. Peça ajuda no grupo antes de resolver.
 
-**Confira a acessibilidade (RNF01 a RNF05):**
+**Confira a acessibilidade (RNF01 a RNF06):**
 
 - [ ] Com o TalkBack ligado, cada imagem e ícone importante é lido com um nome que faz sentido. Imagens e ícones só decorativos não são lidos.
 - [ ] Com a fonte do celular no tamanho máximo, nenhum texto é cortado.
 - [ ] O app Accessibility Scanner não mostra alertas de contraste nem de área de toque.
 - [ ] Mensagens de erro e avisos aparecem como texto, nunca só por cor.
+- [ ] No tema escuro do celular, todos os textos continuam legíveis (RNF06).
 
 ## 4. Abrir o pull request
 
@@ -79,7 +80,7 @@ O `Closes #N` (com o número da issue) fecha a issue automaticamente quando o pu
 - [ ] O checklist de acessibilidade foi seguido.
 - [ ] Não há código de outras issues misturado.
 
-A Jousiclécia também testa a acessibilidade instalando o APK no celular (seção 10).
+No fim de cada iteração, a Jousiclécia testa o app inteiro pelo APK da `main` (seção 10).
 
 Para rodar o app da branch do colega:
 
@@ -108,20 +109,20 @@ Durante a issue, você vai precisar tomar decisões técnicas. Antes de usar alg
 2. Consigo explicar ao professor, em poucas frases, o que é e por que foi preciso?
 3. Existe um jeito mais simples, com o que já sabemos?
 
-Se a resposta à pergunta 1 for "não", só use se for indispensável para a issue. Nesse caso, registre a decisão na seção 8 do documento de requisitos (RNF11) e explique na descrição do pull request.
+Se a resposta à pergunta 1 for "não", só use se for indispensável para a issue. Nesse caso, registre na seção 8 do documento de requisitos (RNF11): um recurso novo, como um componente ou uma função, ganha uma linha na tabela da seção 8.3; uma escolha que muda o rumo do projeto, como a D19, vira uma decisão na seção 8.2. Explique também na descrição do pull request.
 
-As decisões já tomadas estão na [seção 8 do documento de requisitos](requisitos.md#82-decisões-tomadas). Consulte antes de começar.
+As decisões e os recursos já registrados estão na [seção 8 do documento de requisitos](requisitos.md#8-decisões). Consulte antes de começar.
 
 ## 8. Combinados do código
 
 - Todo `@Preview` fica dentro do `AgoraHubTheme`, para mostrar as cores do app.
 - As cores nas telas vêm do tema (`MaterialTheme.colorScheme.primary`, `.error` e assim por diante), nunca de um `Color(0xFF...)` escrito na tela. Assim o tema escuro funciona sozinho (RNF06).
-- Use as palavras do documento de requisitos: "interesse" (não "tag"), "responsável" (não "dono"), "Mural de Oportunidades", "Hub de Projetos" (D11).
-- Ícones vêm do `Icons.Default`, sem importar SVG (D13). Veja a seção 9.
+- Use as palavras do glossário do documento de requisitos (seção 4): "interesse" (não "tag"), "responsável" (não "dono"), "Mural de Oportunidades", "Hub de Projetos".
+- Ícones vêm do `Icons.Default` ou, nas setas, do `Icons.AutoMirrored`, sem importar SVG. Veja a seção 9.
 
 ## 9. Como usar ícones
 
-Os ícones do app são os Material Icons (D13). A biblioteca já está no projeto, e quem desenvolve a tela escolhe o ícone.
+Os ícones do app são os Material Icons, os mesmos da Aula 05. A biblioteca já está no projeto, e quem desenvolve a tela escolhe o ícone.
 
 ### Escolher o ícone
 
@@ -143,13 +144,13 @@ O nome muda de formato no código: `open_in_new` vira `OpenInNew`, e `campaign` 
 | Adicionar    | `Icons.Default.Add`                    |
 | Editar       | `Icons.Default.Edit`                   |
 | E-mail       | `Icons.Default.Email`                  |
-| Abrir link   | `Icons.Default.OpenInNew`              |
+| Abrir link   | `Icons.AutoMirrored.Filled.OpenInNew`  |
 | Enviar       | `Icons.Default.Send`                   |
 | Seta direita | `Icons.Default.ChevronRight`           |
 | Voltar       | `Icons.AutoMirrored.Filled.ArrowBack`  |
 | Sair         | `Icons.AutoMirrored.Filled.Logout`     |
 
-Voltar e Sair usam `AutoMirrored`: são setas que se espelham sozinhas em idiomas escritos da direita para a esquerda.
+Abrir link, Voltar e Sair usam `AutoMirrored`: são setas que se espelham sozinhas em idiomas escritos da direita para a esquerda.
 
 ### Colocar na tela
 
@@ -184,7 +185,7 @@ IconButton(onClick = { /* o que acontece ao tocar */ }) {
 }
 ```
 
-O `IconButton` não aparece nas aulas: ele entra por causa da RNF04.
+O `IconButton` aparece na Aula 09, no campo de CEP da `RegisterUserScreen`.
 
 ## 10. Gerar o APK e testes de acessibilidade
 
@@ -192,9 +193,10 @@ A Jousiclécia testa a acessibilidade instalando o app no celular dela. Para iss
 
 **Como gerar o APK:**
 
-1. No painel **Build Variants**, confira se o módulo `app` está em **debug**.
-2. No menu, clique em **Build › Generate Bundle(s) / APK(s) › Generate APK(s)**.
-3. No aviso que aparece no canto inferior direito, clique em **locate**. O arquivo é `app/build/outputs/apk/debug/app-debug.apk`.
+1. Atualize a `main` e abra-a no Android Studio: `git checkout main` e `git pull origin main`.
+2. No painel **Build Variants**, confira se o módulo `app` está em **debug**.
+3. No menu, clique em **Build › Generate Bundle(s) / APK(s) › Generate APK(s)**.
+4. No aviso que aparece no canto inferior direito, clique em **locate**. O arquivo é `app/build/outputs/apk/debug/app-debug.apk`.
 
 Não envie o APK gerado pelo botão **Run**: ele só instala pelo cabo, e no celular de outra pessoa aparece "Como o pacote parece ser inválido, o app não foi instalado". Como o Run sobrescreve o mesmo arquivo, gere o APK e envie logo em seguida, sem rodar o app no meio.
 
@@ -202,9 +204,9 @@ Ao instalar, o Play Protect avisa que o app é desconhecido. É esperado, porque
 
 **Como funciona o teste:**
 
-1. Quem abriu o pull request gera o APK da própria branch e envia para a Jousiclécia, junto com o **Como testar** da descrição do pull request.
-2. A Jousiclécia testa e relata ao Lucas o que testou e os problemas que encontrou.
-3. O Lucas registra o relato como comentário no pull request.
+1. No fim de cada iteração, depois do pull request da `develop` para a `main` (seção 6), a Fernanda gera o APK da `main` e envia para a Jousiclécia, com um passo a passo para testar tudo o que a iteração entregou.
+2. A Jousiclécia tem a iteração seguinte inteira para testar o app com calma.
+3. Ela relata ao Lucas o que testou e os problemas que encontrou, e o Lucas abre uma issue para cada problema.
 
 ## 11. Como cadastrar uma oportunidade no Firestore
 
@@ -234,9 +236,9 @@ As oportunidades do Mural são cadastradas pela Equipe ÁgoraHub direto no conso
 
 **Cuidados:**
 
-- Não crie um campo `id`. O identificador do documento já é o `id` da oportunidade (D15).
+- Não crie um campo `id`. O identificador do documento já é o `id` da oportunidade (seção 9.2 do documento de requisitos).
 - `prazo` e `dataPublicacao` precisam ser do tipo **timestamp**. Salvos como string, o app não consegue ler a data.
-- Se faltar um campo obrigatório ou o nome estiver errado (por exemplo, `dataPublicação`), a oportunidade **não aparece** no app (D15). Compare o documento com a tabela.
+- Se faltar um campo obrigatório ou o nome estiver errado (por exemplo, `dataPublicação`), a oportunidade **não aparece** no app (seção 9.2 do documento de requisitos). Compare o documento com a tabela.
 - Sem imagem, não crie `imagemUrl` nem `descricaoImagem`. Não deixe esses campos vazios.
 - Antes de salvar uma imagem, abra o endereço no navegador para conferir se ela carrega.
 - O Mural só mostra as oportunidades dentro do prazo (RN12). Uma oportunidade vencida fica no Firestore, mas não aparece no app. Isso não é erro.
