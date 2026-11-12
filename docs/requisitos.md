@@ -17,7 +17,7 @@
 | 2.11   | Fernanda        | 08/11/2026 | Decisão D17, etapa 4: regras da coleção `projetos` (RF14)                                                                                                                                                                                                            |
 | 2.12   | Fernanda        | 09/11/2026 | Decisão D20: `mergeDescendants` nos itens do Calendário e da Equipe                                                                                                                                                                                                  |
 | 3.0    | Fernanda        | 09/11/2026 | Decisões que descrevem o produto viram requisitos (RNF06, RNF10 a RNF13, RNF15 e RNF16) ou saem; telas de consulta como RF28 a RF30; RN04 ampliada; seções 8.3, 8.4 e 9 novas; decisões em aberto D23 a D25; RNF14 com a data da apresentação final; sai a seção 5.4 |
-
+| 3.1    | Fernanda        | 12/11/2026 | Decisões D23 (e-mail dos membros na coleção `emails`), D24 (coleção `solicitacoes`) e D25 (gravação em lote) |
 
 ## Sumário
 
@@ -436,11 +436,7 @@ Esta seção registra o que a RNF11 pede: as decisões que mudam o rumo do proje
 
 ### 8.1 Decisões em aberto
 
-| Id. | Questão | Requisitos afetados |
-|-----|---------|---------------------|
-| D23 | Onde guardar o e-mail que o responsável vê nos membros do projeto. Hoje ele fica só no Authentication (9.1), e a RN05 limita quem pode vê-lo. | RF23 |
-| D24 | Como guardar as solicitações e garantir, nas regras do Firestore, que só o solicitante e o responsável as vejam (RN05). | RF17 a RF24 |
-| D25 | Como atualizar juntos o projeto e as solicitações, sem as Cloud Functions retiradas na Iteração 1, ao aceitar uma solicitação (RN26), remover um membro (RN28) e encerrar o projeto (RN30). | RF21, RF24, RF26 |
+Não há decisões em aberto.
 
 ### 8.2 Decisões tomadas
 
@@ -448,6 +444,9 @@ Esta seção registra o que a RNF11 pede: as decisões que mudam o rumo do proje
 |-----|---------|--------|------|
 | D19 | O app usa coroutines e Retrofit, como nas Aulas 08 e 09. As classes da pasta `data` têm funções `suspend`, que as telas chamam num `LaunchedEffect`, para carregar dados ao abrir, ou num `rememberCoroutineScope`, para gravar ao tocar num botão (Aula 09), sem ViewModel e com `try`/`catch` nas falhas. O Retrofit usa o conversor Moshi, e o Firestore, o `await()` (8.3). O Authentication continua com os ouvintes do `ContaDados`. | A disciplina de Programação para Dispositivos Móveis exige telas que acessam o banco e uma API com coroutines. Muda o registrado na Iteração 1, quando as coroutines saíram do MVP. | 30/10/2026; 09/11/2026 (`rememberCoroutineScope`) |
 | D20 | Cada dev consome uma rota diferente de uma API fake: um arquivo JSON por rota no repositório público `agorahub-api`, lido pelo endereço raw do GitHub (`https://raw.githubusercontent.com/frnnd95/agorahub-api/main/`). O app só lê os dados, com Retrofit e coroutines (D19), nas telas de consulta (RF28 a RF30). Os dados são alterados direto na branch `main` do `agorahub-api` (seção 9.5). | A disciplina exige que cada dev consuma uma rota diferente de uma API. A API fake segue o exemplo do professor, sem servidor nem conta nova, e cada dev atualiza a própria rota sem esperar um pull request no app. O My JSON Server (visto em aula), usado até 03/11, saiu do ar em 01/11. | 30/10/2026; 03/11/2026 (endereço raw) |
+| D23 | O e-mail que o responsável vê nos membros (RF23) fica na coleção `emails`, num documento com o mesmo identificador da solicitação, com os campos `email` e `solicitante`. O solicitante cria esse documento junto com a solicitação (D25), com o próprio e-mail do Authentication. A regra só deixa o responsável ler o documento quando a solicitação está Aceita, conferindo-a com `get()`. O e-mail continua fora de `estudantes`. | A regra do Firestore libera o documento inteiro, e não um campo, e o app não lê o e-mail de outro estudante no Authentication. Assim, a RN05, a RN22 e a RNF08 valem também no Firebase: o e-mail só fica visível depois do aceite e volta a ficar oculto se o membro for removido. | 12/11/2026 |
+| D24 | As solicitações ficam na coleção `solicitacoes`, um documento por solicitação, com os campos `projeto`, `solicitante`, `responsavel`, `status` (Pendente, Aceita, Recusada ou Removida), `motivo` e `criadaEm`. A regra só deixa o solicitante e o responsável lerem, e as consultas do app filtram por um dos dois com `whereEqualTo`, ordenando no app. A RN21 é conferida só no app. | Atende à RN05 com uma regra simples. Com uma subcoleção em cada projeto, o Minhas solicitações (RF18) precisaria de uma consulta de grupo e de um índice; numa lista dentro do projeto, todos os estudantes leriam as solicitações. A regra não consegue procurar outros documentos, por isso a RN21 fica só no app. | 12/11/2026 |
+| D25 | O app grava numa só operação, com a gravação em lote do Firestore (`WriteBatch`), as alterações do aceite (RN26), da remoção de um membro (RN28) e do encerramento do projeto (RN30). O envio da solicitação também grava em lote o documento de `emails` (D23). | Sem as Cloud Functions, retiradas na Iteração 1, o lote evita que o projeto e as solicitações fiquem pela metade se a conexão cair: ou todas as gravações acontecem, ou nenhuma. A transação (`runTransaction`) protegeria também contra dois aceites ao mesmo tempo, mas só o responsável aceita, e ela é mais difícil de explicar. | 12/11/2026 |
 
 ### 8.3 Recursos que não apareceram nas aulas
 
