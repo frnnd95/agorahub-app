@@ -8,6 +8,7 @@ Registro das iterações do Projeto Integrador: o que foi planejado, o que foi e
 | 2        | 06/10 a 13/10/2026 | 7 dias  | Concluída                     |
 | 3        | 13/10 a 27/10/2026 | 15 dias | Concluída, com itens passados para a Iteração 4 |
 | 4        | 27/10 a 10/11/2026 | 15 dias | Concluída, com o RF02 passado para a Iteração 5 |
+| 5        | 10/11 a 24/11/2026 | 15 dias | Em andamento                  |
 
 ## Iteração 1 — 29/09 a 06/10/2026
 
@@ -223,5 +224,70 @@ Também foram concluídas nesta iteração as issues #45, #48 e #47, do mileston
 - Os testes da Jousiclécia passam a ser por iteração: ao fechar uma iteração, a `develop` vai para a `main`, a Fernanda gera o APK da `main` e envia com um passo a passo, e a Jousiclécia testa o app inteiro durante a iteração seguinte (guia de desenvolvimento, seção 10). O APK da Iteração 4 vai para ela no início da Iteração 5.
 - O `requisitos.md` passou para a versão 3.0, coerente com o código e com a seção de decisões mais curta: as decisões que descrevem o produto viraram requisitos, as telas de consulta viraram RF28 a RF30, a estrutura e as regras do Firestore foram para a seção 9, e a seção 8.4 mostra onde está cada decisão antiga. O README e o guia de desenvolvimento foram atualizados junto.
 - As issues da Iteração 5 partem da versão 3.0 e das decisões em aberto D23 a D25.
+
+## Iteração 5 — 10/11 a 24/11/2026
+
+### Objetivo
+
+- Implementar os 15 requisitos funcionais que faltam no MVP: criar e gerenciar projetos, solicitações de participação, membros dos projetos e a confirmação do e-mail institucional.
+- Deixar a Iteração 6 (24/11 a 15/12) para correções e melhorias antes da apresentação final (RNF14).
+- Enviar à Jousiclécia o APK da Iteração 4 e validar as entregas com o PO.
+
+### Itens
+
+| Item                                                        | Requisito ou decisão | Responsável | Issue | Situação |
+|-------------------------------------------------------------|----------------------|-------------|-------|----------|
+| Regras do Firestore das decisões D23 a D25 e solicitar participação | RF17, D23 a D25 | Fernanda | #86 | A fazer |
+| Aceitar uma solicitação                                     | RF21                 | Fernanda    | #91   | A fazer  |
+| Membros do projeto                                          | RF23                 | Fernanda    | #96   | A fazer  |
+| Remover um membro                                           | RF24                 | Fernanda    | #98   | A fazer  |
+| Confirmação do e-mail institucional                         | RF02                 | Fernanda    | #50   | A fazer  |
+| Detalhes do projeto                                         | RF16                 | Samuel      | #85   | A fazer  |
+| Solicitações recebidas                                      | RF20                 | Samuel      | #89   | A fazer  |
+| Recusar uma solicitação                                     | RF22                 | Samuel      | #92   | A fazer  |
+| Minhas solicitações                                         | RF18                 | Samuel      | #94   | A fazer  |
+| Encerrar um projeto                                         | RF26                 | Samuel      | #97   | A fazer  |
+| Criar um projeto                                            | RF13                 | Jhully      | #87   | A fazer  |
+| Meus projetos                                               | RF19                 | Jhully      | #88   | A fazer  |
+| Filtrar o Hub de Projetos por interesse                     | RF15                 | Jhully      | #90   | A fazer  |
+| Editar o título e a descrição de um projeto                 | RF25                 | Jhully      | #93   | A fazer  |
+| Reabrir um projeto fechado                                  | RF27                 | Jhully      | #95   | A fazer  |
+
+As decisões D23 a D25 foram registradas em 12/11, antes das issues que dependem delas. As regras do Firestore ficam na primeira parte da #86, publicada até 13/11, para que as outras issues possam ser testadas com dados cadastrados pelo console, sem esperar o RF17 inteiro.
+
+### Timeline
+
+A data final de cada tarefa é a do pull request aberto. O Lucas revisa em até 24 horas.
+
+| Data       | Responsável | Tarefa                                                                                          |
+|------------|-------------|-------------------------------------------------------------------------------------------------|
+| 12/11      | Fernanda    | Registrar as decisões D23 a D25 e criar as issues da iteração                                   |
+| 12 a 13/11 | Fernanda    | Levar a `develop` para a `main` e enviar à Jousiclécia o APK e o roteiro de teste da Iteração 4 |
+| 12 a 13/11 | Fernanda    | Regras do Firestore das decisões D23 a D25 (#86, parte 1)                                       |
+| 12 a 14/11 | Samuel      | Detalhes do projeto (RF16)                                                                      |
+| 12 a 15/11 | Jhully      | Criar um projeto (RF13)                                                                         |
+| 12 a 24/11 | Lucas       | Revisar os pull requests                                                                        |
+| 13 a 23/11 | Jousiclécia | Testar o APK da Iteração 4 e relatar os problemas ao Lucas                                      |
+| 14 a 17/11 | Fernanda    | Solicitar participação (RF17)                                                                   |
+| 15 a 16/11 | Jhully      | Meus projetos (RF19)                                                                            |
+| 15 a 17/11 | Samuel      | Solicitações recebidas (RF20)                                                                   |
+| 17/11      | Jhully      | Filtrar o Hub de Projetos por interesse (RF15)                                                  |
+| 17/11      | Equipe      | Reunião online de acompanhamento                                                                |
+| 18 a 19/11 | Fernanda    | Aceitar uma solicitação (RF21)                                                                  |
+| 18 a 19/11 | Samuel      | Recusar uma solicitação (RF22)                                                                  |
+| 18 a 19/11 | Jhully      | Editar o título e a descrição de um projeto (RF25)                                              |
+| 20/11      | Fernanda    | Membros do projeto (RF23)                                                                       |
+| 20/11      | Samuel      | Minhas solicitações (RF18)                                                                      |
+| 20/11      | Jhully      | Reabrir um projeto fechado (RF27)                                                               |
+| 21/11      | Fernanda    | Remover um membro (RF24)                                                                        |
+| 21/11      | Samuel      | Encerrar um projeto (RF26)                                                                      |
+| 22/11      | Fernanda    | Confirmação do e-mail institucional (RF02)                                                      |
+| 23/11      | Samuel      | Validar as entregas como PO                                                                     |
+| 24/11      | Equipe      | Apresentar o resultado da Iteração 5 e o plano da Iteração 6                                    |
+
+### Fora desta iteração
+
+- Funcionalidades da versão completa (`requisitos.md`, seção 7).
+- Testes da Jousiclécia nas telas novas desta iteração: entram no APK da Iteração 5, testado na Iteração 6.
 
 Os pull requests são revisados pelo Lucas ou, se ele não puder, por outro dev. Quem abriu o pull request nunca revisa o próprio. A Jousiclécia testa a acessibilidade instalando o APK no celular (guia de desenvolvimento, seção 10).
