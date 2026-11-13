@@ -5,8 +5,10 @@ Registro das iterações do Projeto Integrador: o que foi planejado, o que foi e
 | Iteração | Período            | Duração | Situação                      |
 |----------|--------------------|---------|-------------------------------|
 | 1        | 29/09 a 06/10/2026 | 7 dias  | Concluída, com replanejamento |
-| 2        | 06/10 a 13/10/2026 | 7 dias  | Em andamento                  |
-| 3        | 13/10 a 27/10/2026 | 15 dias | A planejar                    |
+| 2        | 06/10 a 13/10/2026 | 7 dias  | Concluída                     |
+| 3        | 13/10 a 27/10/2026 | 15 dias | Concluída, com itens passados para a Iteração 4 |
+| 4        | 27/10 a 10/11/2026 | 15 dias | Concluída, com o RF02 passado para a Iteração 5 |
+| 5        | 10/11 a 24/11/2026 | 15 dias | Em andamento                  |
 
 ## Iteração 1 — 29/09 a 06/10/2026
 
@@ -51,14 +53,12 @@ Mural de Oportunidades funcionando com dados de exemplo, com a barra de navegaç
 | Paleta de cores nos temas claro e escuro                      | D09, RNF06           | Equipe      | —     | Concluído |
 | Registro das iterações (`iteracoes.md`)                       | D01                  | Equipe      | —     | Concluído |
 | Guia de desenvolvimento para a equipe                         | RNF11, RNF13         | Fernanda    | #27   | Concluído |
-| Ícone do app                                                  | D09                  | Fernanda    | —     | Concluído |
-| Ícones do Material: dependência e tutorial no guia            | D13                  | Fernanda    | —     | Concluído |
-| Classe `Oportunidade` e dados de exemplo                      | D14, RF10, RF11      | Fernanda    |       | Concluído |
-| Mural de Oportunidades                                        | RF10, RN11 a RN15    | Fernanda    |       | A fazer   |
-| Barra de navegação com as abas Mural, Projetos e Perfil       | D08                  | Jhully      |       | A fazer   |
-| Detalhes da oportunidade                                      | RF11                 | Samuel      |       | A fazer   |
+| Classe `Oportunidade` e dados de exemplo                      | RF10, RF11           | Fernanda    | #28   | Concluído |
+| Mural de Oportunidades                                        | RF10, RN11 a RN15    | Fernanda    | #29   | Concluído |
+| Barra de navegação com as abas Mural, Projetos e Perfil       | D08                  | Jhully      | #30   | Concluído |
+| Detalhes da oportunidade                                      | RF11                 | Samuel      | #31   | Concluído |
 
-Os pull requests são revisados por Lucas e Jousiclécia.
+O plano previa a revisão dos pull requests por Lucas e Jousiclécia.
 
 ### Ordem de trabalho
 
@@ -73,4 +73,221 @@ Os pull requests são revisados por Lucas e Jousiclécia.
 
 ### Resultado
 
-Preenchido na entrega de 13/10.
+A iteração foi concluída em 13/10/2026, com os oito itens planejados entregues.
+
+**Entregue fora do plano:**
+
+| Item                                                      | Requisito ou decisão | Responsável | Issue |
+|-----------------------------------------------------------|----------------------|-------------|-------|
+| Ícone do app                                              | D09                  | Fernanda    | —     |
+| Ícones do Material: biblioteca e tutorial no guia         | D13                  | Fernanda    | —     |
+| Datas com `LocalDate` e desugaring                        | D14                  | Fernanda    | #28   |
+| Cores da barra de navegação                               | D09, RNF02           | Fernanda    | #37   |
+| Mesmo estilo de título nas telas Mural, Projetos e Perfil | D08                  | Fernanda    | #29   |
+
+**Revisão e validação:**
+
+- Os pull requests foram revisados por Jhully (#32, #33 e #34), Lucas (#36 e #39), Samuel (#35) e Fernanda (#38).
+- O app foi executado em celular Android real e conferido com o checklist de acessibilidade do guia: TalkBack, fonte no tamanho máximo, Accessibility Scanner e tema escuro.
+- Nenhum item foi apresentado ao cliente. O projeto não tem cliente externo, e a equipe definiu o PO, Samuel, como cliente. A partir da Iteração 3, os itens concluídos são apresentados a ele antes da entrega.
+- Ainda não houve teste com uma pessoa usuária de leitor de tela.
+
+**Métricas:**
+
+- Entrega dos itens planejados: 100% (8 de 8).
+- Aceite dos itens entregues: 100%.
+- Validação pelo PO: 0%.
+- Progresso do projeto: 7% (2 de 27 requisitos funcionais, RF10 e RF11, ainda com dados de exemplo).
+
+**Lições aprendidas:**
+
+- Sem estimativa de tempo, quase todo o código ficou para 10 a 13/10.
+- A cadeia de dependências (classe, Mural, Detalhes e barra) fez itens esperarem uns pelos outros.
+- Issues com critérios de aceite e "Fora desta issue" deixaram a revisão objetiva.
+- Não houve reunião síncrona nem validação do PO.
+- O registro das iterações ficou desatualizado em relação ao GitHub.
+- Uma das revisoras não tem conta no GitHub.
+
+## Iteração 3 — 13/10 a 27/10/2026
+
+### Objetivo
+
+- Concluir o Mural de Oportunidades com as oportunidades reais, vindas do Firebase.
+- Permitir que o estudante crie a conta, entre no app e complete o perfil.
+- Testar as telas com leitor de tela e validá-las com o PO.
+
+### Itens do backlog
+
+- Mural de Oportunidades concluído: oportunidades reais cadastradas no Firebase, tela de detalhes e link aberto no navegador (RF10 a RF12).
+- Tela de abertura e Privacidade e dados (RF06).
+- Acesso do estudante: criar conta com e-mail institucional, confirmar o e-mail, entrar, recuperar a senha e sair (RF01 a RF05).
+- Perfil do estudante: completar o perfil no primeiro acesso e visualizá-lo na aba Perfil (RF07 e RF08).
+- Telas testadas com leitor de tela e entregas validadas pelo PO.
+
+Se sobrar tempo: editar o perfil (RF09) e criar um projeto (RF13).
+
+### Timeline
+
+| Data            | Responsável            | Tarefa                                                         |
+|-----------------|------------------------|----------------------------------------------------------------|
+| 14/10           | Fernanda               | Recriar a branch `develop` e proteger a `main`                 |
+| 14 a 15/10      | Fernanda               | Corrigir a documentação do repositório                         |
+| 14 a 16/10      | Samuel                 | Abrir o link da oportunidade no navegador (RF12)               |
+| 14 a 17/10      | Jhully                 | Criar o projeto Firebase e conectar o Firestore ao app (RNF12) |
+| 14 a 17/10      | Fernanda               | Tela de abertura e tela Privacidade e dados (RF06)             |
+| 14 a 26/10      | Lucas                  | Revisar os pull requests                                       |
+| 15 a 16/10      | Jousiclécia            | Testar com leitor de tela as telas da Iteração 2               |
+| 17 a 19/10      | Samuel                 | Aba Perfil com dados de exemplo (RF08)                         |
+| 18 a 22/10      | Jhully                 | Mural lendo as oportunidades do Firestore (RN10)               |
+| 18 a 22/10      | Fernanda               | Criar conta e Entrar (RF01 e RF03)                             |
+| 20/10           | Equipe                 | Reunião online de acompanhamento                               |
+| 20 a 21/10      | Samuel                 | Cadastrar as oportunidades reais no console do Firebase (RN10) |
+| 22 a 24/10      | Samuel                 | Recuperar a senha (RF04)                                       |
+| 23 a 25/10      | Fernanda               | Confirmação do e-mail institucional (RF02)                     |
+| 23 a 26/10      | Jhully                 | Completar o perfil no primeiro acesso (RF07)                   |
+| 24 a 25/10      | Samuel                 | Sair da conta (RF05)                                           |
+| 26/10           | Samuel                 | Aba Perfil com os dados reais (RF08)                           |
+| 26/10           | Jousiclécia            | Testar com leitor de tela as telas novas                       |
+| 26/10           | Samuel                 | Validar as entregas como PO                                    |
+| 27/10           | Equipe                 | Apresentar o resultado da Iteração 3 e o plano da Iteração 4   |
+| Se sobrar tempo | Quem terminar primeiro | Editar o perfil (RF09) e criar um projeto (RF13)               |
+
+### Resultado
+
+A iteração terminou em 27/10/2026. Até essa data, estavam concluídas as issues #40 (correção da documentação), #41 (projeto Firebase), #42 (link no navegador), #43 (abertura e Privacidade e dados), #44 (aba Perfil com dados de exemplo) e #46 (Criar conta).
+
+Ficaram para depois:
+
+- concluídas na Iteração 4, mas ainda no milestone da Iteração 3: #45 (Mural lendo o Firestore, em 31/10), #48 (cadastro das oportunidades reais, em 01/11) e #47 (Entrar, em 02/11);
+- passadas para o milestone da Iteração 4: #50 (RF02), #54 (RF04), #52 (RF05), #51 (RF07), #53 (RF08 com o Firestore) e, dos itens para quando sobrasse tempo, #49 (RF09). O RF13 não foi iniciado.
+
+**Revisão e validação:**
+
+- Revisaram os pull requests: Lucas (#57, #59 e #63) e Fernanda (#56, #60 e #61). Samuel aprovou, como PO, o texto da Privacidade e dados (#57). O #59 foi revertido pelo #61 e refeito no #62. O #55, só de documentação, e o #62 não têm revisão registrada.
+
+**Métricas:**
+
+- Progresso do projeto: 22% (6 de 27 requisitos funcionais: RF01, RF06, RF08, RF10, RF11 e RF12, com o RF08, o RF10 e o RF11 ainda com dados de exemplo).
+
+## Iteração 4 — 27/10 a 10/11/2026
+
+### Objetivo
+
+- Aplicar coroutines e Retrofit, como pede a disciplina de Programação para Dispositivos Móveis (D19 e D20): cada dev entrega uma tela que lê uma coleção do Firestore e uma tela que consome uma rota diferente da API fake.
+- Concluir as issues da Iteração 3 que passaram para esta iteração.
+
+### Itens
+
+| Item                                               | Requisito ou decisão | Responsável | Issue | Situação     |
+|----------------------------------------------------|----------------------|-------------|-------|--------------|
+| Coroutines, Retrofit e API fake                    | D19, D20             | Fernanda    | #65   | Concluído    |
+| Hub de Projetos com projetos de teste do Firestore | RF14                 | Fernanda    | #66   | Concluído    |
+| Tela Equipe ÁgoraHub                               | RF30                 | Fernanda    | #70   | Concluído    |
+| Confirmação do e-mail institucional                | RF02                 | Fernanda    | #50   | Passou para a Iteração 5 |
+| Mural com coroutines e mensagem de erro            | RN10, D19            | Jhully      | #67   | Concluído    |
+| Tela Perguntas frequentes                          | RF28                 | Jhully      | #68   | Concluído    |
+| Recuperar a senha                                  | RF04                 | Jhully      | #54   | Concluído    |
+| Completar o perfil no primeiro acesso              | RF07                 | Samuel      | #51   | Concluído    |
+| Sair da conta                                      | RF05                 | Samuel      | #52   | Concluído    |
+| Aba Perfil com os dados do Firestore               | RF08                 | Samuel      | #53   | Concluído    |
+| Tela Calendário acadêmico                          | RF29                 | Samuel      | #69   | Concluído    |
+| Editar o perfil                                    | RF09                 | Samuel      | #49   | Concluído    |
+
+Também foram concluídas nesta iteração as issues #45, #48 e #47, do milestone da Iteração 3.
+
+### Resultado
+
+**Mudanças durante a iteração:**
+
+- O My JSON Server saiu do ar em 01/11, e a API fake passou a ser lida pelo endereço raw do GitHub (D20, em 03/11).
+- A #50 (RF02) não foi concluída e passou para a Iteração 5.
+
+**Revisão e validação:**
+
+- Revisaram os pull requests: Lucas (#71 a #79, #81 e #82), Fernanda (#64, #80 e #83) e Samuel (#82).
+- A Jousiclécia não testou nesta iteração, porque a equipe não preparou os testes para ela.
+- Não houve validação direta pelo PO. Numa conversa informal, o Samuel disse que está gostando do que o app está se tornando e que está animado com os próximos incrementos.
+
+**Métricas:**
+
+- Entrega dos itens planejados: 92% (11 de 12; o RF02 passou para a Iteração 5).
+- Aceite dos itens entregues: 100% (11 de 11, todos com o pull request aprovado na revisão).
+- Progresso do projeto: 50% (15 de 30 requisitos funcionais, já com os RF28 a RF30 da versão 3.0 dos requisitos; na contagem anterior, 12 de 27).
+
+**Lições aprendidas:**
+
+- Issues que não dependem de outras pessoas andam mais rápido.
+- Mandar um APK a cada issue para a Jousiclécia não é viável para os devs.
+
+### Mudanças para as próximas iterações
+
+- Os testes da Jousiclécia passam a ser por iteração: ao fechar uma iteração, a `develop` vai para a `main`, a Fernanda gera o APK da `main` e envia com um passo a passo, e a Jousiclécia testa o app inteiro durante a iteração seguinte (guia de desenvolvimento, seção 10). O APK da Iteração 4 vai para ela no início da Iteração 5.
+- O `requisitos.md` passou para a versão 3.0, coerente com o código e com a seção de decisões mais curta: as decisões que descrevem o produto viraram requisitos, as telas de consulta viraram RF28 a RF30, a estrutura e as regras do Firestore foram para a seção 9, e a seção 8.4 mostra onde está cada decisão antiga. O README e o guia de desenvolvimento foram atualizados junto.
+- As issues da Iteração 5 partem da versão 3.0 e das decisões em aberto D23 a D25.
+
+## Iteração 5 — 10/11 a 24/11/2026
+
+### Objetivo
+
+- Implementar os 15 requisitos funcionais que faltam no MVP: criar e gerenciar projetos, solicitações de participação, membros dos projetos e a confirmação do e-mail institucional.
+- Deixar a Iteração 6 (24/11 a 15/12) para correções e melhorias antes da apresentação final (RNF14).
+- Enviar à Jousiclécia o APK da Iteração 4 e validar as entregas com o PO.
+
+### Itens
+
+| Item                                                        | Requisito ou decisão | Responsável | Issue | Situação |
+|-------------------------------------------------------------|----------------------|-------------|-------|----------|
+| Regras do Firestore das decisões D23 a D25 e solicitar participação | RF17, D23 a D25 | Fernanda | #86 | A fazer |
+| Aceitar uma solicitação                                     | RF21                 | Fernanda    | #91   | A fazer  |
+| Membros do projeto                                          | RF23                 | Fernanda    | #96   | A fazer  |
+| Remover um membro                                           | RF24                 | Fernanda    | #98   | A fazer  |
+| Confirmação do e-mail institucional                         | RF02                 | Fernanda    | #50   | A fazer  |
+| Detalhes do projeto                                         | RF16                 | Samuel      | #85   | A fazer  |
+| Solicitações recebidas                                      | RF20                 | Samuel      | #89   | A fazer  |
+| Recusar uma solicitação                                     | RF22                 | Samuel      | #92   | A fazer  |
+| Minhas solicitações                                         | RF18                 | Samuel      | #94   | A fazer  |
+| Encerrar um projeto                                         | RF26                 | Samuel      | #97   | A fazer  |
+| Criar um projeto                                            | RF13                 | Jhully      | #87   | A fazer  |
+| Meus projetos                                               | RF19                 | Jhully      | #88   | A fazer  |
+| Filtrar o Hub de Projetos por interesse                     | RF15                 | Jhully      | #90   | A fazer  |
+| Editar o título e a descrição de um projeto                 | RF25                 | Jhully      | #93   | A fazer  |
+| Reabrir um projeto fechado                                  | RF27                 | Jhully      | #95   | A fazer  |
+
+As decisões D23 a D25 foram registradas em 12/11, antes das issues que dependem delas. As regras do Firestore ficam na primeira parte da #86, publicada até 13/11, para que as outras issues possam ser testadas com dados cadastrados pelo console, sem esperar o RF17 inteiro.
+
+### Timeline
+
+A data final de cada tarefa é a do pull request aberto. O Lucas revisa em até 24 horas.
+
+| Data       | Responsável | Tarefa                                                                                          |
+|------------|-------------|-------------------------------------------------------------------------------------------------|
+| 12/11      | Fernanda    | Registrar as decisões D23 a D25 e criar as issues da iteração                                   |
+| 12 a 13/11 | Fernanda    | Levar a `develop` para a `main` e enviar à Jousiclécia o APK e o roteiro de teste da Iteração 4 |
+| 12 a 13/11 | Fernanda    | Regras do Firestore das decisões D23 a D25 (#86, parte 1)                                       |
+| 12 a 14/11 | Samuel      | Detalhes do projeto (RF16)                                                                      |
+| 12 a 15/11 | Jhully      | Criar um projeto (RF13)                                                                         |
+| 12 a 24/11 | Lucas       | Revisar os pull requests                                                                        |
+| 13 a 23/11 | Jousiclécia | Testar o APK da Iteração 4 e relatar os problemas ao Lucas                                      |
+| 14 a 17/11 | Fernanda    | Solicitar participação (RF17)                                                                   |
+| 15 a 16/11 | Jhully      | Meus projetos (RF19)                                                                            |
+| 15 a 17/11 | Samuel      | Solicitações recebidas (RF20)                                                                   |
+| 17/11      | Jhully      | Filtrar o Hub de Projetos por interesse (RF15)                                                  |
+| 17/11      | Equipe      | Reunião online de acompanhamento                                                                |
+| 18 a 19/11 | Fernanda    | Aceitar uma solicitação (RF21)                                                                  |
+| 18 a 19/11 | Samuel      | Recusar uma solicitação (RF22)                                                                  |
+| 18 a 19/11 | Jhully      | Editar o título e a descrição de um projeto (RF25)                                              |
+| 20/11      | Fernanda    | Membros do projeto (RF23)                                                                       |
+| 20/11      | Samuel      | Minhas solicitações (RF18)                                                                      |
+| 20/11      | Jhully      | Reabrir um projeto fechado (RF27)                                                               |
+| 21/11      | Fernanda    | Remover um membro (RF24)                                                                        |
+| 21/11      | Samuel      | Encerrar um projeto (RF26)                                                                      |
+| 22/11      | Fernanda    | Confirmação do e-mail institucional (RF02)                                                      |
+| 23/11      | Samuel      | Validar as entregas como PO                                                                     |
+| 24/11      | Equipe      | Apresentar o resultado da Iteração 5 e o plano da Iteração 6                                    |
+
+### Fora desta iteração
+
+- Funcionalidades da versão completa (`requisitos.md`, seção 7).
+- Testes da Jousiclécia nas telas novas desta iteração: entram no APK da Iteração 5, testado na Iteração 6.
+
+Os pull requests são revisados pelo Lucas ou, se ele não puder, por outro dev. Quem abriu o pull request nunca revisa o próprio. A Jousiclécia testa a acessibilidade instalando o APK no celular (guia de desenvolvimento, seção 10).

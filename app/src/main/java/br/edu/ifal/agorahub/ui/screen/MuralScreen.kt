@@ -1,5 +1,6 @@
 package br.edu.ifal.agorahub.ui.screen
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -14,11 +15,42 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import br.edu.ifal.agorahub.data.oportunidadesExemplo
+import br.edu.ifal.agorahub.domain.Oportunidade
+import java.time.LocalDate
 
 @Composable
-fun MuralScreen(navController: NavController, modifier: Modifier = Modifier)  {
-    val oportunidades = OportunidadeDados().listarMural()
+fun MuralScreen(navController: NavController, modifier: Modifier = Modifier) {
+    var carregando by remember { mutableStateOf(true) }
+    var oportunidades by remember { mutableStateOf(listOf<Oportunidade>()) }
+    var falhou by remember { mutableStateOf(false) }
 
+    // Pede a lista uma vez, quando a tela abre
+    LaunchedEffect(Unit) {
+        try {
+            oportunidades = OportunidadeDados().listarMural()
+        } catch (e: Exception) {
+            falhou = true
+            Log.e("CarregamentoMural", "Erro ao carregar o mural", e)
+        }
+        carregando = false
+    }
+    MuralConteudo(carregando, falhou, oportunidades, navController, modifier)
+}
+
+@Composable
+private fun MuralConteudo(
+    carregando: Boolean,
+    falhou: Boolean,
+    oportunidades: List<Oportunidade>,
+    navController: NavController,
+    modifier: Modifier = Modifier
+) {
     LazyColumn(modifier = modifier) {
         item {
             Text(
@@ -26,6 +58,32 @@ fun MuralScreen(navController: NavController, modifier: Modifier = Modifier)  {
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(16.dp)
             )
+        }
+        if (carregando) {
+            item {
+                Text(
+                    text = "Carregando oportunidades...",
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        } else if (falhou) {
+            item {
+                Text(
+                    text = "Não foi possível carregar as oportunidades. Confira a conexão com a internet.",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        } else if (oportunidades.isEmpty()) {
+            item {
+                Text(
+                    text = "Nenhuma oportunidade aberta no momento.",
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
         }
         items(oportunidades) { oportunidade ->
             CardOportunidade(oportunidade, navController)
@@ -36,7 +94,12 @@ fun MuralScreen(navController: NavController, modifier: Modifier = Modifier)  {
 @Preview(showBackground = true)
 @Composable
 fun MuralScreenPreview() {
-    AgoraHubTheme() {
-        MuralScreen(rememberNavController())
+    AgoraHubTheme {
+        MuralConteudo(
+            carregando = false,
+            falhou = false,
+            oportunidades = oportunidadesExemplo.filter { it.prazo >= LocalDate.now() },
+            navController = rememberNavController()
+        )
     }
 }

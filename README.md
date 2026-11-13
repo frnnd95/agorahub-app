@@ -6,20 +6,33 @@ Projeto acadêmico das disciplinas de Projeto Integrador e Programação para Di
 
 ## Situação atual
 
-O app abre na tela do Mural de Oportunidades, que por enquanto mostra apenas o título.
+O app abre na tela de abertura, com Entrar, Criar conta e Ver privacidade e dados. A conta usa o e-mail institucional, pelo Firebase Authentication, e a tela Entrar tem a recuperação de senha. No primeiro acesso, o estudante completa o perfil com nome, curso e de 3 a 5 interesses.
+
+Depois disso, a barra de navegação tem três abas:
+
+- **Mural:** oportunidades cadastradas pela equipe no Firestore (seção 11 do guia de desenvolvimento). As vencidas não aparecem, a lista é ordenada pelo prazo mais próximo e o prazo fica em vermelho quando faltam 3 dias ou menos. Tocar numa oportunidade abre os detalhes, com o link para o navegador.
+- **Projetos:** projetos abertos e com vagas, lidos do Firestore. Por enquanto, são projetos de teste cadastrados pelo console.
+- **Perfil:** nome, curso e interesses do estudante, com as opções Editar perfil, Calendário acadêmico, Perguntas frequentes, Equipe ÁgoraHub, Privacidade e dados e Sair. Calendário, Perguntas e Equipe leem a API fake do repositório `agorahub-api`.
 
 ## Tecnologias
 
 - Kotlin
 - Jetpack Compose
 - Android Studio
+- Navigation Compose: navegação entre as telas (Aula 06)
+- Coil: imagens das oportunidades carregadas da internet (Aula 01)
+- Material Icons: ícones das telas (Aula 05)
+- Desugaring de bibliotecas do Java: datas com `LocalDate` no Android 7 (seção 8.3 dos requisitos)
+- Retrofit com Moshi: lê a API fake do repositório `agorahub-api` nas telas de consulta (Aula 09, D19 e D20)
+- Coroutines: chamadas à internet sem travar a tela (Aulas 08 e 09, D19)
+- Firebase Authentication e Cloud Firestore: contas e dados do app (RNF12)
 
 ## Documentação
 
 - [Requisitos](docs/requisitos.md): o que o app faz no MVP, o que fica para a versão completa e as decisões do projeto.
 - [Iterações](docs/iteracoes.md): o que foi planejado e entregue em cada iteração.
 - [Guia de desenvolvimento](docs/guia-desenvolvimento.md): passo a passo para trabalhar numa issue.
-- 
+
 ## Como rodar o projeto
 
 1. Clone o repositório:
@@ -31,16 +44,28 @@ O app abre na tela do Mural de Oportunidades, que por enquanto mostra apenas o t
 4. Conecte um celular com a **Depuração USB** ativada ou inicie um emulador.
 5. Clique em **Run ▶**.
 
-**Resultado esperado:** o app abre mostrando "Mural de Oportunidades".
+**Resultado esperado:** o app abre na tela de abertura. Depois de entrar e completar o perfil, ele abre no Mural de Oportunidades, com a barra de navegação embaixo.
 
 Se aparecer o erro `INSTALL_FAILED_USER_RESTRICTED`, ative **Instalar via USB** nas Opções do desenvolvedor.
+
+### Firebase
+
+O app usa o Firebase, no plano gratuito Spark, com o Authentication (e-mail e senha) e o Cloud Firestore. Para rodar o projeto:
+
+- O arquivo `google-services.json` já está na pasta `app` do repositório. Não é preciso criar nem baixar outro.
+- Na primeira sincronização, o Gradle baixa as bibliotecas do Firebase, então o computador precisa estar conectado à internet.
+- Para ver ou alterar os dados, entre no [console do Firebase](https://console.firebase.google.com) com o email do AgoraHub.
+- As regras do Firestore ficam no console, não no repositório. As regras em uso estão descritas na seção 9.4 do [documento de requisitos](docs/requisitos.md).
 
 ## Estrutura de pastas
 
 ```
 app/src/main/java/br/edu/ifal/agorahub/
-├── MainActivity.kt   → abre o app e mostra a tela inicial
+├── MainActivity.kt   → abre o app, mostra a barra de navegação e define as rotas das telas
+├── data/             → classes que entregam os dados às telas (RNF16) e os dados de exemplo dos Previews
+├── domain/           → classes que representam os dados do app, como Oportunidade
 └── ui/
+    ├── components/   → partes usadas dentro das telas, como o cartão da oportunidade e a barra de navegação
     ├── screen/       → telas do app (uma por arquivo)
     └── theme/        → cores, fontes e tema
 ```

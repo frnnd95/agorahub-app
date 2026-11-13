@@ -1,35 +1,38 @@
 # Documento de Requisitos — ÁgoraHub
 
-| Versão | Responsável     | Data       | Alterações                                                                                                                                                        |
-|--------|-----------------|------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1.0    | Equipe ÁgoraHub | 06/10/2026 | Primeira versão: propósito, usuários, glossário, solução proposta, requisitos do MVP e da versão completa, relação entre funcionalidades e requisitos, e decisões |
-| 2.0    | Equipe ÁgoraHub | 07/10/2026 | Revisão completa: requisitos organizados por funcionalidade, com novos identificadores; vocabulário das telas; decisões D04 a D12                                 |
-| 2.1    | Equipe ÁgoraHub | 11/10/2026 | Decisão D13 (ícones das telas)                                                                                                                                    |
-| 2.2    | Equipe ÁgoraHub | 11/10/2026 | Decisão D14: datas com `LocalDate` e desugaring                                                                                                                   |
-
+| Versão | Responsável     | Data       | Alterações                                                                                                                                                                                                                                                           |
+|--------|-----------------|------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1.0    | Equipe ÁgoraHub | 06/10/2026 | Primeira versão: propósito, usuários, glossário, solução proposta, requisitos do MVP e da versão completa, relação entre funcionalidades e requisitos, e decisões                                                                                                    |
+| 2.0    | Equipe ÁgoraHub | 07/10/2026 | Revisão completa: requisitos organizados por funcionalidade, com novos identificadores; vocabulário das telas; decisões D04 a D12                                                                                                                                    |
+| 2.1    | Equipe ÁgoraHub | 11/10/2026 | Decisão D13 (ícones das telas)                                                                                                                                                                                                                                       |
+| 2.2    | Equipe ÁgoraHub | 11/10/2026 | Decisão D14: datas com `LocalDate` e desugaring                                                                                                                                                                                                                      |
+| 2.3    | Jhully          | 20/10/2026 | Decisão D17: regra provisória do Firestore                                                                                                                                                                                                                           |
+| 2.4    | Fernanda        | 27/10/2026 | RN01 e RN02 completadas: espaços, letras maiúsculas e e-mail sem nada antes do @; decisão D18 (recursos do cadastro)                                                                                                                                                 |
+| 2.5    | Jhully          | 30/10/2026 | Decisão D15: estrutura da coleção `oportunidades` no Firestore                                                                                                                                                                                                       |
+| 2.6    | Fernanda        | 30/10/2026 | Decisões D19 (Retrofit e coroutines), D20 (API fake) e D21 (coleção `projetos`); RNF12 complementada; seção 5.3 com as telas da D20                                                                                                                                  |
+| 2.7    | Fernanda        | 01/11/2026 | Decisão D17, etapa 2: ler a coleção `oportunidades` exige login (RF03)                                                                                                                                                                                               |
+| 2.8    | Samuel          | 03/11/2026 | Decisões D16 (coleção `estudantes`) e D22 (recursos do Completar perfil); D17, etapa 3: regras da coleção `estudantes` (RF07)                                                                                                                                        |
+| 2.9    | Fernanda        | 03/11/2026 | Decisão D20: a API fake passa a ser lida pelo endereço raw do GitHub, um arquivo por rota                                                                                                                                                                            |
+| 2.10   | Jhully          | 07/11/2026 | Decisão D15: a leitura das oportunidades usa `await()` (D19)                                                                                                                                                                                                         |
+| 2.11   | Fernanda        | 08/11/2026 | Decisão D17, etapa 4: regras da coleção `projetos` (RF14)                                                                                                                                                                                                            |
+| 2.12   | Fernanda        | 09/11/2026 | Decisão D20: `mergeDescendants` nos itens do Calendário e da Equipe                                                                                                                                                                                                  |
+| 3.0    | Fernanda        | 09/11/2026 | Decisões que descrevem o produto viram requisitos (RNF06, RNF10 a RNF13, RNF15 e RNF16) ou saem; telas de consulta como RF28 a RF30; RN04 ampliada; seções 8.3, 8.4 e 9 novas; decisões em aberto D23 a D25; RNF14 com a data da apresentação final; sai a seção 5.4 |
+| 3.1    | Fernanda        | 12/11/2026 | Decisões D23 (e-mail dos membros na coleção `emails`), D24 (coleção `solicitacoes`) e D25 (gravação em lote) |
 
 ## Sumário
 
 1. [Introdução](#1-introdução)
 2. [Propósito do sistema](#2-propósito-do-sistema)
 3. [Usuários](#3-usuários)
-   - [3.1 Tipos de usuário](#31-tipos-de-usuário)
-   - [3.2 Papéis do estudante](#32-papéis-do-estudante)
-   - [3.3 Protopersonas](#33-protopersonas)
 4. [Glossário](#4-glossário)
 5. [Solução proposta](#5-solução-proposta)
-   - [5.1 Como o ÁgoraHub responde aos problemas](#51-como-o-ágorahub-responde-aos-problemas)
-   - [5.2 Funcionalidades do MVP](#52-funcionalidades-do-mvp)
-   - [5.3 Navegação](#53-navegação)
-   - [5.4 O que fica para a versão completa](#54-o-que-fica-para-a-versão-completa)
 6. [Requisitos do MVP](#6-requisitos-do-mvp)
    - [6.1 Requisitos funcionais](#61-requisitos-funcionais)
    - [6.2 Regras de negócio](#62-regras-de-negócio)
    - [6.3 Requisitos não funcionais](#63-requisitos-não-funcionais)
 7. [Requisitos da versão completa](#7-requisitos-da-versão-completa)
 8. [Decisões](#8-decisões)
-   - [8.1 Decisões em aberto](#81-decisões-em-aberto)
-   - [8.2 Decisões tomadas](#82-decisões-tomadas)
+9. [Dados do app](#9-dados-do-app)
 
 ## 1. Introdução
 
@@ -39,8 +42,6 @@ Os requisitos estão divididos em duas partes:
 
 - **MVP do semestre:** o que a equipe vai construir até dezembro de 2026, com os conceitos vistos nas aulas e as exceções previstas na RNF11.
 - **Versão completa:** o que o app precisaria ter para ser usado de verdade pelos estudantes. Fica registrado para não perder a visão do produto, mas não faz parte da entrega do semestre.
-
-O documento está organizado assim: a seção 2 descreve o propósito do sistema; a seção 3, os usuários; a seção 4, o glossário; a seção 5, a solução proposta e a navegação; a seção 6, os requisitos do MVP, organizados por funcionalidade; a seção 7, os requisitos da versão completa; e a seção 8 registra as decisões do projeto.
 
 ## 2. Propósito do sistema
 
@@ -60,7 +61,7 @@ Como a amostra é pequena, esses números indicam tendências e não representam
 
 O propósito do ÁgoraHub é reunir, num só aplicativo Android, **as oportunidades acadêmicas e a formação de equipes de projeto** entre estudantes do IFAL, organizadas por áreas de interesse, com o estudante no controle de quando o seu contato é compartilhado.
 
-A pesquisa também mostrou que 17 respondentes têm dificuldade para tirar dúvidas sobre as disciplinas, por não saberem quem domina o assunto (9) ou por receio de perguntar em grupos grandes (8). Esse problema é real, mas não faz parte do foco do MVP e está registrado como possível evolução.
+A pesquisa também mostrou que 17 respondentes têm dificuldade para tirar dúvidas sobre as disciplinas, por não saberem quem domina o assunto (9) ou por receio de perguntar em grupos grandes (8). Esse problema é real, mas fica fora do foco do MVP e está registrado na versão completa (VC17).
 
 ## 3. Usuários
 
@@ -69,7 +70,7 @@ A pesquisa também mostrou que 17 respondentes têm dificuldade para tirar dúvi
 | Tipo de usuário | Descrição                                                                                                                                                                         | No MVP?               |
 |-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------|
 | Estudante       | Aluno do IFAL com e-mail institucional (`@aluno.ifal.edu.br`). Consulta o Mural de Oportunidades, cria projetos no Hub de Projetos e pede para participar de projetos de colegas. | Sim                   |
-| Equipe ÁgoraHub | Integrantes da equipe que mantêm o Mural de Oportunidades atualizado. No MVP, cadastram as oportunidades fora do aplicativo, pelo console do Firebase.                            | Sim, fora do app      |
+| Equipe ÁgoraHub | Integrantes da equipe que mantêm o Mural de Oportunidades atualizado. No MVP, cadastram as oportunidades pelo console do Firebase e mantêm os dados da API fake (D20), fora do aplicativo.                            | Sim, fora do app      |
 | Administrador   | Publica e remove oportunidades pelo próprio aplicativo.                                                                                                                           | Não (versão completa) |
 | Professor       | Divulga desafios e oportunidades e acompanha a participação dos estudantes.                                                                                                       | Não (versão completa) |
 
@@ -99,13 +100,14 @@ Pessoas fictícias criadas a partir da pesquisa, usadas para orientar as decisõ
 
 ## 4. Glossário
 
-Termos usados neste documento, em ordem alfabética.
+Termos usados neste documento e nas telas do app, em ordem alfabética. As telas usam sempre estes termos, como "interesse" (não "tag") e "responsável" (não "dono"), conforme a RNF05.
 
 | Termo                    | Significado                                                                                                                                                                                  |
 |--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| API fake | Arquivos JSON do repositório público `agorahub-api`, lidos pelas telas de consulta (RF28 a RF30, D20). |
 | Data de publicação       | Data em que a Equipe ÁgoraHub cadastrou a oportunidade. Aparece nos detalhes da oportunidade, não no mural.                                                                                  |
 | E-mail institucional     | Endereço do domínio `@aluno.ifal.edu.br`. É o único aceito no cadastro de estudantes.                                                                                                        |
-| Equipe ÁgoraHub          | Integrantes da equipe do projeto. Cadastram as oportunidades do mural e atendem pedidos de exclusão de conta.                                                                                |
+| Equipe ÁgoraHub          | Integrantes da equipe do projeto. Cadastram as oportunidades do mural, mantêm a API fake e atendem pedidos de exclusão de conta.                                                                                |
 | Hub de Projetos          | Lista dos projetos abertos que ainda têm vagas disponíveis, mostrada na aba Projetos.                                                                                                        |
 | Interesse                | Área de habilidade ou interesse, como Mobile, UX/UI ou Banco de Dados, escolhida da lista de interesses. Aparece no perfil do estudante e nos projetos.                                      |
 | Interesses procurados    | Interesses que o responsável procura em quem vai participar do projeto.                                                                                                                      |
@@ -113,7 +115,7 @@ Termos usados neste documento, em ordem alfabética.
 | Membro do projeto        | Estudante cuja solicitação para participar de um projeto foi aceita e que não foi removido dele.                                                                                             |
 | Meus projetos            | Tela da aba Perfil com os projetos criados pelo estudante.                                                                                                                                   |
 | Minhas solicitações      | Tela da aba Perfil com as solicitações enviadas pelo estudante.                                                                                                                              |
-| Mural de Oportunidades   | Tela inicial do app, na aba Mural, com a lista de oportunidades.                                                                                                                             |
+| Mural de Oportunidades   | Lista de oportunidades da aba Mural. É a primeira tela depois de entrar com o perfil completo.                                                                                                                             |
 | MVP                      | Versão mínima do app, entregue no semestre 2026.2.                                                                                                                                           |
 | Oportunidade             | Edital, estágio, competição, evento ou outra oportunidade cadastrada pela Equipe ÁgoraHub, com título, tipo, descrição, prazo, data de publicação, link e, se houver, imagem.                |
 | Perfil                   | Nome, curso e de 3 a 5 interesses do estudante.                                                                                                                                              |
@@ -161,20 +163,19 @@ Quando o responsável pelo projeto aceita uma solicitação, passa a ver o e-mai
 4. **Hub de Projetos:** criação de projetos, lista com filtro por interesse e detalhes de cada projeto.
 5. **Solicitações:** pedido de participação num projeto, com aviso sobre o compartilhamento do e-mail, e acompanhamento das solicitações enviadas.
 6. **Gestão dos projetos:** resposta às solicitações recebidas, acesso ao e-mail dos membros, edição do título e da descrição, remoção de membros, encerramento e reabertura.
+7. **Consultas:** Perguntas frequentes, Calendário acadêmico e Equipe ÁgoraHub, com dados da API fake.
 
 ### 5.3 Navegação
 
-Antes de entrar, o app mostra a tela de abertura, com as opções Entrar, Criar conta e Ver privacidade e dados. A partir dela, o estudante chega ao cadastro, à confirmação do e-mail, à entrada e à recuperação de senha. Depois do primeiro acesso, o app abre no Mural e passa a ter uma barra inferior com três abas:
+Antes de entrar, o app mostra a tela de abertura, com Entrar, Criar conta e Ver privacidade e dados, que levam ao cadastro, à confirmação do e-mail, à entrada e à recuperação de senha. Depois de entrar, e sempre que o app abre com alguém logado, a tela Início abre o Completar perfil (RF07), se o perfil ainda não existe, ou o Mural. Com o perfil completo, aparece a barra inferior com três abas (RNF15):
 
-| Aba      | O que reúne                                                                                                                         |
-|----------|-------------------------------------------------------------------------------------------------------------------------------------|
-| Mural    | Mural de Oportunidades e os detalhes de cada oportunidade.                                                                          |
-| Projetos | Hub de Projetos, com o botão Novo projeto, e os detalhes de cada projeto.                                                           |
-| Perfil   | Perfil do estudante, Editar perfil, Solicitações recebidas, Minhas solicitações, Meus projetos, Privacidade e dados e Sair.         |
+| Aba      | O que reúne |
+|----------|-------------|
+| Mural    | Mural de Oportunidades e os detalhes de cada oportunidade. |
+| Projetos | Hub de Projetos, com o botão Novo projeto, e os detalhes de cada projeto. |
+| Perfil   | Perfil do estudante e as opções Editar perfil, Calendário acadêmico, Perguntas frequentes, Equipe ÁgoraHub, Privacidade e dados e Sair. Com as solicitações, entram também Solicitações recebidas, Minhas solicitações e Meus projetos. |
 
-### 5.4 O que fica para a versão completa
-
-Notificações no celular, filtro do mural por tipo de oportunidade, publicação de oportunidades por administradores e professores, busca de pessoas por interesse, exclusão da conta pelo próprio app, vínculo entre um projeto e uma oportunidade do mural, cancelamento de pedidos, saída de membros de um projeto, e apoio para tirar dúvidas e formar grupos de estudo. Os detalhes estão na seção 7.
+A barra aparece nas três abas e nos detalhes da oportunidade; as outras telas abrem sem ela. Depois de entrar, o Voltar no Mural fecha o app.
 
 ## 6. Requisitos do MVP
 
@@ -239,13 +240,26 @@ Os requisitos estão agrupados pelas funcionalidades da seção 5.2. A coluna **
 | RF26 | Encerrar um projeto.                                                                                                                                             | Média      | RF19       |
 | RF27 | Reabrir um projeto fechado.                                                                                                                                      | Média      | RF19       |
 
-#### 6.1.7 Diagrama de dependências
+#### 6.1.7 Consultas
+
+Telas abertas pela lista de opções da aba Perfil, com dados da API fake (D20).
+
+| Id.  | Descrição | Prioridade | Depende de |
+|------|-----------|------------|------------|
+| RF28 | Exibir as Perguntas frequentes sobre o ÁgoraHub, com cada pergunta e a sua resposta. | Alta | — |
+| RF29 | Exibir o Calendário acadêmico do semestre, com a data e o evento de cada item, na ordem da API fake. | Alta | — |
+| RF30 | Exibir a Equipe ÁgoraHub, com o nome, o papel e, quando houver, a foto de cada integrante. | Alta | — |
+
+#### 6.1.8 Diagrama de dependências
 
 Cada seta vai do requisito que precisa existir antes para o requisito que depende dele.
 
 ```mermaid
 flowchart LR
     RF06
+    RF28
+    RF29
+    RF30
     RF01 --> RF02
     RF01 --> RF03 --> RF05
     RF01 --> RF04
@@ -271,10 +285,10 @@ As regras estão agrupadas pelas mesmas funcionalidades dos requisitos funcionai
 
 | Id.  | Descrição                                                                                                                                                                                                                                                                            | Prioridade | Relacionada a                |
 |------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|------------------------------|
-| RN01 | Só e-mails do domínio `@aluno.ifal.edu.br` podem ser cadastrados.                                                                                                                                                                                                                    | Alta       | RF01                         |
-| RN02 | A senha tem de 8 a 64 caracteres, com pelo menos uma letra e um número, e não pode conter a parte do e-mail antes do @. A senha e a confirmação da senha precisam ser iguais.                                                                                                        | Alta       | RF01                         |
+| RN01 | Só e-mails do domínio `@aluno.ifal.edu.br`, com algo antes do @, podem ser cadastrados. Antes da conferência, o app remove os espaços do início e do fim e passa o e-mail para letras minúsculas, porque o e-mail institucional não diferencia maiúsculas de minúsculas.             | Alta       | RF01                         |
+| RN02 | A senha tem de 8 a 64 caracteres, com pelo menos uma letra e um número, e não pode conter a parte do e-mail antes do @, sem diferenciar maiúsculas de minúsculas. A senha e a confirmação da senha precisam ser iguais.                                                              | Alta       | RF01                         |
 | RN03 | O estudante só entra no app depois de confirmar o e-mail institucional.                                                                                                                                                                                                              | Média      | RF02, RF03                   |
-| RN04 | Ao pedir a recuperação de senha, o estudante vê a mesma mensagem, exista ou não uma conta com o e-mail informado.                                                                                                                                                                    | Baixa      | RF04                         |
+| RN04 | O app não revela se existe uma conta com o e-mail informado: na entrada, e-mail sem conta e senha errada mostram a mesma mensagem; na recuperação de senha, a mensagem é a mesma, exista ou não a conta. | Baixa | RF03, RF04 |
 | RN05 | O nome, o curso e os interesses de um estudante são visíveis aos demais estudantes no app. O e-mail institucional só é visível ao próprio estudante e ao responsável por um projeto do qual ele é membro. Uma solicitação só é visível ao solicitante e ao responsável pelo projeto. | Alta       | RF06, RF16, RF18, RF20, RF23 |
 
 #### 6.2.2 Perfil
@@ -291,7 +305,7 @@ As regras estão agrupadas pelas mesmas funcionalidades dos requisitos funcionai
 | Id.  | Descrição                                                                                                                                                                                                                                      | Prioridade | Relacionada a |
 |------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|---------------|
 | RN10 | As oportunidades são cadastradas pela Equipe ÁgoraHub, com título, tipo, descrição, prazo, link e, opcionalmente, imagem. A data de publicação é a data do cadastro. Estudantes não publicam oportunidades.                                    | Média      | RF10, RF11    |
-| RN11 | Os tipos de oportunidade são: Edital, Estágio, Competição, Evento e Outro.                                                                                                                                                                     | Média      | RF10, RF11    |
+| RN11 | Os tipos de oportunidade são: Edital, Estágio, Competição, Evento e Outro. Bolsas entram como Edital ou Estágio, e Competição inclui hackathons, maratonas de programação e olimpíadas. | Média | RF10, RF11 |
 | RN12 | O Mural de Oportunidades só mostra oportunidades dentro do prazo. Cada oportunidade fica visível até as 23h59 do último dia do prazo.                                                                                                          | Média      | RF10          |
 | RN13 | O Mural de Oportunidades mostra as oportunidades da que tem o prazo mais próximo para a que tem o prazo mais distante. Com o mesmo prazo, aparece primeiro a publicada mais recentemente.                                                      | Média      | RF10          |
 | RN14 | No mural, o prazo aparece como data ("Prazo: 20/10"). Quando faltam 3 dias ou menos, aparece em vermelho, como "Faltam 3 dias", "Faltam 2 dias", "Falta 1 dia" e, no último dia, "Encerra hoje".                                               | Média      | RF10          |
@@ -339,7 +353,7 @@ As regras estão agrupadas pelas mesmas funcionalidades dos requisitos funcionai
 | Hardware                     | IoT e Embarcados, Robótica                                                                                            |
 | Pesquisa, gestão e sociedade | Pesquisa Acadêmica, Gestão de Projetos, Empreendedorismo, Acessibilidade, Ensino e Monitoria, Programação Competitiva |
 
-As categorias só organizam a lista na tela: o estudante escolhe interesses, não categorias.
+As categorias só organizam a lista na tela: o estudante escolhe interesses, não categorias. A lista cobre as áreas citadas na pesquisa e nas protopersonas.
 
 ### 6.3 Requisitos não funcionais
 
@@ -351,16 +365,18 @@ A coluna **Como verificar** indica como confirmar que o requisito foi atendido.
 | RNF02 | Os textos têm contraste mínimo de 4,5:1 com o fundo (3:1 para textos grandes), conforme o nível AA das diretrizes WCAG.                                                                                                                                                                                          | Produto / Usabilidade            | Alta       | O app Accessibility Scanner não mostra alertas de contraste.                                                                                                                     |
 | RNF03 | Os textos respeitam o tamanho de fonte escolhido nas configurações do celular, sem cortar conteúdo.                                                                                                                                                                                                              | Produto / Usabilidade            | Alta       | Com a fonte do celular no tamanho máximo, todos os textos aparecem inteiros.                                                                                                     |
 | RNF04 | Botões e outros elementos tocáveis têm área de toque de pelo menos 48 dp.                                                                                                                                                                                                                                        | Produto / Usabilidade            | Média      | O app Accessibility Scanner não mostra alertas de área de toque.                                                                                                                 |
-| RNF05 | Os textos usam linguagem simples. Mensagens de erro aparecem escritas junto ao campo com problema, nunca indicadas só por cor.                                                                                                                                                                                   | Produto / Usabilidade            | Média      | Revisão das telas: todo erro aparece como texto.                                                                                                                                 |
-| RNF06 | O app segue o tema claro ou escuro escolhido nas configurações do celular, usando as cores da paleta do app (D09).                                                                                                                                                                                               | Produto / Usabilidade            | Média      | Ao trocar o tema do celular, o app passa a usar as cores do tema correspondente.                                                                                                 |
+| RNF05 | Os textos usam linguagem simples e os termos do glossário (seção 4). Mensagens de erro aparecem escritas junto ao campo com problema, nunca indicadas só por cor. | Produto / Usabilidade | Média | Revisão das telas: todo erro aparece como texto, e os termos são os do glossário. |
+| RNF06 | O app segue o tema claro ou escuro escolhido no celular, com a paleta de cores e o logotipo definidos pelo PO, e não adapta as cores ao papel de parede. | Produto / Usabilidade | Média | Ao trocar o tema do celular, o app passa a usar as cores do tema correspondente. |
 | RNF07 | As senhas ficam ocultas durante a digitação, e cada campo de senha tem um botão para mostrá-la ou ocultá-la.                                                                                                                                                                                                     | Produto / Proteção               | Média      | Ao digitar, aparecem pontos no lugar dos caracteres; o botão alterna entre mostrar e ocultar, e o leitor de tela anuncia a ação e o campo, como "Mostrar senha".                 |
-| RNF08 | As regras de segurança do Firestore só permitem acesso a usuários logados e garantem a visibilidade definida na RN05.                                                                                                                                                                                            | Produto / Proteção               | Alta       | No simulador de regras do console do Firebase, acessos sem login são recusados, e um estudante não consegue ler o e-mail nem as solicitações de outro, exceto nos casos da RN05. |
+| RNF08 | As regras de segurança do Firestore só permitem acesso a usuários logados e garantem a visibilidade definida na RN05. As regras em uso estão na seção 9.4. | Produto / Proteção | Alta | No simulador de regras do console do Firebase, acessos sem login são recusados, e um estudante não consegue ler o e-mail nem as solicitações de outro, exceto nos casos da RN05. |
 | RNF09 | O app coleta só nome, e-mail institucional, curso e interesses. A tela Privacidade e dados (RF06) informa para que esses dados são usados, quem vê cada um, onde ficam guardados e como pedir a correção (pelo Editar perfil) ou a exclusão (pelo e-mail da Equipe ÁgoraHub, mostrado na tela), conforme a LGPD. | Externo / Legislativo            | Alta       | Revisão da tela Privacidade e dados.                                                                                                                                             |
-| RNF10 | O app é Android nativo, desenvolvido em Kotlin com Jetpack Compose, e funciona no Android 7.0 (API 24) ou superior.                                                                                                                                                                                              | Organizacional / Desenvolvimento | Alta       | Configuração do projeto no arquivo `build.gradle.kts`.                                                                                                                           |
-| RNF11 | O desenvolvimento é incremental, em iterações, usando prioritariamente os conceitos vistos na disciplina. Uma tecnologia nova só entra se for indispensável para um requisito do MVP, e a decisão fica registrada na seção 8.                                                                                    | Organizacional / Desenvolvimento | Alta       | Comparação entre o código, o plano de iterações e as decisões registradas.                                                                                                       |
-| RNF12 | Os dados ficam no Firebase, no plano gratuito Spark, usando apenas o Firebase Authentication (e-mail e senha) e o Cloud Firestore.                                                                                                                                                                               | Organizacional / Desenvolvimento | Alta       | No console do Firebase, o projeto está no plano Spark e só o Authentication e o Firestore estão ativados.                                                                        |
-| RNF13 | O código fica no GitHub, com uma branch por tarefa, e o README descreve só o que existe no repositório.                                                                                                                                                                                                          | Organizacional / Desenvolvimento | Média      | Revisão do repositório.                                                                                                                                                          |
-| RNF14 | O MVP está funcionando na apresentação final (08/12 ou 15/12/2026), com entrega final em 17/12/2026.                                                                                                                                                                                                             | Organizacional / Entrega         | Alta       | Demonstração na apresentação final.                                                                                                                                              |
+| RNF10 | O app é Android nativo, criado com o modelo Empty Activity do Android Studio, em Kotlin com Jetpack Compose. Funciona no Android 7.0 (`minSdk` 24) ou superior e usa o `compileSdk` 37, exigido pelas bibliotecas que o Android Studio adicionou ao projeto. | Organizacional / Desenvolvimento | Alta | Configuração do projeto no arquivo `app/build.gradle.kts`. |
+| RNF11 | O desenvolvimento é incremental, em iterações, e o MVP usa os conceitos vistos na disciplina; o restante fica na versão completa (seção 7). Um recurso que não apareceu nas aulas só entra se for indispensável para um requisito do MVP e fica registrado na seção 8. | Organizacional / Desenvolvimento | Alta | Comparação entre o código, o plano de iterações e a seção 8. |
+| RNF12 | Os dados do app ficam no Firebase, no plano gratuito Spark, só com o Firebase Authentication (e-mail e senha, que também envia os links do RF02 e do RF04) e o Cloud Firestore. O Room, visto nas aulas, não é usado, porque cada celular teria só os próprios dados. As telas de consulta (RF28 a RF30) leem a API fake (D20). | Organizacional / Desenvolvimento | Alta | No console do Firebase, o projeto está no plano Spark e só o Authentication e o Firestore estão ativados. |
+| RNF13 | O código e a documentação ficam no GitHub, com uma branch por tarefa. A documentação fica em arquivos Markdown na pasta `docs`, e o README descreve só o que existe no repositório. | Organizacional / Desenvolvimento | Média | Revisão do repositório. |
+| RNF14 | O MVP está funcionando na apresentação final (15/12/2026), com entrega final em 17/12/2026.                                                                                                                                                                                                             | Organizacional / Entrega         | Alta       | Demonstração na apresentação final.                                                                                                                                              |
+| RNF15 | A navegação principal é uma barra inferior com as abas Mural, Projetos e Perfil, cada uma com ícone e texto (seção 5.3). | Produto / Usabilidade | Alta | Com o TalkBack, cada aba é lida pelo nome e pelo estado, como "Mural, selecionado". |
+| RNF16 | As telas obtêm os dados por meio de uma classe para cada assunto, na pasta `data`, sem ler ou gravar direto no Firebase ou na API. Assim, a origem dos dados muda sem alterar as telas. | Organizacional / Desenvolvimento | Média | Revisão de código: nenhuma tela lê ou grava dados direto no Firebase ou na API. |
 
 ## 7. Requisitos da versão completa
 
@@ -416,7 +432,7 @@ Funcionalidades que fazem parte da visão do produto, mas não serão desenvolvi
 
 ## 8. Decisões
 
-Cada decisão tem um identificador. Quando uma decisão em aberto é tomada, ela passa para a seção 8.2 e mantém o mesmo identificador.
+Esta seção registra o que a RNF11 pede: as decisões que mudam o rumo do projeto (8.1 e 8.2) e os recursos que não apareceram nas aulas (8.3). Quando uma decisão em aberto é tomada, ela passa para a 8.2 com o mesmo identificador.
 
 ### 8.1 Decisões em aberto
 
@@ -424,19 +440,110 @@ Não há decisões em aberto.
 
 ### 8.2 Decisões tomadas
 
-| Id. | Decisão                                                                                                                                                                                                                                    | Motivo                                                                                                                                                                                                      | Data       |
-|-----|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
-| D01 | O MVP se limita ao que a equipe consegue construir com os conceitos vistos na disciplina, com as exceções previstas na RNF11. O restante fica na versão completa (seção 7).                                                                | O planejamento inicial não pôde ser executado na Iteração 1 (ver `iteracoes.md`).                                                                                                                           | 06/10/2026 |
-| D02 | A documentação fica em arquivos Markdown na pasta `docs` do repositório.                                                                                                                                                                   | Fica junto do código, abre formatada no GitHub e guarda o histórico de mudanças.                                                                                                                            | 06/10/2026 |
-| D03 | O app é criado com o modelo Empty Activity do Android Studio, em Kotlin com Jetpack Compose, com `minSdk` 24 e `compileSdk` 37.                                                                                                            | Segue a configuração usada na disciplina. O `compileSdk` 37 é exigido pelas bibliotecas que o próprio Android Studio adicionou ao projeto.                                                                  | 06/10/2026 |
-| D04 | Os dados ficam no Firebase, conforme a RNF12.                                                                                                                                                                                              | Com o Room, cada celular teria os próprios dados, e os estudantes não veriam os projetos e os perfis dos colegas, o que contraria o propósito do app (RNF11).                                               | 07/10/2026 |
-| D05 | Os interesses são os da lista de interesses (seção 6.2.7).                                                                                                                                                                                 | Cobrem as áreas citadas na pesquisa e nas protopersonas.                                                                                                                                                    | 07/10/2026 |
-| D06 | Os tipos de oportunidade são os da RN11.                                                                                                                                                                                                   | Bolsas são oferecidas por edital ou por estágio. Competição inclui hackathons, maratonas de programação e olimpíadas.                                                                                       | 07/10/2026 |
-| D07 | As regras da senha foram definidas na RN02.                                                                                                                                                                                                | —                                                                                                                                                                                                           | 07/10/2026 |
-| D08 | A navegação é feita por uma barra inferior com as abas Mural, Projetos e Perfil, cada uma com ícone e texto (seção 5.3).                                                                                                                   | Os nomes correspondem às três áreas do app, e o texto junto ao ícone atende à acessibilidade.                                                                                                               | 07/10/2026 |
-| D09 | A paleta de cores (temas claro e escuro), os ícones e o logotipo foram definidos pelo PO. O app não adapta as cores ao papel de parede do celular.                                                                                         | A paleta segue os papéis de cor do Material 3 e atende ao contraste da RNF02.                                                                                                                               | 07/10/2026 |
-| D10 | As telas obtêm os dados por meio de uma classe para cada assunto, sem acessá-los diretamente.                                                                                                                                              | Permite trocar a origem dos dados sem alterar as telas.                                                                                                                                                     | 07/10/2026 |
-| D11 | O documento e as telas usam "interesse" no lugar de "tag" e "responsável" no lugar de "dono".                                                                                                                                              | São palavras mais simples para o estudante (RNF05).                                                                                                                                                         | 07/10/2026 |
-| D12 | A confirmação do e-mail (RF02) e a recuperação de senha (RF04) fazem parte do MVP.                                                                                                                                                         | São oferecidas pelo próprio Firebase Authentication (D04), sem outra tecnologia.                                                                                                                            | 07/10/2026 |
-| D13 | Os ícones das telas são os Material Icons, usados com `Icons.Default`, pela biblioteca `material-icons-extended`, sem importar arquivos SVG. Quem desenvolve a tela escolhe o ícone. Complementa a D09: o PO define a paleta e o logotipo. | Os SVGs de ícones recebidos pela equipe são os próprios Material Icons, os mesmos usados nas aulas. Assim não é preciso importar arquivos nem usar outro recurso (RNF11).                                   | 11/10/2026 |
-| D14 | O prazo e a data de publicação das oportunidades usam a classe `LocalDate`, com o desugaring de bibliotecas do Java ativado no `app/build.gradle.kts`.                                                                                     | O `LocalDate` facilita comparar datas e contar dias (RN12 a RN14), mas só existe a partir do Android 8. O desugaring inclui essas classes no app e mantém o suporte ao Android 7 (RNF10), conforme a RNF11. | 11/10/2026 |
+| Id. | Decisão | Motivo | Data |
+|-----|---------|--------|------|
+| D19 | O app usa coroutines e Retrofit, como nas Aulas 08 e 09. As classes da pasta `data` têm funções `suspend`, que as telas chamam num `LaunchedEffect`, para carregar dados ao abrir, ou num `rememberCoroutineScope`, para gravar ao tocar num botão (Aula 09), sem ViewModel e com `try`/`catch` nas falhas. O Retrofit usa o conversor Moshi, e o Firestore, o `await()` (8.3). O Authentication continua com os ouvintes do `ContaDados`. | A disciplina de Programação para Dispositivos Móveis exige telas que acessam o banco e uma API com coroutines. Muda o registrado na Iteração 1, quando as coroutines saíram do MVP. | 30/10/2026; 09/11/2026 (`rememberCoroutineScope`) |
+| D20 | Cada dev consome uma rota diferente de uma API fake: um arquivo JSON por rota no repositório público `agorahub-api`, lido pelo endereço raw do GitHub (`https://raw.githubusercontent.com/frnnd95/agorahub-api/main/`). O app só lê os dados, com Retrofit e coroutines (D19), nas telas de consulta (RF28 a RF30). Os dados são alterados direto na branch `main` do `agorahub-api` (seção 9.5). | A disciplina exige que cada dev consuma uma rota diferente de uma API. A API fake segue o exemplo do professor, sem servidor nem conta nova, e cada dev atualiza a própria rota sem esperar um pull request no app. O My JSON Server (visto em aula), usado até 03/11, saiu do ar em 01/11. | 30/10/2026; 03/11/2026 (endereço raw) |
+| D23 | O e-mail que o responsável vê nos membros (RF23) fica na coleção `emails`, num documento com o mesmo identificador da solicitação, com os campos `email` e `solicitante`. O solicitante cria esse documento junto com a solicitação (D25), com o próprio e-mail do Authentication. A regra só deixa o responsável ler o documento quando a solicitação está Aceita, conferindo-a com `get()`. O e-mail continua fora de `estudantes`. | A regra do Firestore libera o documento inteiro, e não um campo, e o app não lê o e-mail de outro estudante no Authentication. Assim, a RN05, a RN22 e a RNF08 valem também no Firebase: o e-mail só fica visível depois do aceite e volta a ficar oculto se o membro for removido. | 12/11/2026 |
+| D24 | As solicitações ficam na coleção `solicitacoes`, um documento por solicitação, com os campos `projeto`, `solicitante`, `responsavel`, `status` (Pendente, Aceita, Recusada ou Removida), `motivo` e `criadaEm`. A regra só deixa o solicitante e o responsável lerem, e as consultas do app filtram por um dos dois com `whereEqualTo`, ordenando no app. A RN21 é conferida só no app. | Atende à RN05 com uma regra simples. Com uma subcoleção em cada projeto, o Minhas solicitações (RF18) precisaria de uma consulta de grupo e de um índice; numa lista dentro do projeto, todos os estudantes leriam as solicitações. A regra não consegue procurar outros documentos, por isso a RN21 fica só no app. | 12/11/2026 |
+| D25 | O app grava numa só operação, com a gravação em lote do Firestore (`WriteBatch`), as alterações do aceite (RN26), da remoção de um membro (RN28) e do encerramento do projeto (RN30). O envio da solicitação também grava em lote o documento de `emails` (D23). | Sem as Cloud Functions, retiradas na Iteração 1, o lote evita que o projeto e as solicitações fiquem pela metade se a conexão cair: ou todas as gravações acontecem, ou nenhuma. A transação (`runTransaction`) protegeria também contra dois aceites ao mesmo tempo, mas só o responsável aceita, e ela é mais difícil de explicar. | 12/11/2026 |
+
+### 8.3 Recursos que não apareceram nas aulas
+
+Recursos que entraram por serem indispensáveis a um requisito (RNF11). Quem usar um recurso novo acrescenta uma linha aqui e explica no pull request.
+
+| Recurso | Onde é usado | Por que entrou | Registro |
+|---------|--------------|----------------|----------|
+| `NavigationBar` e `NavigationBarItem` | Barra inferior (RNF15) | É o componente do Material 3 para essa barra | Issue #30 |
+| `LocalDate` e o desugaring de bibliotecas do Java, no `app/build.gradle.kts` | Prazo e data de publicação das oportunidades | O `LocalDate` compara datas e conta dias (RN12 a RN14), mas só existe a partir do Android 8; o desugaring mantém o Android 7 (RNF10) | D14 |
+| `LocalUriHandler` | Botão Abrir no navegador (RF12) | Abre o link sem biblioteca nova e sem `Intent`, `Uri` e `Context` | PR #56 |
+| `FlowRow`, `clearAndSetSemantics` e `clickable(role = Role.Button)` | Aba Perfil (RF08); o `FlowRow` também no cartão do projeto e no seletor de interesses | Os interesses quebram a linha sem sair da tela (RNF03); o TalkBack pula as iniciais, que repetem o nome, e anuncia as opções como botão (RNF01) | PR #60 |
+| Parâmetros `placeholder`, `visualTransformation`, `keyboardOptions`, `isError` e `supportingText` do `OutlinedTextField`; `enabled` do `Button`; `imePadding()`; `popUpTo`; e as funções de texto `trim`, `lowercase`, `substringBefore`, `contains`, `any`, `isLetter` e `isDigit` | Criar conta (RF01) e, depois, as outras telas com formulário | São o mínimo para a RN01, a RN02, a RNF05 e a RNF07 | D18 |
+| `RadioButton`, `FilterChip`, `selectable`, `selectableGroup` e as semânticas `heading()` e `liveRegion` | Completar e Editar perfil (RF07 e RF09), no `SeletorInteresses`; o `liveRegion` também na recuperação de senha (RF04) | O TalkBack lê se o curso e cada interesse estão marcados (RNF01), com toque de 48 dp (RNF04) | D22 |
+| `await()`, da biblioteca `kotlinx-coroutines-play-services` | Classes da pasta `data` que leem e gravam no Firestore | Espera o resultado do Firestore numa coroutine (D19) | D19 |
+| `semantics(mergeDescendants = true)` | Itens do Calendário acadêmico e da Equipe ÁgoraHub (RF29 e RF30) | O TalkBack lê cada item de uma vez: a data com o evento; o nome com o papel | D20 |
+
+### 8.4 Correspondência das decisões da versão 2
+
+Decisões que saíram desta seção na versão 3.0. Os números não são reutilizados.
+
+| Decisão | Onde está agora | Decisão | Onde está agora |
+|---------|-----------------|---------|-----------------|
+| D01 | RNF11 | D11 | Seção 4 e RNF05 |
+| D02 | RNF13 | D12 | RNF12 |
+| D03 | RNF10 | D13 | Guia, seções 8 e 9 |
+| D04 | RNF12 | D14 | Seção 8.3 |
+| D05 | RN08 e seção 6.2.7 | D15 | Seção 9.2 |
+| D06 | RN11 | D16 | Seção 9.1 |
+| D07 | RN02 | D17 | Seção 9.4 e RNF08 |
+| D08 | RNF15 | D18 | Seção 8.3 |
+| D09 | RNF06 | D21 | Seção 9.3 |
+| D10 | RNF16 | D22 | Seção 8.3 |
+
+## 9. Dados do app
+
+Estrutura usada hoje no Firestore (RNF12) e na API fake (D20). Os nomes dos campos são escritos exatamente assim, sem acento.
+
+### 9.1 Coleção `estudantes`
+
+Um documento por estudante, com o mesmo identificador do usuário no Firebase Authentication. O perfil está completo quando o documento existe (RN06). O e-mail fica só no Authentication, porque a RN05 limita quem pode vê-lo (D23).
+
+| Campo | Tipo | Regra |
+|-------|------|-------|
+| `nome` | texto | — |
+| `curso` | texto | RN07 |
+| `interesses` | lista de textos | Nomes da seção 6.2.7, de 3 a 5 (RN08 e RN09) |
+
+A lista de interesses fica uma única vez no código, em `InteresseDados`, para o RF07, o RF09 e o RF13.
+
+### 9.2 Coleção `oportunidades`
+
+Um documento por oportunidade, cadastrado pela Equipe ÁgoraHub no console do Firebase (RN10), como explica a seção 11 do guia de desenvolvimento. O identificador do documento é o `id` da classe `Oportunidade`. O app ignora os documentos sem algum campo obrigatório.
+
+| Campo | Tipo | Regra |
+|-------|------|-------|
+| `titulo` | texto | Obrigatório |
+| `tipo` | texto | Obrigatório; um dos tipos da RN11 |
+| `descricao` | texto | Obrigatório |
+| `prazo` | timestamp | Obrigatório; vira `LocalDate` no app (8.3) |
+| `dataPublicacao` | timestamp | Obrigatório; data do cadastro (RN10) |
+| `link` | texto | Obrigatório |
+| `imagemUrl` | texto | Opcional (RN15) |
+| `descricaoImagem` | texto | Opcional para o app; quem cadastra preenche sempre que houver imagem (RN15) |
+
+### 9.3 Coleção `projetos`
+
+Um documento por projeto, com o identificador gerado pelo Firestore. Até o RF13, os projetos são de teste, cadastrados pelo console.
+
+| Campo | Tipo | Regra |
+|-------|------|-------|
+| `titulo` | texto | RN16 |
+| `descricao` | texto | RN16 |
+| `vagas` | número | De 1 a 10 (RN16) |
+| `interesses` | lista de textos | Nomes da seção 6.2.7, de 1 a 5 (RN16) |
+| `status` | texto | Aberto, Fechado ou Encerrado |
+| `responsavel` | texto | Identificador do responsável no Authentication (RN17) |
+| `membros` | lista de textos | Identificadores dos membros, sem o responsável |
+| `criadoEm` | timestamp | Ordem do Hub de Projetos (RN19) |
+
+Vagas disponíveis = `vagas` menos o número de itens de `membros` (RN18). O nome do responsável é lido em `estudantes`, para não ficar em dois lugares.
+
+### 9.4 Regras do Firestore
+
+As regras ficam no console do Firebase e repetem conferências do app, como a da RN09, porque o app pode ser contornado (RNF08). Todas usam a função `logado()`, que confere se há um usuário logado (`request.auth != null`).
+
+| Coleção | Leitura | Criação e alteração | Exclusão |
+|---------|---------|---------------------|----------|
+| `oportunidades` | Com login | Não pelo app: o cadastro é feito no console, que não passa pelas regras (RN10) | Não pelo app |
+| `estudantes` | Com login (RN05) | Só no próprio documento (`request.auth.uid == uid`), só com os campos `nome`, `curso` e `interesses` e com 3 a 5 interesses (RN09) | Não pelo app |
+| `projetos` | Com login | Não pelo app, até o RF13 | Não pelo app |
+
+### 9.5 API fake
+
+Arquivos da branch `main` do repositório `agorahub-api` (D20). O app só lê, e os itens aparecem na ordem do arquivo.
+
+| Arquivo | Campos | Tela |
+|---------|--------|------|
+| `perguntas.json` | `id`, `pergunta` e `resposta` | Perguntas frequentes (RF28) |
+| `calendario.json` | `id`, `data` (texto, no formato dd/mm/aaaa) e `evento` | Calendário acadêmico (RF29) |
+| `equipe.json` | `id`, `nome`, `papel` e, opcional, `foto` (endereço raw de uma imagem da pasta `fotos`) | Equipe ÁgoraHub (RF30) |
