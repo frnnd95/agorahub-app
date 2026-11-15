@@ -31,6 +31,7 @@ import br.edu.ifal.agorahub.data.PerfilDados
 import br.edu.ifal.agorahub.data.ProjetoDados
 import br.edu.ifal.agorahub.data.projetosExemplo
 import br.edu.ifal.agorahub.domain.Projeto
+import br.edu.ifal.agorahub.ui.components.ChipInteresse
 import br.edu.ifal.agorahub.ui.components.Selo
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 import java.time.ZoneId
@@ -45,6 +46,7 @@ fun DetalhesProjetoScreen(id: String?, modifier: Modifier = Modifier) {
     var projeto by remember { mutableStateOf<Projeto?>(null) }
     var nomeResponsavel by remember { mutableStateOf<String?>(null) }
     var seuProjeto by remember { mutableStateOf(false) }
+    var meusInteresses by remember { mutableStateOf(listOf<String>()) }
 
     // Lê o projeto e, depois, o nome do responsável em estudantes (seção 9.3)
     LaunchedEffect(Unit) {
@@ -55,6 +57,7 @@ fun DetalhesProjetoScreen(id: String?, modifier: Modifier = Modifier) {
                 nomeResponsavel = PerfilDados().buscarPerfilDe(encontrado.responsavel)?.nome
                 // O projeto é de quem está logado? (RN17)
                 seuProjeto = encontrado.responsavel == ContaDados().uidAtual()
+                meusInteresses = PerfilDados().buscarPerfil()?.interesses ?: listOf()
             }
         } catch (e: Exception) {
             falhou = true
@@ -62,7 +65,7 @@ fun DetalhesProjetoScreen(id: String?, modifier: Modifier = Modifier) {
         }
         carregando = false
     }
-    DetalhesProjetoConteudo(carregando, falhou, projeto, nomeResponsavel, seuProjeto, modifier)
+    DetalhesProjetoConteudo(carregando, falhou, projeto, nomeResponsavel, seuProjeto, meusInteresses, modifier)
 }
 
 @Composable
@@ -72,6 +75,7 @@ private fun DetalhesProjetoConteudo(
     projeto: Projeto?,
     nomeResponsavel: String?,
     seuProjeto: Boolean,
+    meusInteresses: List<String>,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -176,17 +180,7 @@ private fun DetalhesProjetoConteudo(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     projeto.interesses.forEach { interesse ->
-                        Surface(
-                            shape = RoundedCornerShape(8.dp),
-                            color = MaterialTheme.colorScheme.surfaceVariant
-                        ) {
-                            Text(
-                                text = interesse,
-                                style = MaterialTheme.typography.labelLarge,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
-                            )
-                        }
+                        ChipInteresse(interesse = interesse, emComum = interesse in meusInteresses)
                     }
                 }
             }
@@ -203,7 +197,8 @@ fun DetalhesProjetoScreenPreview() {
             falhou = false,
             projeto = projetosExemplo[0],
             nomeResponsavel = "Marina Coutinho",
-            seuProjeto = true
+            seuProjeto = true,
+            meusInteresses = listOf("Mobile", "UX/UI")
         )
     }
 }

@@ -34,6 +34,7 @@ fun CardProjeto(
     projeto: Projeto,
     nomeResponsavel: String?,
     seuProjeto: Boolean,
+    meusInteresses: List<String>,
     navController: NavController
 ) {
     val textoVagas = if (projeto.vagasDisponiveis == 1) {
@@ -95,27 +96,24 @@ fun CardProjeto(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 projeto.interesses.forEach { interesse ->
-                    Surface(
-                        shape = RoundedCornerShape(8.dp),
-                        color = MaterialTheme.colorScheme.surfaceVariant
-                    ) {
-                        Text(
-                            text = interesse,
-                            style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
-                        )
-                    }
+                    ChipInteresse(interesse = interesse, emComum = interesse in meusInteresses)
                 }
             }
         }
     }
 }
 
+
 @Preview(showBackground = true)
 @Composable
 fun CardProjetoPreview() {
     AgoraHubTheme {
-        CardProjeto(projetosExemplo[0], "Marina Coutinho", true, rememberNavController())
+        CardProjeto(
+            projetosExemplo[0],
+            "Marina Coutinho",
+            true,
+            listOf("Mobile", "UX/UI"),
+            rememberNavController()
+        )
     }
 }

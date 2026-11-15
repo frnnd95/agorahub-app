@@ -32,6 +32,7 @@ fun ProjetosScreen(navController: NavController, modifier: Modifier = Modifier) 
     var projetos by remember { mutableStateOf(listOf<Projeto>()) }
     var nomes by remember { mutableStateOf(mapOf<String, String>()) }
     var meuUid by remember { mutableStateOf<String?>(null) }
+    var meusInteresses by remember { mutableStateOf(listOf<String>()) }
 
     // Pede a lista uma vez, quando a tela abre; depois, o nome de cada responsável
     LaunchedEffect(Unit) {
@@ -47,13 +48,14 @@ fun ProjetosScreen(navController: NavController, modifier: Modifier = Modifier) 
             nomes = encontrados
             projetos = lista
             meuUid = ContaDados().uidAtual()
+            meusInteresses = PerfilDados().buscarPerfil()?.interesses ?: listOf()
         } catch (e: Exception) {
             Log.e("CarregamentoProjetos", "Erro ao carregar projetos", e)
             falhou = true
         }
         carregando = false
     }
-    ProjetosConteudo(carregando, falhou, projetos, nomes, meuUid, navController, modifier)
+    ProjetosConteudo(carregando, falhou, projetos, nomes, meuUid, meusInteresses, navController, modifier)
 }
 
 @Composable
@@ -63,6 +65,7 @@ private fun ProjetosConteudo(
     projetos: List<Projeto>,
     nomes: Map<String, String>,
     meuUid: String?,
+    meusInteresses: List<String>,
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
@@ -105,6 +108,7 @@ private fun ProjetosConteudo(
                 projeto = projeto,
                 nomeResponsavel = nomes[projeto.responsavel],
                 seuProjeto = projeto.responsavel == meuUid,
+                meusInteresses = meusInteresses,
                 navController = navController
             )
         }
@@ -121,6 +125,7 @@ fun ProjetosScreenPreview() {
             projetos = projetosExemplo,
             nomes = mapOf("uid-exemplo-1" to "Marina Coutinho", "uid-exemplo-2" to "Pedro Henrique"),
             meuUid = "uid-exemplo-1",
+            meusInteresses = listOf("Mobile", "Banco de Dados"),
             navController = rememberNavController()
         )
     }
