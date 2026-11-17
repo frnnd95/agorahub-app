@@ -8,6 +8,10 @@ import kotlinx.coroutines.tasks.await
 class PerfilDados {
     suspend fun buscarPerfil(): Perfil? {
         val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return null
+        return buscarPerfilDe(uid)
+    }
+    // O perfil de qualquer estudante, pelo uid (RF16, RF20 e RF23)
+    suspend fun buscarPerfilDe(uid: String): Perfil? {
         val documento = FirebaseFirestore.getInstance()
             .collection("estudantes")
             .document(uid)
