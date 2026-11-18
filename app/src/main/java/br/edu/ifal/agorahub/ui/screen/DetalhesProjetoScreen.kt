@@ -65,11 +65,11 @@ fun DetalhesProjetoScreen(id: String?, modifier: Modifier = Modifier) {
                 // RN21: pendente, membro ou removido impedem nova solicitação
                 if (!seuProjeto) {
                     val minhas = SolicitacaoDados().listarMinhasDoProjeto(encontrado.id)
-                    Log.d("DetalhesProjeto", "projeto=${encontrado.id} minhas=${minhas.map { it.status }}")
                     impedimento = when {
                         minhas.any { it.status == "Pendente" } -> "Pendente"
                         minhas.any { it.status == "Aceita" } -> "Aceita"
                         minhas.any { it.status == "Removida" } -> "Removida"
+                        encontrado.status != "Aberto" || encontrado.vagasDisponiveis <= 0 -> "Fechado"
                         else -> null
                     }
                 }
@@ -207,6 +207,7 @@ private fun DetalhesProjetoConteudo(
                     val texto = when (impedimento) {
                         "Pendente" -> "Sua solicitação está pendente."
                         "Aceita" -> "Você é membro deste projeto."
+                        "Fechado" -> "Este projeto não está recebendo solicitações."
                         else -> "Você foi removido deste projeto."
                     }
                     val fundo = when (impedimento) {
@@ -231,7 +232,7 @@ private fun DetalhesProjetoConteudo(
                             modifier = Modifier.padding(16.dp)
                         )
                     }
-                } else if (projeto.status == "Aberto" && projeto.vagasDisponiveis > 0) {
+                } else {
                     Button(
                         onClick = { },
                         modifier = Modifier
