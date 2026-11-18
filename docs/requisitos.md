@@ -17,9 +17,9 @@
 | 2.11   | Fernanda        | 08/11/2026 | Decisão D17, etapa 4: regras da coleção `projetos` (RF14)                                                                                                                                                                                                            |
 | 2.12   | Fernanda        | 09/11/2026 | Decisão D20: `mergeDescendants` nos itens do Calendário e da Equipe                                                                                                                                                                                                  |
 | 3.0    | Fernanda        | 09/11/2026 | Decisões que descrevem o produto viram requisitos (RNF06, RNF10 a RNF13, RNF15 e RNF16) ou saem; telas de consulta como RF28 a RF30; RN04 ampliada; seções 8.3, 8.4 e 9 novas; decisões em aberto D23 a D25; RNF14 com a data da apresentação final; sai a seção 5.4 |
-| 3.1    | Fernanda        | 12/11/2026 | Decisões D23 (e-mail dos membros na coleção `emails`), D24 (coleção `solicitacoes`) e D25 (gravação em lote) |
-| 3.2    | Fernanda        | 16/11/2026 | Seção 8.3: `buildAnnotatedString`, `withStyle` e `SpanStyle` (RF14) |
-| 3.3    | Fernanda        | 18/11/2026 | RN07, RN16 e RN27 com limites de tamanho; RF20 com o número de pendentes na aba Perfil; VC19 (abas nas Solicitações recebidas) |
+| 3.1    | Fernanda        | 12/11/2026 | Decisões D23 (e-mail dos membros na coleção `emails`), D24 (coleção `solicitacoes`) e D25 (gravação em lote)                                                                                                                                                         |
+| 3.2    | Fernanda        | 16/11/2026 | Seção 8.3: `buildAnnotatedString`, `withStyle` e `SpanStyle` (RF14)                                                                                                                                                                                                  |
+| 3.3    | Fernanda        | 18/11/2026 | RN07, RN16 e RN27 com limites de tamanho; RF20 com o número de pendentes na aba Perfil; VC19 (abas nas Solicitações recebidas); regras de projetos na seção 9.4.                                                                                                     |
 
 ## Sumário
 
@@ -540,7 +540,7 @@ As regras ficam no console do Firebase e repetem conferências do app, como a da
 |---------|---------|---------------------|----------|
 | `oportunidades` | Com login | Não pelo app: o cadastro é feito no console, que não passa pelas regras (RN10) | Não pelo app |
 | `estudantes` | Com login (RN05) | Só no próprio documento (`request.auth.uid == uid`), só com os campos `nome`, `curso` e `interesses` e com 3 a 5 interesses (RN09) | Não pelo app |
-| `projetos` | Com login | Não pelo app, até o RF13 | Não pelo app |
+| `projetos` | Com login | Criação só pelo responsável (`responsavel` igual ao uid), com status Aberto, sem membros, título de até 80 e descrição de até 1000 caracteres, de 1 a 10 vagas e de 1 a 5 interesses (RN16, RN17). Alteração só pelo responsável, em projeto Aberto ou Fechado, sem mudar `responsavel`, `vagas` nem `interesses`; os membros não passam das vagas, e projeto Aberto precisa ter vaga livre (RN18, RN29 a RN31) | Não pelo app |
 
 ### 9.5 API fake
 
