@@ -25,6 +25,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 import br.edu.ifal.agorahub.ui.components.SeletorInteresses
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.material3.Button
 
 // RF13: formulário para criar um projeto
 @Composable
@@ -34,6 +36,11 @@ fun NovoProjetoScreen(navController: NavController, modifier: Modifier = Modifie
     // Vagas como texto, porque o campo devolve texto
     var vagas by remember { mutableStateOf("") }
     var interesses by remember { mutableStateOf(listOf<String>()) }
+    var erroTitulo by remember { mutableStateOf("") }
+    var erroDescricao by remember { mutableStateOf("") }
+    var erroVagas by remember { mutableStateOf("") }
+    var erroInteresses by remember { mutableStateOf("") }
+    var erroGeral by remember { mutableStateOf("") }
 
     Column(
         modifier = modifier
@@ -52,12 +59,16 @@ fun NovoProjetoScreen(navController: NavController, modifier: Modifier = Modifie
             onValueChange = { titulo = it },
             label = { Text("Título") },
             singleLine = true,
+            isError = erroTitulo != "",
+            supportingText = { if (erroTitulo != "") Text(erroTitulo) },
             modifier = Modifier.fillMaxWidth()
         )
         OutlinedTextField(
             value = descricao,
             onValueChange = { descricao = it },
             label = { Text("Descrição") },
+            isError = erroDescricao != "",
+            supportingText = { if (erroDescricao != "") Text(erroDescricao) },
             modifier = Modifier.fillMaxWidth()
         )
         OutlinedTextField(
@@ -66,6 +77,8 @@ fun NovoProjetoScreen(navController: NavController, modifier: Modifier = Modifie
             label = { Text("Número de vagas") },
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            isError = erroVagas != "",
+            supportingText = { if (erroVagas != "") Text(erroVagas) },
             modifier = Modifier.fillMaxWidth()
         )
         SeletorInteresses(
@@ -74,6 +87,45 @@ fun NovoProjetoScreen(navController: NavController, modifier: Modifier = Modifie
             titulo = "Interesses procurados",
             orientacao = "Escolha de 1 a 5 interesses."
         )
+        if (erroInteresses != "") {
+            Text(
+                text = erroInteresses,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.error
+            )
+        }
+        if (erroGeral != "") {
+            Text(
+                text = erroGeral,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.error
+            )
+        }
+        Button(
+            onClick = {
+                // RN16: confere cada campo e mostra o erro junto dele
+                val tituloLimpo = titulo.trim()
+                val descricaoLimpa = descricao.trim()
+                val numeroVagas = vagas.trim().toIntOrNull()
+                erroTitulo = if (tituloLimpo == "") "Preencha este campo."
+                else if (tituloLimpo.length > 80) "O título pode ter no máximo 80 caracteres."
+                else ""
+                erroDescricao = if (descricaoLimpa == "") "Preencha este campo."
+                else if (descricaoLimpa.length > 1000) "A descrição pode ter no máximo 1000 caracteres."
+                else ""
+                erroVagas = if (numeroVagas == null || numeroVagas < 1 || numeroVagas > 10)
+                    "Informe um número de 1 a 10." else ""
+                erroInteresses = if (interesses.isEmpty()) "Escolha pelo menos 1 interesse." else ""
+                erroGeral = if (erroTitulo != "" || erroDescricao != "" || erroVagas != "")
+                    "Confira os campos no início da tela." else ""
+                // A gravação entra aqui no Incremento 5
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(min = 48.dp)
+        ) {
+            Text("Criar projeto")
+        }
     }
 }
 
