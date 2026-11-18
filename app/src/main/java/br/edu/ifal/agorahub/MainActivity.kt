@@ -18,6 +18,7 @@ import br.edu.ifal.agorahub.ui.screen.DetalhesOportunidadeScreen
 import br.edu.ifal.agorahub.ui.screen.MuralScreen
 import br.edu.ifal.agorahub.ui.screen.PerfilScreen
 import br.edu.ifal.agorahub.ui.screen.ProjetosScreen
+import br.edu.ifal.agorahub.ui.screen.NovoProjetoScreen
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 import androidx.compose.runtime.getValue
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -69,7 +70,8 @@ class MainActivity : ComponentActivity() {
                             rotaAtual != "verificacao" &&
                             rotaAtual != "inicio" &&
                             rotaAtual != "completar-perfil" &&
-                            rotaAtual != "editar-perfil"
+                            rotaAtual != "editar-perfil" &&
+                            rotaAtual != "novo-projeto"
                         ){
                             BarraNavegacao(navController)
                         }
@@ -93,7 +95,8 @@ class MainActivity : ComponentActivity() {
                         composable("completar-perfil") { CompletarPerfilScreen(navController) }
                         composable("editar-perfil") { CompletarPerfilScreen(navController, editar = true) }
                         composable("mural") { MuralScreen(navController) }
-                        composable("projetos") { ProjetosScreen() }
+                        composable("projetos") { ProjetosScreen(navController) }
+                        composable("novo-projeto") { NovoProjetoScreen(navController) }
                         composable("perfil") { PerfilScreen(navController) }
                         composable("detalhes/{id}") { backStackEntry ->
                             val id = backStackEntry.arguments?.getString("id")
