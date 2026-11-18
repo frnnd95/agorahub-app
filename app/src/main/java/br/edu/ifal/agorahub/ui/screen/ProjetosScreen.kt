@@ -1,12 +1,20 @@
 package br.edu.ifal.agorahub.ui.screen
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 import android.util.Log
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,7 +30,7 @@ import br.edu.ifal.agorahub.domain.Projeto
 import br.edu.ifal.agorahub.ui.components.CardProjeto
 
 @Composable
-fun ProjetosScreen(modifier: Modifier = Modifier) {
+fun ProjetosScreen(navController: NavController, modifier: Modifier = Modifier) {
     var carregando by remember { mutableStateOf(true) }
     var falhou by remember { mutableStateOf(false) }
     var projetos by remember { mutableStateOf(listOf<Projeto>()) }
@@ -37,7 +45,7 @@ fun ProjetosScreen(modifier: Modifier = Modifier) {
         }
         carregando = false
     }
-    ProjetosConteudo(carregando, falhou, projetos, modifier)
+    ProjetosConteudo(carregando, falhou, projetos, navController, modifier)
 }
 
 @Composable
@@ -45,6 +53,7 @@ private fun ProjetosConteudo(
     carregando: Boolean,
     falhou: Boolean,
     projetos: List<Projeto>,
+    navController: NavController,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(modifier = modifier) {
@@ -54,6 +63,17 @@ private fun ProjetosConteudo(
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(16.dp)
             )
+        }
+        item {
+            // RF13: abre o formulário de novo projeto
+            Button(
+                onClick = { navController.navigate("novo-projeto") },
+                modifier = Modifier.padding(horizontal = 16.dp)
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = null)
+                Spacer(Modifier.size(8.dp))
+                Text("Novo projeto")
+            }
         }
         if (carregando) {
             item {
@@ -94,7 +114,8 @@ fun ProjetosScreenPreview() {
         ProjetosConteudo(
             carregando = false,
             falhou = false,
-            projetos = projetosExemplo
+            projetos = projetosExemplo,
+            navController = rememberNavController()
         )
     }
 }
