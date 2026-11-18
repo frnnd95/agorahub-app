@@ -255,7 +255,7 @@ Também foram concluídas nesta iteração as issues #45, #48 e #47, do mileston
 | Barra inferior só nas abas e nos detalhes da oportunidade   | RNF15                | Fernanda    | #102  | A fazer  |
 | Interesses em comum também em texto                         | RF16                 | A definir   | #103  | A fazer  |
 | Nome e outro curso com até 60 caracteres                    | RF07                 | A definir   | #104  | A fazer  |
-| Espaços, tamanho mínimo e aviso no Novo projeto             | RF13                 | A definir   | #105  | A fazer  |
+| Espaços, tamanho mínimo e aviso no Novo projeto             | RF13                 | A definir   | #107  | A fazer  |
 
 As decisões D23 a D25 foram registradas em 12/11, antes das issues que dependem delas. As regras do Firestore ficam na primeira parte da #86, publicada até 13/11, para que as outras issues possam ser testadas com dados cadastrados pelo console, sem esperar o RF17 inteiro.
 Em 18/11, a análise do protótipo levou a ajustes em várias issues: a tela Membros saiu, e o e-mail e o Remover ficam nas solicitações Aceitas (#96 e #98); as ações sem volta pedem confirmação; o requisitos.md passou para a versão 3.3. As issues #102 a #104 e a do RF13 foram criadas nesse dia.
