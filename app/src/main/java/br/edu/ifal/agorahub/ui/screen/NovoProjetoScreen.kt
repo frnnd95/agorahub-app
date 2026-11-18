@@ -24,6 +24,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
+import br.edu.ifal.agorahub.ui.components.SeletorInteresses
 
 // RF13: formulário para criar um projeto
 @Composable
@@ -32,6 +33,7 @@ fun NovoProjetoScreen(navController: NavController, modifier: Modifier = Modifie
     var descricao by remember { mutableStateOf("") }
     // Vagas como texto, porque o campo devolve texto
     var vagas by remember { mutableStateOf("") }
+    var interesses by remember { mutableStateOf(listOf<String>()) }
 
     Column(
         modifier = modifier
@@ -65,6 +67,12 @@ fun NovoProjetoScreen(navController: NavController, modifier: Modifier = Modifie
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth()
+        )
+        SeletorInteresses(
+            escolhidos = interesses,
+            aoMudar = { nova -> interesses = nova },
+            titulo = "Interesses procurados",
+            orientacao = "Escolha de 1 a 5 interesses."
         )
     }
 }
