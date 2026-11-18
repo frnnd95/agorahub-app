@@ -27,6 +27,10 @@ import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 import br.edu.ifal.agorahub.ui.components.SeletorInteresses
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material3.Button
+import android.util.Log
+import androidx.compose.runtime.rememberCoroutineScope
+import br.edu.ifal.agorahub.data.ProjetoDados
+import kotlinx.coroutines.launch
 
 // RF13: formulário para criar um projeto
 @Composable
@@ -41,6 +45,8 @@ fun NovoProjetoScreen(navController: NavController, modifier: Modifier = Modifie
     var erroVagas by remember { mutableStateOf("") }
     var erroInteresses by remember { mutableStateOf("") }
     var erroGeral by remember { mutableStateOf("") }
+    var criando by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
 
     Column(
         modifier = modifier
@@ -118,8 +124,26 @@ fun NovoProjetoScreen(navController: NavController, modifier: Modifier = Modifie
                 erroInteresses = if (interesses.isEmpty()) "Escolha pelo menos 1 interesse." else ""
                 erroGeral = if (erroTitulo != "" || erroDescricao != "" || erroVagas != "")
                     "Confira os campos no início da tela." else ""
-                // A gravação entra aqui no Incremento 5
+                val valido = erroTitulo == "" && erroDescricao == "" &&
+                        erroVagas == "" && erroInteresses == ""
+                if (valido && numeroVagas != null) {
+                    criando = true
+                    scope.launch {
+                        try {
+                            ProjetoDados().criarProjeto(
+                                tituloLimpo, descricaoLimpa, numeroVagas, interesses
+                            )
+                            // Volta ao Hub, que lê o Firestore de novo
+                            navController.popBackStack()
+                        } catch (e: Exception) {
+                            criando = false
+                            erroGeral = "Não foi possível criar o projeto. Confira a internet e tente de novo."
+                            Log.e("NovoProjeto", "Erro ao criar projeto", e)
+                        }
+                    }
+                }
             },
+            enabled = !criando,
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(min = 48.dp)
