@@ -19,6 +19,7 @@
 | 3.0    | Fernanda        | 09/11/2026 | Decisões que descrevem o produto viram requisitos (RNF06, RNF10 a RNF13, RNF15 e RNF16) ou saem; telas de consulta como RF28 a RF30; RN04 ampliada; seções 8.3, 8.4 e 9 novas; decisões em aberto D23 a D25; RNF14 com a data da apresentação final; sai a seção 5.4 |
 | 3.1    | Fernanda        | 12/11/2026 | Decisões D23 (e-mail dos membros na coleção `emails`), D24 (coleção `solicitacoes`) e D25 (gravação em lote) |
 | 3.2    | Fernanda        | 16/11/2026 | Seção 8.3: `buildAnnotatedString`, `withStyle` e `SpanStyle` (RF14) |
+| 3.3    | Jhully          | 18/11/2026 | Seção 9.3: projetos criados pelo app (RF13); seção 8.3: `add()` e `toIntOrNull()` |
 
 ## Sumário
 
@@ -464,6 +465,7 @@ Recursos que entraram por serem indispensáveis a um requisito (RNF11). Quem usa
 | `await()`, da biblioteca `kotlinx-coroutines-play-services` | Classes da pasta `data` que leem e gravam no Firestore | Espera o resultado do Firestore numa coroutine (D19) | D19 |
 | `semantics(mergeDescendants = true)` | Itens do Calendário acadêmico e da Equipe ÁgoraHub (RF29 e RF30) | O TalkBack lê cada item de uma vez: a data com o evento; o nome com o papel | D20 |
 | `buildAnnotatedString`, `withStyle` e `SpanStyle` | Cartão do Hub de Projetos (RF14), na linha "Criado por" | Deixam as vagas disponíveis (RN18) em negrito no meio da linha, num só `Text`, como no protótipo | PR #100 |
+| `add()` do Firestore e `toIntOrNull()` | Novo projeto (RF13), na função `criarProjeto` do `ProjetoDados` e na validação das vagas | O `add()` grava um documento com o identificador gerado pelo Firestore (seção 9.3); o `toIntOrNull()` converte as vagas em número sem fechar o app quando o texto não é número (RN16) | Issue #87 |
 
 ### 8.4 Correspondência das decisões da versão 2
 
@@ -515,7 +517,7 @@ Um documento por oportunidade, cadastrado pela Equipe ÁgoraHub no console do Fi
 
 ### 9.3 Coleção `projetos`
 
-Um documento por projeto, com o identificador gerado pelo Firestore. Até o RF13, os projetos são de teste, cadastrados pelo console.
+Um documento por projeto, com o identificador gerado pelo Firestore. Os projetos são criados pelo app, no botão Novo projeto do Hub de Projetos (RF13).
 
 | Campo | Tipo | Regra |
 |-------|------|-------|
