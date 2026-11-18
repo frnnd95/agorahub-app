@@ -11,7 +11,7 @@ O app abre na tela de abertura, com Entrar, Criar conta e Ver privacidade e dado
 Depois disso, a barra de navegação tem três abas:
 
 - **Mural:** oportunidades cadastradas pela equipe no Firestore (seção 11 do guia de desenvolvimento). As vencidas não aparecem, a lista é ordenada pelo prazo mais próximo e o prazo fica em vermelho quando faltam 3 dias ou menos. Tocar numa oportunidade abre os detalhes, com o link para o navegador.
-- **Projetos:** projetos abertos e com vagas, lidos do Firestore. Por enquanto, são projetos de teste cadastrados pelo console.
+- **Projetos:** projetos abertos e com vagas, lidos do Firestore. Tocar num projeto abre os detalhes, com o responsável, as vagas e os interesses procurados; os interesses em comum com o seu perfil ficam em destaque. Por enquanto, são projetos de teste cadastrados pelo console.
 - **Perfil:** nome, curso e interesses do estudante, com as opções Editar perfil, Calendário acadêmico, Perguntas frequentes, Equipe ÁgoraHub, Privacidade e dados e Sair. Calendário, Perguntas e Equipe leem a API fake do repositório `agorahub-api`.
 
 ## Tecnologias
