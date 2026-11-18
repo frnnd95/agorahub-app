@@ -19,6 +19,21 @@ class ProjetoDados {
         val abertos = todos.filter { it.status == "Aberto" && it.vagasDisponiveis > 0 }
         return abertos.sortedByDescending { it.criadoEm }
     }
+
+    suspend fun buscarPorId(id: String?): Projeto? {
+        if (id == null) {
+            return null
+        }
+        // Espera o Firestore responder; se falhar, lança uma exceção
+        val doc = FirebaseFirestore.getInstance()
+            .collection("projetos")
+            .document(id)
+            .get()
+            .await()
+        // Documento inexistente ou incompleto vira null
+        return converter(doc)
+    }
+
     // RF13: grava um projeto novo com os campos da seção 9.3
     suspend fun criarProjeto(
         titulo: String,
@@ -43,16 +58,20 @@ class ProjetoDados {
             .add(dados)
             .await()
     }
-    // Documento do Firestore para Projeto (estrutura da D21)
+
+    // Documento do Firestore para Projeto (seção 9.3)
     private fun converter(doc: DocumentSnapshot): Projeto? {
         val vagas = doc.getLong("vagas") ?: return null
         val membros = doc.get("membros") as? List<*> ?: return null
         val interesses = doc.get("interesses") as? List<*> ?: return null
         return Projeto(
+            id = doc.id,
             titulo = doc.getString("titulo") ?: return null,
+            descricao = doc.getString("descricao") ?: return null,
             vagasDisponiveis = vagas.toInt() - membros.size, // RN18
             interesses = interesses.filterIsInstance<String>(),
             status = doc.getString("status") ?: return null,
+            responsavel = doc.getString("responsavel") ?: return null,
             criadoEm = doc.getTimestamp("criadoEm") ?: return null,
         )
     }

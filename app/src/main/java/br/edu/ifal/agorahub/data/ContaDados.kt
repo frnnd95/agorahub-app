@@ -42,6 +42,10 @@ class ContaDados {
         return FirebaseAuth.getInstance().currentUser != null
     }
 
+    fun uidAtual(): String? {
+        return FirebaseAuth.getInstance().currentUser?.uid
+    }
+
     fun sair() {
         FirebaseAuth.getInstance().signOut()
     }

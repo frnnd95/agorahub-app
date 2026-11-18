@@ -18,6 +18,7 @@
 | 2.12   | Fernanda        | 09/11/2026 | Decisão D20: `mergeDescendants` nos itens do Calendário e da Equipe                                                                                                                                                                                                  |
 | 3.0    | Fernanda        | 09/11/2026 | Decisões que descrevem o produto viram requisitos (RNF06, RNF10 a RNF13, RNF15 e RNF16) ou saem; telas de consulta como RF28 a RF30; RN04 ampliada; seções 8.3, 8.4 e 9 novas; decisões em aberto D23 a D25; RNF14 com a data da apresentação final; sai a seção 5.4 |
 | 3.1    | Fernanda        | 12/11/2026 | Decisões D23 (e-mail dos membros na coleção `emails`), D24 (coleção `solicitacoes`) e D25 (gravação em lote) |
+| 3.2    | Fernanda        | 16/11/2026 | Seção 8.3: `buildAnnotatedString`, `withStyle` e `SpanStyle` (RF14) |
 
 ## Sumário
 
@@ -462,6 +463,7 @@ Recursos que entraram por serem indispensáveis a um requisito (RNF11). Quem usa
 | `RadioButton`, `FilterChip`, `selectable`, `selectableGroup` e as semânticas `heading()` e `liveRegion` | Completar e Editar perfil (RF07 e RF09), no `SeletorInteresses`; o `liveRegion` também na recuperação de senha (RF04) | O TalkBack lê se o curso e cada interesse estão marcados (RNF01), com toque de 48 dp (RNF04) | D22 |
 | `await()`, da biblioteca `kotlinx-coroutines-play-services` | Classes da pasta `data` que leem e gravam no Firestore | Espera o resultado do Firestore numa coroutine (D19) | D19 |
 | `semantics(mergeDescendants = true)` | Itens do Calendário acadêmico e da Equipe ÁgoraHub (RF29 e RF30) | O TalkBack lê cada item de uma vez: a data com o evento; o nome com o papel | D20 |
+| `buildAnnotatedString`, `withStyle` e `SpanStyle` | Cartão do Hub de Projetos (RF14), na linha "Criado por" | Deixam as vagas disponíveis (RN18) em negrito no meio da linha, num só `Text`, como no protótipo | PR #100 |
 
 ### 8.4 Correspondência das decisões da versão 2
 
