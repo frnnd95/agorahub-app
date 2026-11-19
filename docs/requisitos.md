@@ -18,10 +18,10 @@
 | 2.12   | Fernanda        | 09/11/2026 | Decisão D20: `mergeDescendants` nos itens do Calendário e da Equipe                                                                                                                                                                                                  |
 | 3.0    | Fernanda        | 09/11/2026 | Decisões que descrevem o produto viram requisitos (RNF06, RNF10 a RNF13, RNF15 e RNF16) ou saem; telas de consulta como RF28 a RF30; RN04 ampliada; seções 8.3, 8.4 e 9 novas; decisões em aberto D23 a D25; RNF14 com a data da apresentação final; sai a seção 5.4 |
 | 3.1    | Fernanda        | 12/11/2026 | Decisões D23 (e-mail dos membros na coleção `emails`), D24 (coleção `solicitacoes`) e D25 (gravação em lote)                                                                                                                                                         |
-| 3.2    | Fernanda        | 16/11/2026 | Seção 8.3: `buildAnnotatedString`, `withStyle` e `SpanStyle` (RF14)                                                                                                                                                                                                  |
-| 3.3    | Fernanda        | 18/11/2026 | RN07, RN16 e RN27 com limites de tamanho; RF20 com o número de pendentes na aba Perfil; VC19 (abas nas Solicitações recebidas); regras de projetos na seção 9.4.                                                                                                     |
-| 3.4    | Fernanda        | 19/11/2026 | Seções 9.6 e 9.7 (`solicitacoes` e `emails`), com as regras na 9.4; e-mail na 9.1; seção 8.3 com `whereEqualTo`, gravação em lote, `AlertDialog` e `get()` nas regras (RF17)                                                                                         |
-
+| 3.2    | Fernanda        | 16/11/2026 | Seção 8.3: `buildAnnotatedString`, `withStyle` e `SpanStyle` (RF14)                                                                                                                                                                                                  |                                                                                                    |                                                                                  |
+| 3.3    | Jhully          | 18/11/2026 | Seção 9.3: projetos criados pelo app (RF13); seção 8.3: `add()` e `toIntOrNull()` |                                                                                                                                                                                                  |
+| 3.4    | Fernanda        | 18/11/2026 | RN07, RN16 e RN27 com limites de tamanho; RF20 com o número de pendentes na aba Perfil; VC19 (abas nas Solicitações recebidas); regras de projetos na seção 9.4.                                                                                                     |
+| 3.5    | Fernanda        | 19/11/2026 | Seções 9.6 e 9.7 (`solicitacoes` e `emails`), com as regras na 9.4; e-mail na 9.1; seção 8.3 com `whereEqualTo`, gravação em lote, `AlertDialog` e `get()` nas regras (RF17)
 ## Sumário
 
 1. [Introdução](#1-introdução)
@@ -471,6 +471,7 @@ Recursos que entraram por serem indispensáveis a um requisito (RNF11). Quem usa
 | `batch()`, `commit()` e `document()` sem identificador | Envio da solicitação (RF17) e, depois, aceite, remoção e encerramento | Grava a solicitação e o e-mail juntos, ou nenhum dos dois; o `document()` cria o identificador antes de gravar (D23, D25) | Issue #86 |
 | `AlertDialog` | Aviso da RN22 (RF17) e, depois, confirmações do RF24 e do RF26 | Mostra o aviso por cima da tela, com Confirmar e Cancelar, lidos pelo TalkBack | Issue #86 |
 | `get()` nas regras do Firestore | Regras de `solicitacoes` e `emails` (9.4) | A regra confere o projeto ou a solicitação ligados ao documento (D23, D24) | Issue #86 |
+| `add()` do Firestore e `toIntOrNull()` | Novo projeto (RF13), na função `criarProjeto` do `ProjetoDados` e na validação das vagas | O `add()` grava um documento com o identificador gerado pelo Firestore (seção 9.3); o `toIntOrNull()` converte as vagas em número sem fechar o app quando o texto não é número (RN16) | Issue #87 |
 
 ### 8.4 Correspondência das decisões da versão 2
 
@@ -522,7 +523,7 @@ Um documento por oportunidade, cadastrado pela Equipe ÁgoraHub no console do Fi
 
 ### 9.3 Coleção `projetos`
 
-Um documento por projeto, com o identificador gerado pelo Firestore. Até o RF13, os projetos são de teste, cadastrados pelo console.
+Um documento por projeto, com o identificador gerado pelo Firestore. Os projetos são criados pelo app, no botão Novo projeto do Hub de Projetos (RF13).
 
 | Campo | Tipo | Regra |
 |-------|------|-------|
