@@ -20,6 +20,7 @@
 | 3.1    | Fernanda        | 12/11/2026 | Decisões D23 (e-mail dos membros na coleção `emails`), D24 (coleção `solicitacoes`) e D25 (gravação em lote)                                                                                                                                                         |
 | 3.2    | Fernanda        | 16/11/2026 | Seção 8.3: `buildAnnotatedString`, `withStyle` e `SpanStyle` (RF14)                                                                                                                                                                                                  |
 | 3.3    | Fernanda        | 18/11/2026 | RN07, RN16 e RN27 com limites de tamanho; RF20 com o número de pendentes na aba Perfil; VC19 (abas nas Solicitações recebidas); regras de projetos na seção 9.4.                                                                                                     |
+| 3.4    | Fernanda        | 19/11/2026 | Seções 9.6 e 9.7 (`solicitacoes` e `emails`), com as regras na 9.4; e-mail na 9.1; seção 8.3 com `whereEqualTo`, gravação em lote, `AlertDialog` e `get()` nas regras (RF17)                                                                                         |
 
 ## Sumário
 
@@ -466,6 +467,10 @@ Recursos que entraram por serem indispensáveis a um requisito (RNF11). Quem usa
 | `await()`, da biblioteca `kotlinx-coroutines-play-services` | Classes da pasta `data` que leem e gravam no Firestore | Espera o resultado do Firestore numa coroutine (D19) | D19 |
 | `semantics(mergeDescendants = true)` | Itens do Calendário acadêmico e da Equipe ÁgoraHub (RF29 e RF30) | O TalkBack lê cada item de uma vez: a data com o evento; o nome com o papel | D20 |
 | `buildAnnotatedString`, `withStyle` e `SpanStyle` | Cartão do Hub de Projetos (RF14), na linha "Criado por" | Deixam as vagas disponíveis (RN18) em negrito no meio da linha, num só `Text`, como no protótipo | PR #100 |
+| `whereEqualTo` | Consultas de `solicitacoes` (RF17 e, depois, RF18 e RF20) | Filtra as solicitações de um estudante ou de um responsável, a única leitura que a regra libera (D24) | Issue #86 |
+| `batch()`, `commit()` e `document()` sem identificador | Envio da solicitação (RF17) e, depois, aceite, remoção e encerramento | Grava a solicitação e o e-mail juntos, ou nenhum dos dois; o `document()` cria o identificador antes de gravar (D23, D25) | Issue #86 |
+| `AlertDialog` | Aviso da RN22 (RF17) e, depois, confirmações do RF24 e do RF26 | Mostra o aviso por cima da tela, com Confirmar e Cancelar, lidos pelo TalkBack | Issue #86 |
+| `get()` nas regras do Firestore | Regras de `solicitacoes` e `emails` (9.4) | A regra confere o projeto ou a solicitação ligados ao documento (D23, D24) | Issue #86 |
 
 ### 8.4 Correspondência das decisões da versão 2
 
@@ -490,7 +495,7 @@ Estrutura usada hoje no Firestore (RNF12) e na API fake (D20). Os nomes dos camp
 
 ### 9.1 Coleção `estudantes`
 
-Um documento por estudante, com o mesmo identificador do usuário no Firebase Authentication. O perfil está completo quando o documento existe (RN06). O e-mail fica só no Authentication, porque a RN05 limita quem pode vê-lo (D23).
+Um documento por estudante, com o mesmo identificador do usuário no Firebase Authentication. O perfil está completo quando o documento existe (RN06). O e-mail não fica aqui: ele vai para a coleção `emails` quando o estudante pede para participar de um projeto, e o responsável só lê depois do aceite (RN05, D23).
 
 | Campo | Tipo | Regra |
 |-------|------|-------|
@@ -541,6 +546,8 @@ As regras ficam no console do Firebase e repetem conferências do app, como a da
 | `oportunidades` | Com login | Não pelo app: o cadastro é feito no console, que não passa pelas regras (RN10) | Não pelo app |
 | `estudantes` | Com login (RN05) | Só no próprio documento (`request.auth.uid == uid`), só com os campos `nome`, `curso` e `interesses` e com 3 a 5 interesses (RN09) | Não pelo app |
 | `projetos` | Com login | Criação só pelo responsável (`responsavel` igual ao uid), com status Aberto, sem membros, título de até 80 e descrição de até 1000 caracteres, de 1 a 10 vagas e de 1 a 5 interesses (RN16, RN17). Alteração só pelo responsável, em projeto Aberto ou Fechado, sem mudar `responsavel`, `vagas` nem `interesses`; os membros não passam das vagas, e projeto Aberto precisa ter vaga livre (RN18, RN29 a RN31) | Não pelo app |
+| `solicitacoes` | Só o solicitante e o responsável (RN05, D24) | Criação só pelo solicitante, com status Pendente, em projeto Aberto de outra pessoa e com o mesmo `responsavel` do projeto (RN20). Alteração só pelo responsável, sem mudar `projeto`, `solicitante` nem `responsavel`: de Pendente para Aceita, de Pendente para Recusada com motivo ou de Aceita para Removida (RN24, RN27, RN28). A RN21 é conferida só no app | Não pelo app |
+| `emails` | O próprio estudante; o responsável, só com a solicitação de mesmo identificador Aceita (RN05, D23) | Criação só pelo próprio estudante, com o e-mail da conta; sem alteração | Não pelo app |
 
 ### 9.5 API fake
 
@@ -551,3 +558,25 @@ Arquivos da branch `main` do repositório `agorahub-api` (D20). O app só lê, e
 | `perguntas.json` | `id`, `pergunta` e `resposta` | Perguntas frequentes (RF28) |
 | `calendario.json` | `id`, `data` (texto, no formato dd/mm/aaaa) e `evento` | Calendário acadêmico (RF29) |
 | `equipe.json` | `id`, `nome`, `papel` e, opcional, `foto` (endereço raw de uma imagem da pasta `fotos`) | Equipe ÁgoraHub (RF30) |
+
+### 9.6 Coleção `solicitacoes`
+
+Um documento por solicitação, com o identificador gerado pelo Firestore (D24). Um estudante pode ter mais de uma solicitação para o mesmo projeto, como uma Recusada e uma nova (RN21). As consultas filtram por `solicitante` ou por `responsavel` com `whereEqualTo` e ordenam no app.
+
+| Campo | Tipo | Regra |
+|-------|------|-------|
+| `projeto` | texto | Identificador do projeto em `projetos` |
+| `solicitante` | texto | Identificador de quem pediu, no Authentication |
+| `responsavel` | texto | O mesmo do projeto, para o responsável consultar as recebidas (RF20) |
+| `status` | texto | Pendente, Aceita, Recusada ou Removida |
+| `motivo` | texto | Só na recusa (RN26, RN27 e RN30) |
+| `criadaEm` | timestamp | Ordem das listas (RF18 e RF20) |
+
+### 9.7 Coleção `emails`
+
+Um documento por solicitação, com o mesmo identificador dela, gravado no mesmo lote (D23, D25). O responsável só lê com a solicitação Aceita e deixa de ler depois de uma remoção.
+
+| Campo | Tipo | Regra |
+|-------|------|-------|
+| `email` | texto | E-mail da conta no Authentication |
+| `solicitante` | texto | Identificador de quem pediu |
