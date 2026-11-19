@@ -19,7 +19,8 @@
 | 3.0    | Fernanda        | 09/11/2026 | Decisões que descrevem o produto viram requisitos (RNF06, RNF10 a RNF13, RNF15 e RNF16) ou saem; telas de consulta como RF28 a RF30; RN04 ampliada; seções 8.3, 8.4 e 9 novas; decisões em aberto D23 a D25; RNF14 com a data da apresentação final; sai a seção 5.4 |
 | 3.1    | Fernanda        | 12/11/2026 | Decisões D23 (e-mail dos membros na coleção `emails`), D24 (coleção `solicitacoes`) e D25 (gravação em lote) |
 | 3.2    | Fernanda        | 16/11/2026 | Seção 8.3: `buildAnnotatedString`, `withStyle` e `SpanStyle` (RF14) |
-| 3.3    | Jhully          | 18/11/2026 | Seção 9.3: projetos criados pelo app (RF13); seção 8.3: `add()` e `toIntOrNull()` |
+| 3.3    | Jhully          | 18/11/2026 | Seção 9.3: projetos criados pelo app (RF13); seção 8.3: `add()` e `toIntOrNull()` |                                                                                                                                                                                                  |
+| 3.4    | Fernanda        | 18/11/2026 | RN07, RN16 e RN27 com limites de tamanho; RF20 com o número de pendentes na aba Perfil; VC19 (abas nas Solicitações recebidas); regras de projetos na seção 9.4.                                                                                                     |
 
 ## Sumário
 
@@ -233,7 +234,7 @@ Os requisitos estão agrupados pelas funcionalidades da seção 5.2. A coluna **
 | Id.  | Descrição                                                                                                                                                        | Prioridade | Depende de |
 |------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|------------|
 | RF19 | Exibir ao responsável os projetos que ele criou (Meus projetos), com status, vagas disponíveis e vagas preenchidas.                                              | Alta       | RF13       |
-| RF20 | Exibir ao responsável as solicitações recebidas, separadas por status, com as pendentes em primeiro lugar e o nome, o curso e os interesses de cada solicitante. | Alta       | RF17       |
+| RF20 | Exibir ao responsável as solicitações recebidas, separadas por status, com as pendentes em primeiro lugar e o nome, o curso e os interesses de cada solicitante, e mostrar na aba Perfil quantas estão pendentes. | Alta | RF17 |
 | RF21 | Aceitar uma solicitação pendente.                                                                                                                                | Alta       | RF20       |
 | RF22 | Recusar uma solicitação pendente, informando o motivo.                                                                                                           | Alta       | RF20       |
 | RF23 | Exibir ao responsável os membros de um projeto dele, com nome, curso, interesses e e-mail institucional de cada um.                                              | Alta       | RF19, RF21 |
@@ -298,7 +299,7 @@ As regras estão agrupadas pelas mesmas funcionalidades dos requisitos funcionai
 | Id.  | Descrição                                                                                                                                                                                       | Prioridade | Relacionada a          |
 |------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|------------------------|
 | RN06 | O estudante só acessa o Mural de Oportunidades, o Hub de Projetos e as solicitações depois de completar o perfil.                                                                               | Alta       | RF07, RF10, RF14, RF17 |
-| RN07 | O curso é Sistemas de Informação ou outro curso, informado pelo nome.                                                                                                                           | Média      | RF07, RF09             |
+| RN07 | O nome tem até 60 caracteres. O curso é Sistemas de Informação ou outro curso, informado pelo nome, com até 60 caracteres. | Média | RF07, RF09 |
 | RN08 | O estudante escolhe seus interesses na lista de interesses (seção 6.2.7) e pode alterar essa escolha depois. A lista é fixa: estudantes não podem incluir, renomear ou excluir interesses dela. | Alta       | RF07, RF09, RF13, RF15 |
 | RN09 | O perfil tem de 3 a 5 interesses.                                                                                                                                                               | Alta       | RF07, RF09             |
 
@@ -317,7 +318,7 @@ As regras estão agrupadas pelas mesmas funcionalidades dos requisitos funcionai
 
 | Id.  | Descrição                                                                                                                                                             | Prioridade | Relacionada a    |
 |------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|------------------|
-| RN16 | O título do projeto tem até 80 caracteres, e a descrição, até 1000; nenhum dos dois pode ficar vazio. O projeto tem de 1 a 10 vagas e de 1 a 5 interesses procurados. | Alta       | RF13, RF25       |
+| RN16 | O título do projeto tem de 5 a 80 caracteres, e a descrição, de 20 a 1000, sem contar os espaços do início e do fim, que o app remove antes de gravar. O projeto tem de 1 a 10 vagas e de 1 a 5 interesses procurados. | Alta | RF13, RF25 |
 | RN17 | Todo projeto é criado com status Aberto. Quem cria o projeto é o responsável por ele.                                                                                 | Alta       | RF13             |
 | RN18 | Vagas disponíveis = número de vagas do projeto − número de membros.                                                                                                   | Alta       | RF14, RF16, RF19 |
 | RN19 | O Hub de Projetos mostra só projetos com status Aberto e com vagas disponíveis, do criado mais recentemente para o mais antigo.                                       | Alta       | RF14             |
@@ -338,7 +339,7 @@ As regras estão agrupadas pelas mesmas funcionalidades dos requisitos funcionai
 | RN24 | Uma solicitação Pendente pode ser aceita ou recusada. Uma solicitação Aceita pode passar a Removida. Recusada e Removida são status finais: não mudam mais.                                                    | Alta       | RF21, RF22, RF24 |
 | RN25 | Uma solicitação só pode ser aceita se o projeto tiver vagas disponíveis.                                                                                                                                       | Alta       | RF21             |
 | RN26 | Quando as vagas disponíveis chegam a zero, o projeto passa para o status Fechado, e as solicitações pendentes dele são recusadas automaticamente com o motivo "Vagas preenchidas".                             | Alta       | RF21             |
-| RN27 | Toda recusa feita pelo responsável tem um motivo escolhido da lista: Perfil não compatível, Vagas preenchidas ou Outro. Ao escolher Outro, o responsável precisa escrever o motivo. O solicitante vê o motivo. | Média      | RF18, RF22       |
+| RN27 | Toda recusa feita pelo responsável tem um motivo escolhido da lista: Perfil não compatível, Vagas preenchidas ou Outro. Ao escolher Outro, o responsável precisa escrever o motivo, com até 200 caracteres. O solicitante vê o motivo. | Média | RF18, RF22 |
 | RN28 | Ao remover um membro, a solicitação dele passa para Removida e a vaga volta a ficar disponível. O status do projeto não muda: um projeto Fechado continua Fechado até o responsável reabri-lo.                 | Média      | RF24             |
 | RN29 | Só projetos com status Aberto ou Fechado podem ser editados.                                                                                                                                                   | Média      | RF25             |
 | RN30 | Ao encerrar um projeto, ele passa para o status Encerrado, e as solicitações pendentes dele são recusadas automaticamente com o motivo "Projeto encerrado". Um projeto Encerrado não pode ser reaberto.        | Média      | RF26             |
@@ -412,6 +413,7 @@ Funcionalidades que fazem parte da visão do produto, mas não serão desenvolvi
 | VC12 | Edição das vagas e dos interesses procurados de um projeto.                                                                               | Exige regras para quando o número de vagas fica menor que o número de membros. |
 | VC13 | Justificativa ao encerrar um projeto: não completou as vagas, desistência ou concluído, com link para o site ou repositório do resultado. | Ganha valor junto com o acompanhamento por professores (VC16).                 |
 | VC14 | Reabertura de um projeto encerrado.                                                                                                       | Depende de como ficarão os status com a VC13.                                  |
+| VC19 | Abas por status nas Solicitações recebidas, com a contagem de cada status. | Pede um componente que não apareceu nas aulas (`TabRow`); no MVP, a lista separa os status com títulos. |
 
 ### 7.4 Comunicação
 
@@ -540,7 +542,7 @@ As regras ficam no console do Firebase e repetem conferências do app, como a da
 |---------|---------|---------------------|----------|
 | `oportunidades` | Com login | Não pelo app: o cadastro é feito no console, que não passa pelas regras (RN10) | Não pelo app |
 | `estudantes` | Com login (RN05) | Só no próprio documento (`request.auth.uid == uid`), só com os campos `nome`, `curso` e `interesses` e com 3 a 5 interesses (RN09) | Não pelo app |
-| `projetos` | Com login | Não pelo app, até o RF13 | Não pelo app |
+| `projetos` | Com login | Criação só pelo responsável (`responsavel` igual ao uid), com status Aberto, sem membros, título de até 80 e descrição de até 1000 caracteres, de 1 a 10 vagas e de 1 a 5 interesses (RN16, RN17). Alteração só pelo responsável, em projeto Aberto ou Fechado, sem mudar `responsavel`, `vagas` nem `interesses`; os membros não passam das vagas, e projeto Aberto precisa ter vaga livre (RN18, RN29 a RN31) | Não pelo app |
 
 ### 9.5 API fake
 
