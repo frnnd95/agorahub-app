@@ -59,22 +59,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = {
-                        if (
-                            rotaAtual != "abertura" &&
-                            rotaAtual != "privacidade" &&
-                            rotaAtual != "perguntas" &&
-                            rotaAtual != "calendario" &&
-                            rotaAtual != "equipe" &&
-                            rotaAtual != "cadastro" &&
-                            rotaAtual != "entrar" &&
-                            rotaAtual != "recuperar-senha" &&
-                            rotaAtual != "verificacao" &&
-                            rotaAtual != "inicio" &&
-                            rotaAtual != "completar-perfil" &&
-                            rotaAtual != "editar-perfil" &&
-                            rotaAtual != "novo-projeto" &&
-                            rotaAtual != "projeto/{id}"
-                        ){
+                        if (rotaAtual in listOf("mural", "projetos", "perfil", "detalhes/{id}")) {
                             BarraNavegacao(navController)
                         }
                     }
