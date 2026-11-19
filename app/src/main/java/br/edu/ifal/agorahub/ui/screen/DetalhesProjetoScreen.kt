@@ -41,6 +41,8 @@ import androidx.compose.material3.Button
 import br.edu.ifal.agorahub.data.SolicitacaoDados
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.TextButton
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
 
 private val formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy")
 
@@ -53,6 +55,9 @@ fun DetalhesProjetoScreen(id: String?, modifier: Modifier = Modifier) {
     var seuProjeto by remember { mutableStateOf(false) }
     var meusInteresses by remember { mutableStateOf(listOf<String>()) }
     var impedimento by remember { mutableStateOf<String?>(null) }
+    var enviando by remember { mutableStateOf(false) }
+    var falhaEnvio by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
 
     // Lê o projeto e, depois, o nome do responsável em estudantes (seção 9.3)
     LaunchedEffect(Unit) {
@@ -82,7 +87,28 @@ fun DetalhesProjetoScreen(id: String?, modifier: Modifier = Modifier) {
         }
         carregando = false
     }
-    DetalhesProjetoConteudo(carregando, falhou, projeto, nomeResponsavel, seuProjeto, meusInteresses, impedimento, { }, modifier)
+    DetalhesProjetoConteudo(
+        carregando, falhou, projeto, nomeResponsavel, seuProjeto, meusInteresses, impedimento,
+        enviando, falhaEnvio,
+        aoConfirmar = {
+            val atual = projeto
+            if (atual != null) {
+                scope.launch {
+                    enviando = true
+                    falhaEnvio = false
+                    try {
+                        SolicitacaoDados().enviar(atual.id, atual.responsavel)
+                        impedimento = "Pendente"
+                    } catch (e: Exception) {
+                        falhaEnvio = true
+                        Log.e("DetalhesProjeto", "Erro ao enviar a solicitação", e)
+                    }
+                    enviando = false
+                }
+            }
+        },
+        modifier = modifier
+    )
 }
 
 @Composable
@@ -94,6 +120,8 @@ private fun DetalhesProjetoConteudo(
     seuProjeto: Boolean,
     meusInteresses: List<String>,
     impedimento: String?,
+    enviando: Boolean,
+    falhaEnvio: Boolean,
     aoConfirmar: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -237,8 +265,15 @@ private fun DetalhesProjetoConteudo(
                         )
                     }
                 } else {
+                    if (falhaEnvio) {
+                        Text(
+                            text = "Não foi possível enviar a solicitação. Confira a internet e tente de novo.",
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
                     Button(
                         onClick = { mostrarAviso = true },
+                        enabled = !enviando,
                         modifier = Modifier
                             .fillMaxWidth()
                             .heightIn(min = 48.dp)
@@ -278,9 +313,11 @@ fun DetalhesProjetoScreenPreview() {
             falhou = false,
             projeto = projetosExemplo[0],
             nomeResponsavel = "Marina Coutinho",
-            seuProjeto = true,
+            seuProjeto = false,
             meusInteresses = listOf("Mobile", "UX/UI"),
             impedimento = null,
+            enviando = false,
+            falhaEnvio = false,
             aoConfirmar = { }
         )
     }
