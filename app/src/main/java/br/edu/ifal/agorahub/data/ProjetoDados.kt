@@ -42,6 +42,8 @@ class ProjetoDados {
             titulo = doc.getString("titulo") ?: return null,
             descricao = doc.getString("descricao") ?: return null,
             vagasDisponiveis = vagas.toInt() - membros.size, // RN18
+            vagas = vagas.toInt(),
+            membros = membros.filterIsInstance<String>(),
             interesses = interesses.filterIsInstance<String>(),
             status = doc.getString("status") ?: return null,
             responsavel = doc.getString("responsavel") ?: return null,
