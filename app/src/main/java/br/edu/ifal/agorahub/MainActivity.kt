@@ -42,6 +42,7 @@ import br.edu.ifal.agorahub.domain.Oportunidade
 import br.edu.ifal.agorahub.data.ContaDados
 import br.edu.ifal.agorahub.ui.screen.DetalhesProjetoScreen
 import br.edu.ifal.agorahub.ui.screen.EquipeScreen
+import br.edu.ifal.agorahub.ui.screen.MeusProjetosScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,7 +72,8 @@ class MainActivity : ComponentActivity() {
                             rotaAtual != "inicio" &&
                             rotaAtual != "completar-perfil" &&
                             rotaAtual != "editar-perfil" &&
-                            rotaAtual != "projeto/{id}"
+                            rotaAtual != "projeto/{id}" &&
+                            rotaAtual != "meus-projetos"
                         ){
                             BarraNavegacao(navController)
                         }
@@ -100,6 +102,7 @@ class MainActivity : ComponentActivity() {
                             DetalhesProjetoScreen(backStackEntry.arguments?.getString("id"))
                         }
                         composable("perfil") { PerfilScreen(navController) }
+                        composable("meus-projetos") { MeusProjetosScreen() }
                         composable("detalhes/{id}") { backStackEntry ->
                             val id = backStackEntry.arguments?.getString("id")
                             var carregando by remember { mutableStateOf(true) }
