@@ -39,6 +39,8 @@ import java.time.format.DateTimeFormatter
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material3.Button
 import br.edu.ifal.agorahub.data.SolicitacaoDados
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
 
 private val formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy")
 
@@ -80,7 +82,7 @@ fun DetalhesProjetoScreen(id: String?, modifier: Modifier = Modifier) {
         }
         carregando = false
     }
-    DetalhesProjetoConteudo(carregando, falhou, projeto, nomeResponsavel, seuProjeto, meusInteresses, impedimento, modifier)
+    DetalhesProjetoConteudo(carregando, falhou, projeto, nomeResponsavel, seuProjeto, meusInteresses, impedimento, { }, modifier)
 }
 
 @Composable
@@ -92,8 +94,10 @@ private fun DetalhesProjetoConteudo(
     seuProjeto: Boolean,
     meusInteresses: List<String>,
     impedimento: String?,
+    aoConfirmar: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var mostrarAviso by remember { mutableStateOf(false) }
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -234,12 +238,30 @@ private fun DetalhesProjetoConteudo(
                     }
                 } else {
                     Button(
-                        onClick = { },
+                        onClick = { mostrarAviso = true },
                         modifier = Modifier
                             .fillMaxWidth()
                             .heightIn(min = 48.dp)
                     ) {
                         Text("Solicitar participação")
+                    }
+                    if (mostrarAviso) {
+                        AlertDialog(
+                            onDismissRequest = { mostrarAviso = false },
+                            title = { Text("Antes de enviar") },
+                            text = {
+                                Text("Se sua solicitação for aceita, seu e-mail institucional será compartilhado com o responsável pelo projeto.")
+                            },
+                            confirmButton = {
+                                TextButton(onClick = {
+                                    mostrarAviso = false
+                                    aoConfirmar()
+                                }) { Text("Confirmar") }
+                            },
+                            dismissButton = {
+                                TextButton(onClick = { mostrarAviso = false }) { Text("Cancelar") }
+                            }
+                        )
                     }
                 }
             }
@@ -258,7 +280,8 @@ fun DetalhesProjetoScreenPreview() {
             nomeResponsavel = "Marina Coutinho",
             seuProjeto = true,
             meusInteresses = listOf("Mobile", "UX/UI"),
-            impedimento = null
+            impedimento = null,
+            aoConfirmar = { }
         )
     }
 }
