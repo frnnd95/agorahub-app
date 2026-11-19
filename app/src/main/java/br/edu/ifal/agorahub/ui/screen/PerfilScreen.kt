@@ -50,6 +50,7 @@ import br.edu.ifal.agorahub.data.PerfilDados
 import br.edu.ifal.agorahub.data.perfilExemplo
 import br.edu.ifal.agorahub.domain.Perfil
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
+import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.Groups
 
 @Composable
@@ -110,6 +111,11 @@ private fun PerfilConteudo(
                     icone = Icons.Default.Edit,
                     texto = "Editar perfil",
                     onClick = { navController.navigate("editar-perfil") }
+                )
+                ItemOpcao(
+                    icone = Icons.Default.Folder,
+                    texto = "Meus projetos",
+                    onClick = { navController.navigate("meus-projetos") }
                 )
                 ItemOpcao(
                     icone = Icons.Default.CalendarMonth,
