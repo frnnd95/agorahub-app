@@ -31,7 +31,10 @@ import br.edu.ifal.agorahub.data.InteresseDados
 fun SeletorInteresses(
     escolhidos: List<String>,
     aoMudar: (List<String>) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    // Textos do perfil como padrão, para o RF07 e o RF09 não mudarem
+    titulo: String = "Seus interesses",
+    orientacao: String = "Escolha de 3 a 5 interesses. Eles ajudam a mostrar com o que você pode colaborar."
 ) {
     val categorias = remember { InteresseDados().listarCategorias() }
     // Categoria onde o estudante tentou marcar o sexto interesse
@@ -39,12 +42,12 @@ fun SeletorInteresses(
 
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(
-            text = "Seus interesses",
+            text = titulo,
             style = MaterialTheme.typography.titleMedium,
             modifier = Modifier.semantics { heading() }
         )
         Text(
-            text = "Escolha de 3 a 5 interesses. Eles ajudam a mostrar com o que você pode colaborar.",
+            text = orientacao,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )

@@ -18,6 +18,7 @@ import br.edu.ifal.agorahub.ui.screen.DetalhesOportunidadeScreen
 import br.edu.ifal.agorahub.ui.screen.MuralScreen
 import br.edu.ifal.agorahub.ui.screen.PerfilScreen
 import br.edu.ifal.agorahub.ui.screen.ProjetosScreen
+import br.edu.ifal.agorahub.ui.screen.NovoProjetoScreen
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 import androidx.compose.runtime.getValue
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -82,6 +83,7 @@ class MainActivity : ComponentActivity() {
                         composable("editar-perfil") { CompletarPerfilScreen(navController, editar = true) }
                         composable("mural") { MuralScreen(navController) }
                         composable("projetos") { ProjetosScreen(navController) }
+                        composable("novo-projeto") { NovoProjetoScreen(navController) }
                         composable("projeto/{id}") { backStackEntry ->
                             DetalhesProjetoScreen(backStackEntry.arguments?.getString("id"))
                         }
