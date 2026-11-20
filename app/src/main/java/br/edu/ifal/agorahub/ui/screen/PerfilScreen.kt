@@ -1,21 +1,17 @@
 package br.edu.ifal.agorahub.ui.screen
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -41,8 +37,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.clearAndSetSemantics
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -55,6 +49,7 @@ import br.edu.ifal.agorahub.domain.Perfil
 import br.edu.ifal.agorahub.ui.components.CartaoPerfil
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 
+@SuppressLint("AutoboxingStateCreation")
 @Composable
 fun PerfilScreen(navController: NavController, modifier: Modifier = Modifier) {
     var carregando by remember { mutableStateOf(true) }
@@ -190,78 +185,6 @@ private fun PerfilConteudo(
 }
 
 @Composable
-private fun CartaoPerfil(perfil: Perfil) {
-    val partes = perfil.nome.split(" ").filter { it.isNotEmpty() }
-    val iniciais = if (partes.size > 1) {
-        partes.first().take(1) + partes.last().take(1)
-    } else if (partes.size == 1) {
-        partes.first().take(1)
-    } else {
-        ""
-    }
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(72.dp)
-                        .background(MaterialTheme.colorScheme.primaryContainer, CircleShape)
-                        .clearAndSetSemantics { },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = iniciais.uppercase(),
-                        style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                }
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = perfil.nome,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = perfil.curso,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            }
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                perfil.interesses.forEach { interesse ->
-                    Surface(
-                        shape = RoundedCornerShape(8.dp),
-                        color = MaterialTheme.colorScheme.surfaceVariant
-                    ) {
-                        Text(
-                            text = interesse,
-                            style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
-                        )
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
 private fun ItemOpcao(
     icone: ImageVector,
     texto: String,
@@ -305,10 +228,4 @@ fun PerfilScreenPreview() {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun CartaoPerfilPreview() {
-    AgoraHubTheme {
-        CartaoPerfil(perfilExemplo)
-    }
-}
+
