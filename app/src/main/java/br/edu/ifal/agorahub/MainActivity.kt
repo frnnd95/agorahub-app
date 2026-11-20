@@ -43,6 +43,7 @@ import br.edu.ifal.agorahub.domain.Oportunidade
 import br.edu.ifal.agorahub.data.ContaDados
 import br.edu.ifal.agorahub.ui.screen.DetalhesProjetoScreen
 import br.edu.ifal.agorahub.ui.screen.EquipeScreen
+import br.edu.ifal.agorahub.ui.screen.RecusarSolicitacaoScreen
 import br.edu.ifal.agorahub.ui.screen.SolicitacoesRecebidasScreen
 
 class MainActivity : ComponentActivity() {
@@ -89,7 +90,10 @@ class MainActivity : ComponentActivity() {
                             DetalhesProjetoScreen(backStackEntry.arguments?.getString("id"))
                         }
                         composable("perfil") { PerfilScreen(navController) }
-                        composable("solicitacoes-recebidas") { SolicitacoesRecebidasScreen() }
+                        composable("solicitacoes-recebidas") { SolicitacoesRecebidasScreen(navController) }
+                        composable("recusar/{id}") { backStackEntry ->
+                            RecusarSolicitacaoScreen(backStackEntry.arguments?.getString("id"), navController)
+                        }
                         composable("detalhes/{id}") { backStackEntry ->
                             val id = backStackEntry.arguments?.getString("id")
                             var carregando by remember { mutableStateOf(true) }
