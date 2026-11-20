@@ -41,6 +41,30 @@ class SolicitacaoDados {
         lote.commit().await()
     }
 
+    // RF22: recusa uma solicitação Pendente, com o motivo (RN24, RN27)
+    suspend fun recusar(id: String, motivo: String) {
+        FirebaseFirestore.getInstance()
+            .collection("solicitacoes")
+            .document(id)
+            .update(mapOf("status" to "Recusada", "motivo" to motivo))
+            .await()
+    }
+
+    // RF20: as solicitações dos projetos de quem está logado (D24)
+    suspend fun listarRecebidas(): List<Solicitacao> {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return listOf()
+        // A regra só deixa o responsável ler as solicitações dos seus projetos
+        val resultado = FirebaseFirestore.getInstance()
+            .collection("solicitacoes")
+            .whereEqualTo("responsavel", uid)
+            .get()
+            .await()
+        // Ordena no app, sem orderBy: da mais recente para a mais antiga
+        return resultado.documents
+            .mapNotNull { converter(it) }
+            .sortedByDescending { it.criadaEm }
+    }
+
     private fun converter(doc: DocumentSnapshot): Solicitacao? {
         return Solicitacao(
             id = doc.id,
