@@ -41,6 +41,21 @@ class SolicitacaoDados {
         lote.commit().await()
     }
 
+    // RF20: as solicitações dos projetos de quem está logado (D24)
+    suspend fun listarRecebidas(): List<Solicitacao> {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return listOf()
+        // A regra só deixa o responsável ler as solicitações dos seus projetos
+        val resultado = FirebaseFirestore.getInstance()
+            .collection("solicitacoes")
+            .whereEqualTo("responsavel", uid)
+            .get()
+            .await()
+        // Ordena no app, sem orderBy: da mais recente para a mais antiga
+        return resultado.documents
+            .mapNotNull { converter(it) }
+            .sortedByDescending { it.criadaEm }
+    }
+
     private fun converter(doc: DocumentSnapshot): Solicitacao? {
         return Solicitacao(
             id = doc.id,
