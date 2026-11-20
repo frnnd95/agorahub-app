@@ -47,23 +47,23 @@ fun CartaoPerfil(
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // Círculo com as iniciais: decorativo, o TalkBack não lê
                 Box(
                     modifier = Modifier
-                        .size(48.dp)
+                        .size(72.dp)
                         .background(MaterialTheme.colorScheme.primaryContainer, CircleShape)
                         .clearAndSetSemantics { },
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = iniciais.uppercase(),
-                        style = MaterialTheme.typography.titleMedium,
+                        style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
@@ -71,7 +71,7 @@ fun CartaoPerfil(
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = nome,
-                        style = MaterialTheme.typography.titleMedium,
+                        style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
                     Text(

@@ -23,6 +23,8 @@ import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Groups
+import androidx.compose.material.icons.filled.Inbox
 import androidx.compose.material.icons.filled.QuestionAnswer
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.Icon
@@ -47,15 +49,17 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import br.edu.ifal.agorahub.data.ContaDados
 import br.edu.ifal.agorahub.data.PerfilDados
+import br.edu.ifal.agorahub.data.SolicitacaoDados
 import br.edu.ifal.agorahub.data.perfilExemplo
 import br.edu.ifal.agorahub.domain.Perfil
+import br.edu.ifal.agorahub.ui.components.CartaoPerfil
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
-import androidx.compose.material.icons.filled.Groups
 
 @Composable
 fun PerfilScreen(navController: NavController, modifier: Modifier = Modifier) {
     var carregando by remember { mutableStateOf(true) }
     var perfil by remember { mutableStateOf<Perfil?>(null) }
+    var pendentes by remember { mutableStateOf(0) }
     LaunchedEffect(Unit) {
         try {
             perfil = PerfilDados().buscarPerfil()
@@ -63,14 +67,25 @@ fun PerfilScreen(navController: NavController, modifier: Modifier = Modifier) {
             Log.e("CarregamentoPerfil", "Erro ao carregar perfil", e)
         }
         carregando = false
+        // RF20: quantas solicitações recebidas estão pendentes
+        try {
+            pendentes = SolicitacaoDados().listarRecebidas().count { it.status == "Pendente" }
+        } catch (e: Exception) {
+            Log.e(
+                "CarregamentoPerfil",
+                "Erro ao contar as solicitações pendentes",
+                e
+            )
+        }
     }
-    PerfilConteudo(carregando, perfil, navController, modifier)
+    PerfilConteudo(carregando, perfil, pendentes, navController, modifier)
 }
 
 @Composable
 private fun PerfilConteudo(
     carregando: Boolean,
     perfil: Perfil?,
+    pendentes: Int,
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
@@ -97,7 +112,11 @@ private fun PerfilConteudo(
                 color = MaterialTheme.colorScheme.error
             )
         } else {
-            CartaoPerfil(perfil)
+            CartaoPerfil(
+                nome = perfil.nome,
+                curso = perfil.curso,
+                interesses = perfil.interesses
+            )
         }
         // Cartão do estudante: editar o perfil e o calendário
         Surface(
@@ -115,6 +134,19 @@ private fun PerfilConteudo(
                     icone = Icons.Default.CalendarMonth,
                     texto = "Calendário acadêmico",
                     onClick = { navController.navigate("calendario") }
+                )
+                // RF20: com a contagem de pendentes
+                val textoSolicitacoes = if (pendentes == 1) {
+                    "Solicitações recebidas · 1 pendente"
+                } else if (pendentes > 1) {
+                    "Solicitações recebidas · $pendentes pendentes"
+                } else {
+                    "Solicitações recebidas"
+                }
+                ItemOpcao(
+                    icone = Icons.Default.Inbox,
+                    texto = textoSolicitacoes,
+                    onClick = { navController.navigate("solicitacoes-recebidas") }
                 )
             }
         }
@@ -267,6 +299,7 @@ fun PerfilScreenPreview() {
         PerfilConteudo(
             carregando = false,
             perfil = perfilExemplo,
+            pendentes = 2,
             navController = rememberNavController()
         )
     }
