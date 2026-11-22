@@ -31,7 +31,19 @@ class ProjetoDados {
         // Documento inexistente ou incompleto vira null
         return converter(doc)
     }
-
+    // RF19: projetos do estudante logado, em todos os status
+    suspend fun listarMeus(): List<Projeto> {
+        val uid = ContaDados().uidAtual()
+            ?: throw IllegalStateException("Nenhum estudante logado")
+        val resultado = FirebaseFirestore.getInstance()
+            .collection("projetos")
+            .get()
+            .await()
+        val todos = resultado.documents.mapNotNull { converter(it) }
+        val meus = todos.filter { it.responsavel == uid }
+        // Do mais recente para o mais antigo (sugestão da ficha)
+        return meus.sortedByDescending { it.criadoEm }
+    }
     // Documento do Firestore para Projeto (seção 9.3)
     private fun converter(doc: DocumentSnapshot): Projeto? {
         val vagas = doc.getLong("vagas") ?: return null
