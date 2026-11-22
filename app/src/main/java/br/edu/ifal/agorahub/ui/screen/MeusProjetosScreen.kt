@@ -20,6 +20,14 @@ import br.edu.ifal.agorahub.data.ProjetoDados
 import br.edu.ifal.agorahub.data.projetosExemplo
 import br.edu.ifal.agorahub.domain.Projeto
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Surface
+import androidx.compose.ui.text.font.FontWeight
+import br.edu.ifal.agorahub.ui.components.Selo
 
 // RF19: projetos criados pelo estudante logado
 @Composable
@@ -82,12 +90,57 @@ private fun MeusProjetosConteudo(
                 )
             }
         }
-        // Por enquanto, só o título; o item completo vem no próximo incremento
         items(projetos, key = { it.id }) { projeto ->
+            ItemMeuProjeto(projeto)
+        }
+    }
+}
+
+// Um projeto da lista: status, título e vagas (RN18)
+@Composable
+private fun ItemMeuProjeto(projeto: Projeto) {
+    val disponiveis = if (projeto.vagasDisponiveis == 1) {
+        "1 vaga disponível"
+    } else {
+        "${projeto.vagasDisponiveis} vagas disponíveis"
+    }
+    val preenchidas = if (projeto.membros.size == 1) {
+        "1 preenchida"
+    } else {
+        "${projeto.membros.size} preenchidas"
+    }
+    // Mesmas cores do selo nos detalhes do projeto
+    val fundoStatus = when (projeto.status) {
+        "Aberto" -> MaterialTheme.colorScheme.tertiaryContainer
+        "Fechado" -> MaterialTheme.colorScheme.errorContainer
+        else -> MaterialTheme.colorScheme.surfaceVariant
+    }
+    val corStatus = when (projeto.status) {
+        "Aberto" -> MaterialTheme.colorScheme.onTertiaryContainer
+        "Fechado" -> MaterialTheme.colorScheme.onErrorContainer
+        else -> MaterialTheme.colorScheme.onSurfaceVariant
+    }
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        shape = RoundedCornerShape(16.dp),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Selo(texto = projeto.status, fundo = fundoStatus, cor = corStatus, comPonto = true)
             Text(
                 text = projeto.titulo,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "$disponiveis · $preenchidas",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }
