@@ -98,7 +98,6 @@ class MainActivity : ComponentActivity() {
                             RecusarSolicitacaoScreen(backStackEntry.arguments?.getString("id"), navController)
                         }
                         composable("meus-projetos") { MeusProjetosScreen(navController) }
-                        composable("solicitacoes-recebidas") { SolicitacoesRecebidasScreen() }
                         composable("detalhes/{id}") { backStackEntry ->
                             val id = backStackEntry.arguments?.getString("id")
                             var carregando by remember { mutableStateOf(true) }
