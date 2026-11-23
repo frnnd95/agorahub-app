@@ -82,6 +82,12 @@ private fun ProjetosConteudo(
 ) {
     // RF15: interesse escolhido no filtro; "Todos" mostra a lista inteira
     var escolhido by remember { mutableStateOf("Todos") }
+    // RF15: com "Todos", a lista fica igual; senão, só os projetos com o interesse
+    val filtrados = if (escolhido == "Todos") {
+        projetos
+    } else {
+        projetos.filter { escolhido in it.interesses }
+    }
     LazyColumn(modifier = modifier) {
         item {
             Text(
@@ -134,8 +140,16 @@ private fun ProjetosConteudo(
                     modifier = Modifier.padding(16.dp)
                 )
             }
+        } else if (filtrados.isEmpty()) {
+            item {
+                Text(
+                    text = "Nenhum projeto com esse interesse no momento.",
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
         }
-        items(projetos, key = { it.id }) { projeto ->
+        items(filtrados, key = { it.id }) { projeto ->
             CardProjeto(
                 projeto = projeto,
                 nomeResponsavel = nomes[projeto.responsavel],
