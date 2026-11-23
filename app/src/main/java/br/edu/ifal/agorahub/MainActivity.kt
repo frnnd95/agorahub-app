@@ -43,6 +43,7 @@ import br.edu.ifal.agorahub.domain.Oportunidade
 import br.edu.ifal.agorahub.data.ContaDados
 import br.edu.ifal.agorahub.ui.screen.DetalhesProjetoScreen
 import br.edu.ifal.agorahub.ui.screen.EquipeScreen
+import br.edu.ifal.agorahub.ui.screen.SolicitacoesRecebidasScreen
 import br.edu.ifal.agorahub.ui.screen.MeusProjetosScreen
 
 class MainActivity : ComponentActivity() {
@@ -60,8 +61,9 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = {
-
+                        if (rotaAtual in listOf("mural", "projetos", "perfil", "detalhes/{id}")) {
                             BarraNavegacao(navController)
+                        }
                     }
                 ) { innerPadding ->
                     NavHost(
@@ -89,6 +91,7 @@ class MainActivity : ComponentActivity() {
                         }
                         composable("perfil") { PerfilScreen(navController) }
                         composable("meus-projetos") { MeusProjetosScreen(navController) }
+                        composable("solicitacoes-recebidas") { SolicitacoesRecebidasScreen() }
                         composable("detalhes/{id}") { backStackEntry ->
                             val id = backStackEntry.arguments?.getString("id")
                             var carregando by remember { mutableStateOf(true) }

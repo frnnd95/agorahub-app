@@ -1,21 +1,17 @@
 package br.edu.ifal.agorahub.ui.screen
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -23,6 +19,8 @@ import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Groups
+import androidx.compose.material.icons.filled.Inbox
 import androidx.compose.material.icons.filled.QuestionAnswer
 import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.Icon
@@ -39,24 +37,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.clearAndSetSemantics
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import br.edu.ifal.agorahub.data.ContaDados
 import br.edu.ifal.agorahub.data.PerfilDados
+import br.edu.ifal.agorahub.data.SolicitacaoDados
 import br.edu.ifal.agorahub.data.perfilExemplo
 import br.edu.ifal.agorahub.domain.Perfil
+import br.edu.ifal.agorahub.ui.components.CartaoPerfil
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 import androidx.compose.material.icons.filled.Folder
-import androidx.compose.material.icons.filled.Groups
 
+@SuppressLint("AutoboxingStateCreation")
 @Composable
 fun PerfilScreen(navController: NavController, modifier: Modifier = Modifier) {
     var carregando by remember { mutableStateOf(true) }
     var perfil by remember { mutableStateOf<Perfil?>(null) }
+    var pendentes by remember { mutableStateOf(0) }
     LaunchedEffect(Unit) {
         try {
             perfil = PerfilDados().buscarPerfil()
@@ -64,14 +63,25 @@ fun PerfilScreen(navController: NavController, modifier: Modifier = Modifier) {
             Log.e("CarregamentoPerfil", "Erro ao carregar perfil", e)
         }
         carregando = false
+        // RF20: quantas solicitações recebidas estão pendentes
+        try {
+            pendentes = SolicitacaoDados().listarRecebidas().count { it.status == "Pendente" }
+        } catch (e: Exception) {
+            Log.e(
+                "CarregamentoPerfil",
+                "Erro ao contar as solicitações pendentes",
+                e
+            )
+        }
     }
-    PerfilConteudo(carregando, perfil, navController, modifier)
+    PerfilConteudo(carregando, perfil, pendentes, navController, modifier)
 }
 
 @Composable
 private fun PerfilConteudo(
     carregando: Boolean,
     perfil: Perfil?,
+    pendentes: Int,
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
@@ -98,7 +108,11 @@ private fun PerfilConteudo(
                 color = MaterialTheme.colorScheme.error
             )
         } else {
-            CartaoPerfil(perfil)
+            CartaoPerfil(
+                nome = perfil.nome,
+                curso = perfil.curso,
+                interesses = perfil.interesses
+            )
         }
         // Cartão do estudante: editar o perfil e o calendário
         Surface(
@@ -121,6 +135,19 @@ private fun PerfilConteudo(
                     icone = Icons.Default.CalendarMonth,
                     texto = "Calendário acadêmico",
                     onClick = { navController.navigate("calendario") }
+                )
+                // RF20: com a contagem de pendentes
+                val textoSolicitacoes = if (pendentes == 1) {
+                    "Solicitações recebidas · 1 pendente"
+                } else if (pendentes > 1) {
+                    "Solicitações recebidas · $pendentes pendentes"
+                } else {
+                    "Solicitações recebidas"
+                }
+                ItemOpcao(
+                    icone = Icons.Default.Inbox,
+                    texto = textoSolicitacoes,
+                    onClick = { navController.navigate("solicitacoes-recebidas") }
                 )
             }
         }
@@ -164,78 +191,6 @@ private fun PerfilConteudo(
 }
 
 @Composable
-private fun CartaoPerfil(perfil: Perfil) {
-    val partes = perfil.nome.split(" ").filter { it.isNotEmpty() }
-    val iniciais = if (partes.size > 1) {
-        partes.first().take(1) + partes.last().take(1)
-    } else if (partes.size == 1) {
-        partes.first().take(1)
-    } else {
-        ""
-    }
-    Surface(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(72.dp)
-                        .background(MaterialTheme.colorScheme.primaryContainer, CircleShape)
-                        .clearAndSetSemantics { },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = iniciais.uppercase(),
-                        style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                }
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = perfil.nome,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Text(
-                        text = perfil.curso,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
-            }
-            FlowRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                perfil.interesses.forEach { interesse ->
-                    Surface(
-                        shape = RoundedCornerShape(8.dp),
-                        color = MaterialTheme.colorScheme.surfaceVariant
-                    ) {
-                        Text(
-                            text = interesse,
-                            style = MaterialTheme.typography.labelLarge,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
-                        )
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
 private fun ItemOpcao(
     icone: ImageVector,
     texto: String,
@@ -273,15 +228,10 @@ fun PerfilScreenPreview() {
         PerfilConteudo(
             carregando = false,
             perfil = perfilExemplo,
+            pendentes = 2,
             navController = rememberNavController()
         )
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun CartaoPerfilPreview() {
-    AgoraHubTheme {
-        CartaoPerfil(perfilExemplo)
-    }
-}
+
