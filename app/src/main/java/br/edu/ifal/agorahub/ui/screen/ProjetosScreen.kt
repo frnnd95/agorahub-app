@@ -163,7 +163,7 @@ private fun ProjetosConteudo(
     }
 }
 
-// RF15: opções do filtro (por enquanto só o layout, sem filtrar)
+// RF15: opções do filtro
 @Composable
 private fun FiltroInteresse(
     meusInteresses: List<String>,
