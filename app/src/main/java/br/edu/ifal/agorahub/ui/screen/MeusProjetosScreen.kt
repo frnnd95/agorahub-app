@@ -28,10 +28,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.ui.text.font.FontWeight
 import br.edu.ifal.agorahub.ui.components.Selo
+import androidx.compose.foundation.clickable
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.Role
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 // RF19: projetos criados pelo estudante logado
 @Composable
-fun MeusProjetosScreen(modifier: Modifier = Modifier) {
+fun MeusProjetosScreen(navController: NavController, modifier: Modifier = Modifier) {
     var carregando by remember { mutableStateOf(true) }
     var falhou by remember { mutableStateOf(false) }
     var projetos by remember { mutableStateOf(listOf<Projeto>()) }
@@ -46,7 +51,7 @@ fun MeusProjetosScreen(modifier: Modifier = Modifier) {
         }
         carregando = false
     }
-    MeusProjetosConteudo(carregando, falhou, projetos, modifier)
+    MeusProjetosConteudo(carregando, falhou, projetos, navController, modifier)
 }
 
 @Composable
@@ -54,6 +59,7 @@ private fun MeusProjetosConteudo(
     carregando: Boolean,
     falhou: Boolean,
     projetos: List<Projeto>,
+    navController: NavController,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(modifier = modifier.fillMaxSize()) {
@@ -91,14 +97,14 @@ private fun MeusProjetosConteudo(
             }
         }
         items(projetos, key = { it.id }) { projeto ->
-            ItemMeuProjeto(projeto)
+            ItemMeuProjeto(projeto, navController)
         }
     }
 }
 
 // Um projeto da lista: status, título e vagas (RN18)
 @Composable
-private fun ItemMeuProjeto(projeto: Projeto) {
+private fun ItemMeuProjeto(projeto: Projeto, navController: NavController) {
     val disponiveis = if (projeto.vagasDisponiveis == 1) {
         "1 vaga disponível"
     } else {
@@ -123,9 +129,12 @@ private fun ItemMeuProjeto(projeto: Projeto) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-        shape = RoundedCornerShape(16.dp),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .clip(RoundedCornerShape(16.dp))
+            // Tocar abre os detalhes (RF16); o TalkBack anuncia como botão
+            .clickable(role = Role.Button, onClickLabel = "Ver detalhes") {
+                navController.navigate("projeto/${projeto.id}")
+            },
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -153,7 +162,8 @@ fun MeusProjetosScreenPreview() {
         MeusProjetosConteudo(
             carregando = false,
             falhou = false,
-            projetos = projetosExemplo // dados de teste
+            projetos = projetosExemplo, // dados de teste
+            navController = rememberNavController()
         )
     }
 }

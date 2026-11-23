@@ -102,7 +102,7 @@ class MainActivity : ComponentActivity() {
                             DetalhesProjetoScreen(backStackEntry.arguments?.getString("id"))
                         }
                         composable("perfil") { PerfilScreen(navController) }
-                        composable("meus-projetos") { MeusProjetosScreen() }
+                        composable("meus-projetos") { MeusProjetosScreen(navController) }
                         composable("detalhes/{id}") { backStackEntry ->
                             val id = backStackEntry.arguments?.getString("id")
                             var carregando by remember { mutableStateOf(true) }
