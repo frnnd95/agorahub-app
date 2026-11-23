@@ -77,7 +77,7 @@ class MainActivity : ComponentActivity() {
                         composable("cadastro") { CadastroScreen(navController) }
                         composable("entrar") { EntrarScreen(navController) }
                         composable("recuperar-senha") { RecuperarSenhaScreen() }
-                        composable("verificacao") { VerificacaoScreen() }
+                        composable("verificacao") { VerificacaoScreen(navController) }
                         composable("inicio") { InicioScreen(navController) }
                         composable("completar-perfil") { CompletarPerfilScreen(navController) }
                         composable("editar-perfil") { CompletarPerfilScreen(navController, editar = true) }
