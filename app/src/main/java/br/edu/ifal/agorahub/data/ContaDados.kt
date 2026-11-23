@@ -60,6 +60,10 @@ class ContaDados {
         return FirebaseAuth.getInstance().currentUser?.uid
     }
 
+    fun emailConfirmado(): Boolean {
+        return FirebaseAuth.getInstance().currentUser?.isEmailVerified == true
+    }
+
     fun sair() {
         FirebaseAuth.getInstance().signOut()
     }

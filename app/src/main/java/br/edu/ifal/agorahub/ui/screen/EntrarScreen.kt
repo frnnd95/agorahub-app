@@ -126,8 +126,14 @@ fun EntrarScreen(navController: NavController, modifier: Modifier = Modifier) {
                         email = emailLimpo,
                         senha = senha,
                         aoEntrar = {
-                            navController.navigate("inicio") {
-                                popUpTo("abertura") { inclusive = true }
+                            if (ContaDados().emailConfirmado()) {
+                                navController.navigate("inicio") {
+                                    popUpTo("abertura") { inclusive = true }
+                                }
+                            } else {
+                                navController.navigate("verificacao") {
+                                    popUpTo("abertura")
+                                }
                             }
                         },
                         aoFalhar = { erro ->
