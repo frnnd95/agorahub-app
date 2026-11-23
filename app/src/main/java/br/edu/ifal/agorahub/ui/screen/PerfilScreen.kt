@@ -19,6 +19,7 @@ import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Inbox
 import androidx.compose.material.icons.filled.QuestionAnswer
@@ -124,6 +125,11 @@ private fun PerfilConteudo(
                     icone = Icons.Default.Edit,
                     texto = "Editar perfil",
                     onClick = { navController.navigate("editar-perfil") }
+                )
+                ItemOpcao(
+                    icone = Icons.Default.Folder,
+                    texto = "Meus projetos",
+                    onClick = { navController.navigate("meus-projetos") }
                 )
                 ItemOpcao(
                     icone = Icons.Default.CalendarMonth,
