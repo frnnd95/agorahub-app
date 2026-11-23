@@ -36,6 +36,13 @@ import br.edu.ifal.agorahub.ui.components.Selo
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.material3.Button
+import br.edu.ifal.agorahub.data.SolicitacaoDados
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
 
 private val formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy")
 
@@ -47,6 +54,10 @@ fun DetalhesProjetoScreen(id: String?, modifier: Modifier = Modifier) {
     var nomeResponsavel by remember { mutableStateOf<String?>(null) }
     var seuProjeto by remember { mutableStateOf(false) }
     var meusInteresses by remember { mutableStateOf(listOf<String>()) }
+    var impedimento by remember { mutableStateOf<String?>(null) }
+    var enviando by remember { mutableStateOf(false) }
+    var falhaEnvio by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
 
     // Lê o projeto e, depois, o nome do responsável em estudantes (seção 9.3)
     LaunchedEffect(Unit) {
@@ -58,6 +69,17 @@ fun DetalhesProjetoScreen(id: String?, modifier: Modifier = Modifier) {
                 // O projeto é de quem está logado? (RN17)
                 seuProjeto = encontrado.responsavel == ContaDados().uidAtual()
                 meusInteresses = PerfilDados().buscarPerfil()?.interesses ?: listOf()
+                // RN21: pendente, membro ou removido impedem nova solicitação
+                if (!seuProjeto) {
+                    val minhas = SolicitacaoDados().listarMinhasDoProjeto(encontrado.id)
+                    impedimento = when {
+                        minhas.any { it.status == "Pendente" } -> "Pendente"
+                        minhas.any { it.status == "Aceita" } -> "Aceita"
+                        minhas.any { it.status == "Removida" } -> "Removida"
+                        encontrado.status != "Aberto" || encontrado.vagasDisponiveis <= 0 -> "Fechado"
+                        else -> null
+                    }
+                }
             }
         } catch (e: Exception) {
             falhou = true
@@ -65,7 +87,28 @@ fun DetalhesProjetoScreen(id: String?, modifier: Modifier = Modifier) {
         }
         carregando = false
     }
-    DetalhesProjetoConteudo(carregando, falhou, projeto, nomeResponsavel, seuProjeto, meusInteresses, modifier)
+    DetalhesProjetoConteudo(
+        carregando, falhou, projeto, nomeResponsavel, seuProjeto, meusInteresses, impedimento,
+        enviando, falhaEnvio,
+        aoConfirmar = {
+            val atual = projeto
+            if (atual != null) {
+                scope.launch {
+                    enviando = true
+                    falhaEnvio = false
+                    try {
+                        SolicitacaoDados().enviar(atual.id, atual.responsavel)
+                        impedimento = "Pendente"
+                    } catch (e: Exception) {
+                        falhaEnvio = true
+                        Log.e("DetalhesProjeto", "Erro ao enviar a solicitação", e)
+                    }
+                    enviando = false
+                }
+            }
+        },
+        modifier = modifier
+    )
 }
 
 @Composable
@@ -76,8 +119,13 @@ private fun DetalhesProjetoConteudo(
     nomeResponsavel: String?,
     seuProjeto: Boolean,
     meusInteresses: List<String>,
+    impedimento: String?,
+    enviando: Boolean,
+    falhaEnvio: Boolean,
+    aoConfirmar: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var mostrarAviso by remember { mutableStateOf(false) }
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -184,6 +232,74 @@ private fun DetalhesProjetoConteudo(
                     }
                 }
             }
+
+            // RF17: só para quem não é o responsável (RN20)
+            if (!seuProjeto) {
+                if (impedimento != null) {
+                    val texto = when (impedimento) {
+                        "Pendente" -> "Sua solicitação está pendente."
+                        "Aceita" -> "Você é membro deste projeto."
+                        "Fechado" -> "Este projeto não está recebendo solicitações."
+                        else -> "Você foi removido deste projeto."
+                    }
+                    val fundo = when (impedimento) {
+                        "Pendente" -> MaterialTheme.colorScheme.primaryContainer
+                        "Aceita" -> MaterialTheme.colorScheme.tertiaryContainer
+                        else -> MaterialTheme.colorScheme.surfaceVariant
+                    }
+                    val cor = when (impedimento) {
+                        "Pendente" -> MaterialTheme.colorScheme.onPrimaryContainer
+                        "Aceita" -> MaterialTheme.colorScheme.onTertiaryContainer
+                        else -> MaterialTheme.colorScheme.onSurfaceVariant
+                    }
+                    Surface(
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp),
+                        color = fundo,
+                        contentColor = cor
+                    ) {
+                        Text(
+                            text = texto,
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
+                } else {
+                    if (falhaEnvio) {
+                        Text(
+                            text = "Não foi possível enviar a solicitação. Confira a internet e tente de novo.",
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
+                    Button(
+                        onClick = { mostrarAviso = true },
+                        enabled = !enviando,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = 48.dp)
+                    ) {
+                        Text("Solicitar participação")
+                    }
+                    if (mostrarAviso) {
+                        AlertDialog(
+                            onDismissRequest = { mostrarAviso = false },
+                            title = { Text("Antes de enviar") },
+                            text = {
+                                Text("Se sua solicitação for aceita, seu e-mail institucional será compartilhado com o responsável pelo projeto.")
+                            },
+                            confirmButton = {
+                                TextButton(onClick = {
+                                    mostrarAviso = false
+                                    aoConfirmar()
+                                }) { Text("Confirmar") }
+                            },
+                            dismissButton = {
+                                TextButton(onClick = { mostrarAviso = false }) { Text("Cancelar") }
+                            }
+                        )
+                    }
+                }
+            }
         }
     }
 }
@@ -197,8 +313,12 @@ fun DetalhesProjetoScreenPreview() {
             falhou = false,
             projeto = projetosExemplo[0],
             nomeResponsavel = "Marina Coutinho",
-            seuProjeto = true,
-            meusInteresses = listOf("Mobile", "UX/UI")
+            seuProjeto = false,
+            meusInteresses = listOf("Mobile", "UX/UI"),
+            impedimento = null,
+            enviando = false,
+            falhaEnvio = false,
+            aoConfirmar = { }
         )
     }
 }
