@@ -52,7 +52,9 @@ class MainActivity : ComponentActivity() {
             AgoraHubTheme {
                 val navController = rememberNavController()
                 val telaInicial = remember {
-                    if (ContaDados().estaLogado()) "inicio" else "abertura"
+                    if (!ContaDados().estaLogado()) "abertura"
+                    else if (ContaDados().emailConfirmado()) "inicio"
+                    else "verificacao"
                 }
                 val entradaAtual by navController.currentBackStackEntryAsState()
                 val rotaAtual = entradaAtual?.destination?.route
