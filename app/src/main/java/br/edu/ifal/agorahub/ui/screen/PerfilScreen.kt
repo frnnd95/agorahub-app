@@ -19,6 +19,7 @@ import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Inbox
 import androidx.compose.material.icons.filled.QuestionAnswer
@@ -48,7 +49,6 @@ import br.edu.ifal.agorahub.data.perfilExemplo
 import br.edu.ifal.agorahub.domain.Perfil
 import br.edu.ifal.agorahub.ui.components.CartaoPerfil
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
-import androidx.compose.material.icons.filled.Folder
 
 @SuppressLint("AutoboxingStateCreation")
 @Composable
