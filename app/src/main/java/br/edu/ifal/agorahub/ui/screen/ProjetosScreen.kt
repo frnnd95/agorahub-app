@@ -36,6 +36,7 @@ import androidx.compose.material3.FilterChip
 import br.edu.ifal.agorahub.data.InteresseDados
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.foundation.selection.selectableGroup
 
 @Composable
 fun ProjetosScreen(navController: NavController, modifier: Modifier = Modifier) {
@@ -180,7 +181,7 @@ private fun FiltroInteresse(
         }
     }
     FlowRow(
-        modifier = modifier,
+        modifier = modifier.selectableGroup(),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         opcoes.forEach { opcao ->
