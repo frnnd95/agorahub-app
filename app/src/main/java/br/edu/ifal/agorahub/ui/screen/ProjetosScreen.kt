@@ -34,6 +34,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.material3.FilterChip
 import br.edu.ifal.agorahub.data.InteresseDados
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.FilterChipDefaults
 
 @Composable
 fun ProjetosScreen(navController: NavController, modifier: Modifier = Modifier) {
@@ -78,6 +80,8 @@ private fun ProjetosConteudo(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
+    // RF15: interesse escolhido no filtro; "Todos" mostra a lista inteira
+    var escolhido by remember { mutableStateOf("Todos") }
     LazyColumn(modifier = modifier) {
         item {
             Text(
@@ -99,7 +103,11 @@ private fun ProjetosConteudo(
         }
         item {
             // RF15: filtro por interesse
-            FiltroInteresse(modifier = Modifier.padding(16.dp))
+            FiltroInteresse(
+                escolhido = escolhido,
+                aoEscolher = { escolhido = it },
+                modifier = Modifier.padding(16.dp)
+            )
         }
         if (carregando) {
             item {
@@ -141,7 +149,11 @@ private fun ProjetosConteudo(
 
 // RF15: opções do filtro (por enquanto só o layout, sem filtrar)
 @Composable
-private fun FiltroInteresse(modifier: Modifier = Modifier) {
+private fun FiltroInteresse(
+    escolhido: String,
+    aoEscolher: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
     val opcoes = remember {
         var lista = listOf("Todos")
         InteresseDados().listarCategorias().forEach { categoria ->
@@ -154,10 +166,22 @@ private fun FiltroInteresse(modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         opcoes.forEach { opcao ->
+            val marcado = opcao == escolhido
             FilterChip(
-                selected = opcao == "Todos",
-                onClick = { },
-                label = { Text(opcao) }
+                selected = marcado,
+                onClick = { aoEscolher(opcao) },
+                label = { Text(opcao) },
+                leadingIcon = if (marcado) {
+                    {
+                        Icon(
+                            imageVector = Icons.Default.Check,
+                            contentDescription = null,
+                            modifier = Modifier.size(FilterChipDefaults.IconSize)
+                        )
+                    }
+                } else {
+                    null
+                }
             )
         }
     }
