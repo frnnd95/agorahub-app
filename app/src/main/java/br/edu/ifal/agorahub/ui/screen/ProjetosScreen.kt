@@ -110,6 +110,7 @@ private fun ProjetosConteudo(
         item {
             // RF15: filtro por interesse
             FiltroInteresse(
+                meusInteresses = meusInteresses,
                 escolhido = escolhido,
                 aoEscolher = { escolhido = it },
                 modifier = Modifier.padding(16.dp)
@@ -164,16 +165,19 @@ private fun ProjetosConteudo(
 // RF15: opções do filtro (por enquanto só o layout, sem filtrar)
 @Composable
 private fun FiltroInteresse(
+    meusInteresses: List<String>,
     escolhido: String,
     aoEscolher: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val opcoes = remember {
-        var lista = listOf("Todos")
-        InteresseDados().listarCategorias().forEach { categoria ->
-            lista = lista + categoria.interesses
+    // "Todos", os interesses do perfil e depois os outros, na ordem da seção 6.2.7
+    var opcoes = listOf("Todos") + meusInteresses
+    InteresseDados().listarCategorias().forEach { categoria ->
+        categoria.interesses.forEach { interesse ->
+            if (!meusInteresses.contains(interesse)) {
+                opcoes = opcoes + interesse
+            }
         }
-        lista
     }
     FlowRow(
         modifier = modifier,
