@@ -55,7 +55,9 @@ class MainActivity : ComponentActivity() {
             AgoraHubTheme {
                 val navController = rememberNavController()
                 val telaInicial = remember {
-                    if (ContaDados().estaLogado()) "inicio" else "abertura"
+                    if (!ContaDados().estaLogado()) "abertura"
+                    else if (ContaDados().emailConfirmado()) "inicio"
+                    else "verificacao"
                 }
                 val entradaAtual by navController.currentBackStackEntryAsState()
                 val rotaAtual = entradaAtual?.destination?.route
@@ -80,7 +82,7 @@ class MainActivity : ComponentActivity() {
                         composable("cadastro") { CadastroScreen(navController) }
                         composable("entrar") { EntrarScreen(navController) }
                         composable("recuperar-senha") { RecuperarSenhaScreen() }
-                        composable("verificacao") { VerificacaoScreen() }
+                        composable("verificacao") { VerificacaoScreen(navController) }
                         composable("inicio") { InicioScreen(navController) }
                         composable("completar-perfil") { CompletarPerfilScreen(navController) }
                         composable("editar-perfil") { CompletarPerfilScreen(navController, editar = true) }
