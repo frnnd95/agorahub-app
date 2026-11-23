@@ -172,8 +172,12 @@ fun CompletarPerfilScreen(
             onClick = {
                 val nomeLimpo = nome.trim()
                 val curso = if (outroCurso) nomeCurso.trim() else "Sistemas de Informação"
-                erroNome = if (nomeLimpo == "") "Preencha este campo." else ""
-                erroCurso = if (curso == "") "Informe o nome do curso." else ""
+                erroNome = if (nomeLimpo == "") "Preencha este campo."
+                else if (nomeLimpo.length > 60) "Use no máximo 60 caracteres."
+                else ""
+                erroCurso = if (curso == "") "Informe o nome do curso."
+                else if (curso.length > 60) "Use no máximo 60 caracteres."
+                else ""
                 erroInteresses = if (escolhidos.size < 3) "Escolha pelo menos 3 interesses." else ""
                 erroGeral =
                     if (erroNome != "" || erroCurso != "") "Confira os campos no início da tela." else ""
