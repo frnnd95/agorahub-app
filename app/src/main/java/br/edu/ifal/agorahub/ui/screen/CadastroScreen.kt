@@ -156,6 +156,7 @@ fun CadastroScreen(navController: NavController, modifier: Modifier = Modifier) 
                         email = emailLimpo,
                         senha = senha,
                         aoCriar = {
+                            ContaDados().enviarLinkConfirmacao(aoEnviar = {}, aoFalhar = {})
                             navController.navigate("verificacao") {
                                 popUpTo("abertura")
                             }

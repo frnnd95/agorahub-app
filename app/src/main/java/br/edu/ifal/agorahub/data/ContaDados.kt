@@ -38,6 +38,20 @@ class ContaDados {
             .addOnFailureListener { erro -> aoFalhar(erro) }
     }
 
+    fun enviarLinkConfirmacao(
+        aoEnviar: () -> Unit,
+        aoFalhar: (Exception) -> Unit
+    ) {
+        val usuario = FirebaseAuth.getInstance().currentUser
+        if (usuario == null) {
+            aoFalhar(Exception("Sem login"))
+            return
+        }
+        usuario.sendEmailVerification()
+            .addOnSuccessListener { aoEnviar() }
+            .addOnFailureListener { erro -> aoFalhar(erro) }
+    }
+
     fun estaLogado(): Boolean {
         return FirebaseAuth.getInstance().currentUser != null
     }
