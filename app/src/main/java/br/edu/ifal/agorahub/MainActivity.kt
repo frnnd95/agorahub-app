@@ -7,44 +7,45 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.ui.Modifier
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import br.edu.ifal.agorahub.data.OportunidadeDados
-import br.edu.ifal.agorahub.ui.components.BarraNavegacao
-import br.edu.ifal.agorahub.ui.screen.DetalhesOportunidadeScreen
-import br.edu.ifal.agorahub.ui.screen.MuralScreen
-import br.edu.ifal.agorahub.ui.screen.PerfilScreen
-import br.edu.ifal.agorahub.ui.screen.ProjetosScreen
-import br.edu.ifal.agorahub.ui.screen.NovoProjetoScreen
-import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
-import androidx.compose.runtime.getValue
-import androidx.navigation.compose.currentBackStackEntryAsState
-import br.edu.ifal.agorahub.ui.screen.AberturaScreen
-import br.edu.ifal.agorahub.ui.screen.PrivacidadeScreen
-import br.edu.ifal.agorahub.ui.screen.PerguntasScreen
-import br.edu.ifal.agorahub.ui.screen.CadastroScreen
-import br.edu.ifal.agorahub.ui.screen.EntrarScreen
-import br.edu.ifal.agorahub.ui.screen.RecuperarSenhaScreen
-import br.edu.ifal.agorahub.ui.screen.VerificacaoScreen
-import br.edu.ifal.agorahub.ui.screen.InicioScreen
-import br.edu.ifal.agorahub.ui.screen.CompletarPerfilScreen
-import br.edu.ifal.agorahub.ui.screen.CalendarioScreen
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import br.edu.ifal.agorahub.domain.Oportunidade
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import br.edu.ifal.agorahub.data.ContaDados
+import br.edu.ifal.agorahub.data.OportunidadeDados
+import br.edu.ifal.agorahub.domain.Oportunidade
+import br.edu.ifal.agorahub.ui.components.BarraNavegacao
+import br.edu.ifal.agorahub.ui.screen.AberturaScreen
+import br.edu.ifal.agorahub.ui.screen.CadastroScreen
+import br.edu.ifal.agorahub.ui.screen.CalendarioScreen
+import br.edu.ifal.agorahub.ui.screen.CompletarPerfilScreen
+import br.edu.ifal.agorahub.ui.screen.DetalhesOportunidadeScreen
 import br.edu.ifal.agorahub.ui.screen.DetalhesProjetoScreen
+import br.edu.ifal.agorahub.ui.screen.EntrarScreen
 import br.edu.ifal.agorahub.ui.screen.EquipeScreen
 import br.edu.ifal.agorahub.ui.screen.RecusarSolicitacaoScreen
+import br.edu.ifal.agorahub.ui.screen.InicioScreen
+import br.edu.ifal.agorahub.ui.screen.MeusProjetosScreen
+import br.edu.ifal.agorahub.ui.screen.MuralScreen
+import br.edu.ifal.agorahub.ui.screen.NovoProjetoScreen
+import br.edu.ifal.agorahub.ui.screen.PerfilScreen
+import br.edu.ifal.agorahub.ui.screen.PerguntasScreen
+import br.edu.ifal.agorahub.ui.screen.PrivacidadeScreen
+import br.edu.ifal.agorahub.ui.screen.ProjetosScreen
+import br.edu.ifal.agorahub.ui.screen.RecuperarSenhaScreen
 import br.edu.ifal.agorahub.ui.screen.SolicitacoesRecebidasScreen
+import br.edu.ifal.agorahub.ui.screen.VerificacaoScreen
+import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,6 +95,8 @@ class MainActivity : ComponentActivity() {
                         composable("recusar/{id}") { backStackEntry ->
                             RecusarSolicitacaoScreen(backStackEntry.arguments?.getString("id"), navController)
                         }
+                        composable("meus-projetos") { MeusProjetosScreen(navController) }
+                        composable("solicitacoes-recebidas") { SolicitacoesRecebidasScreen() }
                         composable("detalhes/{id}") { backStackEntry ->
                             val id = backStackEntry.arguments?.getString("id")
                             var carregando by remember { mutableStateOf(true) }

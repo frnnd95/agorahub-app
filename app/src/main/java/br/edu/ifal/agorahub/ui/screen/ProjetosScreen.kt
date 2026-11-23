@@ -30,6 +30,13 @@ import br.edu.ifal.agorahub.data.projetosExemplo
 import br.edu.ifal.agorahub.domain.Projeto
 import br.edu.ifal.agorahub.ui.components.CardProjeto
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.material3.FilterChip
+import br.edu.ifal.agorahub.data.InteresseDados
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.foundation.selection.selectableGroup
 
 @Composable
 fun ProjetosScreen(navController: NavController, modifier: Modifier = Modifier) {
@@ -74,6 +81,14 @@ private fun ProjetosConteudo(
     navController: NavController,
     modifier: Modifier = Modifier
 ) {
+    // RF15: interesse escolhido no filtro; "Todos" mostra a lista inteira
+    var escolhido by remember { mutableStateOf("Todos") }
+    // RF15: com "Todos", a lista fica igual; senão, só os projetos com o interesse
+    val filtrados = if (escolhido == "Todos") {
+        projetos
+    } else {
+        projetos.filter { escolhido in it.interesses }
+    }
     LazyColumn(modifier = modifier) {
         item {
             Text(
@@ -92,6 +107,15 @@ private fun ProjetosConteudo(
                 Spacer(Modifier.size(8.dp))
                 Text("Novo projeto")
             }
+        }
+        item {
+            // RF15: filtro por interesse
+            FiltroInteresse(
+                meusInteresses = meusInteresses,
+                escolhido = escolhido,
+                aoEscolher = { escolhido = it },
+                modifier = Modifier.padding(16.dp)
+            )
         }
         if (carregando) {
             item {
@@ -118,14 +142,65 @@ private fun ProjetosConteudo(
                     modifier = Modifier.padding(16.dp)
                 )
             }
+        } else if (filtrados.isEmpty()) {
+            item {
+                Text(
+                    text = "Nenhum projeto com esse interesse no momento.",
+                    style = MaterialTheme.typography.bodyLarge,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
         }
-        items(projetos, key = { it.id }) { projeto ->
+        items(filtrados, key = { it.id }) { projeto ->
             CardProjeto(
                 projeto = projeto,
                 nomeResponsavel = nomes[projeto.responsavel],
                 seuProjeto = projeto.responsavel == meuUid,
                 meusInteresses = meusInteresses,
                 navController = navController
+            )
+        }
+    }
+}
+
+// RF15: opções do filtro
+@Composable
+private fun FiltroInteresse(
+    meusInteresses: List<String>,
+    escolhido: String,
+    aoEscolher: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    // "Todos", os interesses do perfil e depois os outros, na ordem da seção 6.2.7
+    var opcoes = listOf("Todos") + meusInteresses
+    InteresseDados().listarCategorias().forEach { categoria ->
+        categoria.interesses.forEach { interesse ->
+            if (!meusInteresses.contains(interesse)) {
+                opcoes = opcoes + interesse
+            }
+        }
+    }
+    FlowRow(
+        modifier = modifier.selectableGroup(),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        opcoes.forEach { opcao ->
+            val marcado = opcao == escolhido
+            FilterChip(
+                selected = marcado,
+                onClick = { aoEscolher(opcao) },
+                label = { Text(opcao) },
+                leadingIcon = if (marcado) {
+                    {
+                        Icon(
+                            imageVector = Icons.Default.Check,
+                            contentDescription = null,
+                            modifier = Modifier.size(FilterChipDefaults.IconSize)
+                        )
+                    }
+                } else {
+                    null
+                }
             )
         }
     }

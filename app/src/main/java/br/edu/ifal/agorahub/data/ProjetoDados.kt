@@ -34,6 +34,20 @@ class ProjetoDados {
         return converter(doc)
     }
 
+    // RF19: projetos do estudante logado, em todos os status
+    suspend fun listarMeus(): List<Projeto> {
+        val uid = ContaDados().uidAtual()
+            ?: throw IllegalStateException("Nenhum estudante logado")
+        val resultado = FirebaseFirestore.getInstance()
+            .collection("projetos")
+            .get()
+            .await()
+        val todos = resultado.documents.mapNotNull { converter(it) }
+        val meus = todos.filter { it.responsavel == uid }
+        // Do mais recente para o mais antigo (sugestão da ficha)
+        return meus.sortedByDescending { it.criadoEm }
+    }
+
     // RF13: grava um projeto novo com os campos da seção 9.3
     suspend fun criarProjeto(
         titulo: String,
@@ -69,6 +83,8 @@ class ProjetoDados {
             titulo = doc.getString("titulo") ?: return null,
             descricao = doc.getString("descricao") ?: return null,
             vagasDisponiveis = vagas.toInt() - membros.size, // RN18
+            vagas = vagas.toInt(),
+            membros = membros.filterIsInstance<String>(),
             interesses = interesses.filterIsInstance<String>(),
             status = doc.getString("status") ?: return null,
             responsavel = doc.getString("responsavel") ?: return null,
