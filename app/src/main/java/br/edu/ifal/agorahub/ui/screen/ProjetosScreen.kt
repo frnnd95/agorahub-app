@@ -30,6 +30,10 @@ import br.edu.ifal.agorahub.data.projetosExemplo
 import br.edu.ifal.agorahub.domain.Projeto
 import br.edu.ifal.agorahub.ui.components.CardProjeto
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.material3.FilterChip
+import br.edu.ifal.agorahub.data.InteresseDados
 
 @Composable
 fun ProjetosScreen(navController: NavController, modifier: Modifier = Modifier) {
@@ -93,6 +97,10 @@ private fun ProjetosConteudo(
                 Text("Novo projeto")
             }
         }
+        item {
+            // RF15: filtro por interesse
+            FiltroInteresse(modifier = Modifier.padding(16.dp))
+        }
         if (carregando) {
             item {
                 Text(
@@ -126,6 +134,30 @@ private fun ProjetosConteudo(
                 seuProjeto = projeto.responsavel == meuUid,
                 meusInteresses = meusInteresses,
                 navController = navController
+            )
+        }
+    }
+}
+
+// RF15: opções do filtro (por enquanto só o layout, sem filtrar)
+@Composable
+private fun FiltroInteresse(modifier: Modifier = Modifier) {
+    val opcoes = remember {
+        var lista = listOf("Todos")
+        InteresseDados().listarCategorias().forEach { categoria ->
+            lista = lista + categoria.interesses
+        }
+        lista
+    }
+    FlowRow(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        opcoes.forEach { opcao ->
+            FilterChip(
+                selected = opcao == "Todos",
+                onClick = { },
+                label = { Text(opcao) }
             )
         }
     }
