@@ -243,12 +243,12 @@ private fun DetalhesProjetoConteudo(
                         else -> "Você foi removido deste projeto."
                     }
                     val fundo = when (impedimento) {
-                        "Pendente" -> MaterialTheme.colorScheme.primaryContainer
+                        "Pendente" -> MaterialTheme.colorScheme.secondaryContainer
                         "Aceita" -> MaterialTheme.colorScheme.tertiaryContainer
                         else -> MaterialTheme.colorScheme.surfaceVariant
                     }
                     val cor = when (impedimento) {
-                        "Pendente" -> MaterialTheme.colorScheme.onPrimaryContainer
+                        "Pendente" -> MaterialTheme.colorScheme.onSecondaryContainer
                         "Aceita" -> MaterialTheme.colorScheme.onTertiaryContainer
                         else -> MaterialTheme.colorScheme.onSurfaceVariant
                     }
