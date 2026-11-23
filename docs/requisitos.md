@@ -22,6 +22,8 @@
 | 3.3    | Jhully          | 18/11/2026 | Seção 9.3: projetos criados pelo app (RF13); seção 8.3: `add()` e `toIntOrNull()` |                                                                                                                                                                                                  |
 | 3.4    | Fernanda        | 18/11/2026 | RN07, RN16 e RN27 com limites de tamanho; RF20 com o número de pendentes na aba Perfil; VC19 (abas nas Solicitações recebidas); regras de projetos na seção 9.4.                                                                                                     |
 | 3.5    | Fernanda        | 19/11/2026 | Seções 9.6 e 9.7 (`solicitacoes` e `emails`), com as regras na 9.4; e-mail na 9.1; seção 8.3 com `whereEqualTo`, gravação em lote, `AlertDialog` e `get()` nas regras (RF17)
+| 3.6    | Fernanda        | 23/11/2026 | Seção 9.4: regras com `institucional()` em todas as coleções (RN01, RN03); seção 8.3 com `sendEmailVerification()`, `isEmailVerified`, `popUpTo(navController.graph.id)` e `matches()` |
+
 ## Sumário
 
 1. [Introdução](#1-introdução)
@@ -472,6 +474,9 @@ Recursos que entraram por serem indispensáveis a um requisito (RNF11). Quem usa
 | `AlertDialog` | Aviso da RN22 (RF17) e, depois, confirmações do RF24 e do RF26 | Mostra o aviso por cima da tela, com Confirmar e Cancelar, lidos pelo TalkBack | Issue #86 |
 | `get()` nas regras do Firestore | Regras de `solicitacoes` e `emails` (9.4) | A regra confere o projeto ou a solicitação ligados ao documento (D23, D24) | Issue #86 |
 | `add()` do Firestore e `toIntOrNull()` | Novo projeto (RF13), na função `criarProjeto` do `ProjetoDados` e na validação das vagas | O `add()` grava um documento com o identificador gerado pelo Firestore (seção 9.3); o `toIntOrNull()` converte as vagas em número sem fechar o app quando o texto não é número (RN16) | Issue #87 |
+| `sendEmailVerification()` e `isEmailVerified`, do Firebase Authentication | Cadastro, Verificação, Entrar e abertura do app (RF02) | Enviam o link de confirmação e dizem se o e-mail foi confirmado (RN03, RNF12) | Issue #50 |
+| `popUpTo(navController.graph.id)` | Entrar (RF03), depois do login | Tira todas as telas da pilha, mesmo quando o app abriu na Verificação, e o Voltar no Mural fecha o app | Issue #50 |
+| `matches()` e `request.auth.token.email_verified` nas regras do Firestore | Função `institucional()` (seção 9.4) | Conferem no Firebase o domínio do e-mail (RN01) e a confirmação (RN03), porque o app pode ser contornado (RNF08) | Issue #50 |
 
 ### 8.4 Correspondência das decisões da versão 2
 
@@ -540,14 +545,14 @@ Vagas disponíveis = `vagas` menos o número de itens de `membros` (RN18). O nom
 
 ### 9.4 Regras do Firestore
 
-As regras ficam no console do Firebase e repetem conferências do app, como a da RN09, porque o app pode ser contornado (RNF08). Todas usam a função `logado()`, que confere se há um usuário logado (`request.auth != null`).
+As regras ficam no console do Firebase e repetem conferências do app, como a da RN09, porque o app pode ser contornado (RNF08). Todas usam a função `institucional()`, que confere se há um usuário logado, com e-mail do domínio `@aluno.ifal.edu.br` (RN01) e já confirmado (RN03).
 
-| Coleção | Leitura | Criação e alteração | Exclusão |
-|---------|---------|---------------------|----------|
-| `oportunidades` | Com login | Não pelo app: o cadastro é feito no console, que não passa pelas regras (RN10) | Não pelo app |
-| `estudantes` | Com login (RN05) | Só no próprio documento (`request.auth.uid == uid`), só com os campos `nome`, `curso` e `interesses` e com 3 a 5 interesses (RN09) | Não pelo app |
-| `projetos` | Com login | Criação só pelo responsável (`responsavel` igual ao uid), com status Aberto, sem membros, título de até 80 e descrição de até 1000 caracteres, de 1 a 10 vagas e de 1 a 5 interesses (RN16, RN17). Alteração só pelo responsável, em projeto Aberto ou Fechado, sem mudar `responsavel`, `vagas` nem `interesses`; os membros não passam das vagas, e projeto Aberto precisa ter vaga livre (RN18, RN29 a RN31) | Não pelo app |
-| `solicitacoes` | Só o solicitante e o responsável (RN05, D24) | Criação só pelo solicitante, com status Pendente, em projeto Aberto de outra pessoa e com o mesmo `responsavel` do projeto (RN20). Alteração só pelo responsável, sem mudar `projeto`, `solicitante` nem `responsavel`: de Pendente para Aceita, de Pendente para Recusada com motivo ou de Aceita para Removida (RN24, RN27, RN28). A RN21 é conferida só no app | Não pelo app |
+| Coleção | Leitura                                                                                            | Criação e alteração | Exclusão |
+|---------|----------------------------------------------------------------------------------------------------|---------------------|----------|
+| `oportunidades` | Com e-mail confirmado (RN05)                                                                             | Não pelo app: o cadastro é feito no console, que não passa pelas regras (RN10) | Não pelo app |
+| `estudantes` | Com e-mail confirmado (RN05)                                                                       | Só no próprio documento (`request.auth.uid == uid`), só com os campos `nome`, `curso` e `interesses` e com 3 a 5 interesses (RN09) | Não pelo app |
+| `projetos` | Com e-mail confirmado (RN05)                                                                             | Criação só pelo responsável (`responsavel` igual ao uid), com status Aberto, sem membros, título de até 80 e descrição de até 1000 caracteres, de 1 a 10 vagas e de 1 a 5 interesses (RN16, RN17). Alteração só pelo responsável, em projeto Aberto ou Fechado, sem mudar `responsavel`, `vagas` nem `interesses`; os membros não passam das vagas, e projeto Aberto precisa ter vaga livre (RN18, RN29 a RN31) | Não pelo app |
+| `solicitacoes` | Só o solicitante e o responsável (RN05, D24)                                                       | Criação só pelo solicitante, com status Pendente, em projeto Aberto de outra pessoa e com o mesmo `responsavel` do projeto (RN20). Alteração só pelo responsável, sem mudar `projeto`, `solicitante` nem `responsavel`: de Pendente para Aceita, de Pendente para Recusada com motivo ou de Aceita para Removida (RN24, RN27, RN28). A RN21 é conferida só no app | Não pelo app |
 | `emails` | O próprio estudante; o responsável, só com a solicitação de mesmo identificador Aceita (RN05, D23) | Criação só pelo próprio estudante, com o e-mail da conta; sem alteração | Não pelo app |
 
 ### 9.5 API fake
