@@ -476,6 +476,7 @@ Recursos que entraram por serem indispensáveis a um requisito (RNF11). Quem usa
 | `add()` do Firestore e `toIntOrNull()` | Novo projeto (RF13), na função `criarProjeto` do `ProjetoDados` e na validação das vagas | O `add()` grava um documento com o identificador gerado pelo Firestore (seção 9.3); o `toIntOrNull()` converte as vagas em número sem fechar o app quando o texto não é número (RN16) | Issue #87 |
 | `sendEmailVerification()` e `isEmailVerified`, do Firebase Authentication | Cadastro, Verificação, Entrar e abertura do app (RF02) | Enviam o link de confirmação e dizem se o e-mail foi confirmado (RN03, RNF12) | Issue #50 |
 | `popUpTo(navController.graph.id)` | Entrar (RF03), depois do login | Tira todas as telas da pilha, mesmo quando o app abriu na Verificação, e o Voltar no Mural fecha o app | Issue #50 |
+| `previousBackStackEntry` e `statusBarsPadding()` | Seta de voltar no `topBar` do `Scaffold` da `MainActivity` (#105) | O `previousBackStackEntry` diz se há tela anterior, para a seta não aparecer quando o Voltar deixaria o app em branco; o `statusBarsPadding()` afasta a seta da barra de status, porque o app desenha a tela inteira (`enableEdgeToEdge`) | Issue #105 |
 | `matches()` e `request.auth.token.email_verified` nas regras do Firestore | Função `institucional()` (seção 9.4) | Conferem no Firebase o domínio do e-mail (RN01) e a confirmação (RN03), porque o app pode ser contornado (RNF08) | Issue #50 |
 
 ### 8.4 Correspondência das decisões da versão 2
