@@ -65,6 +65,21 @@ class SolicitacaoDados {
             .sortedByDescending { it.criadaEm }
     }
 
+    // RF18: as solicitações enviadas por quem está logado (D24)
+    suspend fun listarMinhas(): List<Solicitacao> {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return listOf()
+        // A regra só deixa o solicitante ler as próprias solicitações
+        val resultado = FirebaseFirestore.getInstance()
+            .collection("solicitacoes")
+            .whereEqualTo("solicitante", uid)
+            .get()
+            .await()
+        // Ordena no app, sem orderBy: da mais recente para a mais antiga
+        return resultado.documents
+            .mapNotNull { converter(it) }
+            .sortedByDescending { it.criadaEm }
+    }
+
     private fun converter(doc: DocumentSnapshot): Solicitacao? {
         return Solicitacao(
             id = doc.id,

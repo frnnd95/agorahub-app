@@ -478,6 +478,7 @@ Recursos que entraram por serem indispensáveis a um requisito (RNF11). Quem usa
 | `sendEmailVerification()` e `isEmailVerified`, do Firebase Authentication | Cadastro, Verificação, Entrar e abertura do app (RF02) | Enviam o link de confirmação e dizem se o e-mail foi confirmado (RN03, RNF12) | Issue #50 |
 | `popUpTo(navController.graph.id)` | Entrar (RF03), depois do login | Tira todas as telas da pilha, mesmo quando o app abriu na Verificação, e o Voltar no Mural fecha o app | Issue #50 |
 | `matches()` e `request.auth.token.email_verified` nas regras do Firestore | Função `institucional()` (seção 9.4) | Conferem no Firebase o domínio do e-mail (RN01) e a confirmação (RN03), porque o app pode ser contornado (RNF08) | Issue #50 |
+| `LazyRow` | Filtro de interesses do Hub de Projetos (RF15) | Mostra os interesses numa linha que rola para o lado, sem ocupar várias linhas acima da lista; é a versão horizontal do `LazyColumn` | PR #118 |
 
 ### 8.4 Correspondência das decisões da versão 2
 

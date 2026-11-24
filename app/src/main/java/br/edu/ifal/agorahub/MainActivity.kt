@@ -36,6 +36,7 @@ import br.edu.ifal.agorahub.ui.screen.EquipeScreen
 import br.edu.ifal.agorahub.ui.screen.RecusarSolicitacaoScreen
 import br.edu.ifal.agorahub.ui.screen.InicioScreen
 import br.edu.ifal.agorahub.ui.screen.MeusProjetosScreen
+import br.edu.ifal.agorahub.ui.screen.MinhasSolicitacoesScreen
 import br.edu.ifal.agorahub.ui.screen.MuralScreen
 import br.edu.ifal.agorahub.ui.screen.NovoProjetoScreen
 import br.edu.ifal.agorahub.ui.screen.PerfilScreen
@@ -89,7 +90,6 @@ class MainActivity : ComponentActivity() {
                         composable("mural") { MuralScreen(navController) }
                         composable("projetos") { ProjetosScreen(navController) }
                         composable("novo-projeto") { NovoProjetoScreen(navController) }
-                        // RF25: por enquanto abre o formulário de criar; o modo editar vem depois
                         // RF25: reaproveita o formulário do RF13 no modo editar
                         composable("editar-projeto/{id}") { backStackEntry ->
                             NovoProjetoScreen(
@@ -103,6 +103,7 @@ class MainActivity : ComponentActivity() {
                         }
                         composable("perfil") { PerfilScreen(navController) }
                         composable("solicitacoes-recebidas") { SolicitacoesRecebidasScreen(navController) }
+                        composable("minhas-solicitacoes") { MinhasSolicitacoesScreen() }
                         composable("recusar/{id}") { backStackEntry ->
                             RecusarSolicitacaoScreen(backStackEntry.arguments?.getString("id"), navController)
                         }
