@@ -38,6 +38,12 @@ import br.edu.ifal.agorahub.domain.Solicitacao
 import br.edu.ifal.agorahub.ui.components.CartaoPerfil
 import br.edu.ifal.agorahub.ui.components.Selo
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.Button
+import androidx.compose.runtime.rememberCoroutineScope
+import kotlinx.coroutines.launch
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
 
 @Composable
 fun SolicitacoesRecebidasScreen(navController: NavController, modifier: Modifier = Modifier) {
@@ -46,9 +52,12 @@ fun SolicitacoesRecebidasScreen(navController: NavController, modifier: Modifier
     var solicitacoes by remember { mutableStateOf(listOf<Solicitacao>()) }
     var perfis by remember { mutableStateOf(mapOf<String, Perfil>()) }
     var titulos by remember { mutableStateOf(mapOf<String, String>()) }
+    var mensagem by remember { mutableStateOf<String?>(null) }
+    var recarregar by remember { mutableStateOf(0) }
+    val escopo = rememberCoroutineScope()
 
-    // Pede a lista uma vez; depois, o perfil de cada solicitante e o título de cada projeto
-    LaunchedEffect(Unit) {
+    // Roda ao abrir e de novo sempre que "recarregar" muda
+    LaunchedEffect(recarregar) {
         try {
             val lista = SolicitacaoDados().listarRecebidas()
             val perfisEncontrados = mutableMapOf<String, Perfil>()
@@ -75,7 +84,31 @@ fun SolicitacoesRecebidasScreen(navController: NavController, modifier: Modifier
         carregando = false
     }
     SolicitacoesRecebidasConteudo(
-        carregando, falhou, solicitacoes, perfis, titulos,
+        carregando, falhou, solicitacoes, perfis, titulos, mensagem,
+        aoAceitar = { solicitacao ->
+            escopo.launch {
+                try {
+                    val projeto = ProjetoDados().buscarPorId(solicitacao.projeto)
+                    if (projeto == null) {
+                        mensagem = "Projeto não encontrado."
+                    } else if (projeto.vagasDisponiveis <= 0) {
+                        // RN25: sem vaga, não grava
+                        mensagem = "O projeto não tem vagas disponíveis."
+                    } else {
+                        val fechou = SolicitacaoDados().aceitar(solicitacao, projeto)
+                        mensagem = if (fechou) {
+                            "Vagas preenchidas: o projeto foi fechado e as demais solicitações foram recusadas automaticamente."
+                        } else {
+                            null
+                        }
+                        recarregar++
+                    }
+                } catch (e: Exception) {
+                    Log.e("SolicitacoesRecebidas", "Erro ao aceitar a solicitação", e)
+                    mensagem = "Não foi possível aceitar a solicitação. Confira a conexão com a internet."
+                }
+            }
+        },
         aoRecusar = { id -> navController.navigate("recusar/$id") },
         modifier = modifier
     )
@@ -96,67 +129,81 @@ private fun SolicitacoesRecebidasConteudo(
     solicitacoes: List<Solicitacao>,
     perfis: Map<String, Perfil>,
     titulos: Map<String, String>,
+    mensagem: String?,
+    aoAceitar: (Solicitacao) -> Unit,
     aoRecusar: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    LazyColumn(
-        modifier = modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        item {
-            Text(
-                text = "Solicitações recebidas",
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.semantics { heading() }
-            )
-        }
-        if (carregando) {
+    Column(modifier = modifier.fillMaxSize()) {
+        LazyColumn(
+            modifier = Modifier.weight(1f),
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
             item {
                 Text(
-                    text = "Carregando as solicitações...",
-                    style = MaterialTheme.typography.bodyLarge
+                    text = "Solicitações recebidas",
+                    style = MaterialTheme.typography.titleLarge,
+                    modifier = Modifier.semantics { heading() }
                 )
             }
-        } else if (falhou) {
-            item {
-                Text(
-                    text = "Não foi possível carregar as solicitações. Confira a conexão com a internet.",
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.error
-                )
-            }
-        } else if (solicitacoes.isEmpty()) {
-            item {
-                Text(
-                    text = "Você ainda não recebeu solicitações.",
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            }
-        } else {
-            for ((status, tituloGrupo) in grupos) {
-                val doGrupo = solicitacoes.filter { it.status == status }
-                if (doGrupo.isNotEmpty()) {
-                    item(key = status) {
-                        Text(
-                            text = tituloGrupo,
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .padding(top = 8.dp)
-                                .semantics { heading() }
-                        )
-                    }
-                    items(doGrupo, key = { it.id }) { solicitacao ->
-                        ItemSolicitacao(
-                            solicitacao = solicitacao,
-                            perfil = perfis[solicitacao.solicitante],
-                            tituloProjeto = titulos[solicitacao.projeto],
-                            aoRecusar = { aoRecusar(solicitacao.id) }
-                        )
+            if (carregando) {
+                item {
+                    Text(
+                        text = "Carregando as solicitações...",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+            } else if (falhou) {
+                item {
+                    Text(
+                        text = "Não foi possível carregar as solicitações. Confira a conexão com a internet.",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+            } else if (solicitacoes.isEmpty()) {
+                item {
+                    Text(
+                        text = "Você ainda não recebeu solicitações.",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+            } else {
+                for ((status, tituloGrupo) in grupos) {
+                    val doGrupo = solicitacoes.filter { it.status == status }
+                    if (doGrupo.isNotEmpty()) {
+                        item(key = status) {
+                            Text(
+                                text = tituloGrupo,
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier
+                                    .padding(top = 8.dp)
+                                    .semantics { heading() }
+                            )
+                        }
+                        items(doGrupo, key = { it.id }) { solicitacao ->
+                            ItemSolicitacao(
+                                solicitacao = solicitacao,
+                                perfil = perfis[solicitacao.solicitante],
+                                tituloProjeto = titulos[solicitacao.projeto],
+                                aoAceitar = { aoAceitar(solicitacao) },
+                                aoRecusar = { aoRecusar(solicitacao.id) }
+                            )
+                        }
                     }
                 }
             }
+        }
+        if (mensagem != null) {
+            Text(
+                text = mensagem,
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .semantics { liveRegion = LiveRegionMode.Polite }
+            )
         }
     }
 }
@@ -166,6 +213,7 @@ private fun ItemSolicitacao(
     solicitacao: Solicitacao,
     perfil: Perfil?,
     tituloProjeto: String?,
+    aoAceitar: () -> Unit,
     aoRecusar: () -> Unit
 ) {
     // Cores do selo pelo status, do tema
@@ -209,16 +257,26 @@ private fun ItemSolicitacao(
                 )
             }
         }
-        // RF22: só a Pendente pode ser recusada (RN24)
+        // RF21 e RF22: só a Pendente pode ser aceita ou recusada (RN24)
         if (solicitacao.status == "Pendente") {
             val nome = perfil?.nome ?: "estudante sem perfil"
-            OutlinedButton(
-                onClick = aoRecusar,
-                modifier = Modifier
-                    .heightIn(min = 48.dp)
-                    .semantics { contentDescription = "Recusar a solicitação de $nome" }
-            ) {
-                Text("Recusar")
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Button(
+                    onClick = aoAceitar,
+                    modifier = Modifier
+                        .heightIn(min = 48.dp)
+                        .semantics { contentDescription = "Aceitar a solicitação de $nome" }
+                ) {
+                    Text("Aceitar")
+                }
+                OutlinedButton(
+                    onClick = aoRecusar,
+                    modifier = Modifier
+                        .heightIn(min = 48.dp)
+                        .semantics { contentDescription = "Recusar a solicitação de $nome" }
+                ) {
+                    Text("Recusar")
+                }
             }
         }
     }
@@ -234,6 +292,8 @@ fun SolicitacoesRecebidasScreenPreview() {
             solicitacoes = solicitacoesExemplo,
             perfis = solicitantesExemplo,
             titulos = projetosExemplo.associate { it.id to it.titulo },
+            mensagem = null,
+            aoAceitar = {},
             aoRecusar = {}
         )
     }
