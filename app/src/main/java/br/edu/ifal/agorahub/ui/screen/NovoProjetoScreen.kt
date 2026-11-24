@@ -145,19 +145,22 @@ fun NovoProjetoScreen(
                 val descricaoLimpa = descricao.trim()
                 val numeroVagas = vagas.trim().toIntOrNull()
                 erroTitulo = if (tituloLimpo == "") "Preencha este campo."
+                else if (editar && tituloLimpo.length < 5) "O título precisa ter pelo menos 5 caracteres."
                 else if (tituloLimpo.length > 80) "O título pode ter no máximo 80 caracteres."
                 else ""
                 erroDescricao = if (descricaoLimpa == "") "Preencha este campo."
+                else if (editar && descricaoLimpa.length < 20) "A descrição precisa ter pelo menos 20 caracteres."
                 else if (descricaoLimpa.length > 1000) "A descrição pode ter no máximo 1000 caracteres."
                 else ""
-                erroVagas = if (numeroVagas == null || numeroVagas < 1 || numeroVagas > 10)
+                // RF25: no modo editar, vagas e interesses não são conferidos
+                erroVagas = if (!editar && (numeroVagas == null || numeroVagas < 1 || numeroVagas > 10))
                     "Informe um número de 1 a 10." else ""
-                erroInteresses = if (interesses.isEmpty()) "Escolha pelo menos 1 interesse." else ""
+                erroInteresses = if (!editar && interesses.isEmpty()) "Escolha pelo menos 1 interesse." else ""
                 erroGeral = if (erroTitulo != "" || erroDescricao != "" || erroVagas != "")
                     "Confira os campos no início da tela." else ""
                 val valido = erroTitulo == "" && erroDescricao == "" &&
                         erroVagas == "" && erroInteresses == ""
-                if (valido && numeroVagas != null) {
+                if (valido && !editar && numeroVagas != null) {
                     criando = true
                     scope.launch {
                         try {
@@ -174,8 +177,7 @@ fun NovoProjetoScreen(
                     }
                 }
             },
-            // Provisório: no modo editar, só grava depois do incremento 5
-            enabled = !criando && !editar,
+            enabled = !criando,
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(min = 48.dp)
