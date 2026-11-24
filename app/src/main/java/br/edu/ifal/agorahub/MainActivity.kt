@@ -47,6 +47,11 @@ import br.edu.ifal.agorahub.ui.screen.RecuperarSenhaScreen
 import br.edu.ifal.agorahub.ui.screen.SolicitacoesRecebidasScreen
 import br.edu.ifal.agorahub.ui.screen.VerificacaoScreen
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,6 +69,32 @@ class MainActivity : ComponentActivity() {
                 val rotaAtual = entradaAtual?.destination?.route
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
+                    // #105: seta de voltar nas telas sem barra inferior
+                    topBar = {
+                        // Com barra inferior, ou sem tela para onde voltar, não há seta
+                        val semSeta = listOf(
+                            "mural", "projetos", "perfil", "detalhes/{id}",
+                            "abertura", "inicio", "completar-perfil"
+                        )
+                        if (rotaAtual !in semSeta && navController.previousBackStackEntry != null) {
+                            IconButton(
+                                onClick = {
+                                    // Só volta se ainda houver tela anterior (dois toques rápidos)
+                                    if (navController.previousBackStackEntry != null) {
+                                        navController.popBackStack()
+                                    }
+                                },
+                                modifier = Modifier
+                                    .statusBarsPadding()
+                                    .padding(start = 4.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = "Voltar"
+                                )
+                            }
+                        }
+                    },
                     bottomBar = {
                         if (rotaAtual in listOf("mural", "projetos", "perfil", "detalhes/{id}")) {
                             BarraNavegacao(navController)
