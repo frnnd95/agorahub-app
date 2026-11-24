@@ -135,7 +135,9 @@ private fun ItemMeuProjeto(projeto: Projeto, navController: NavController) {
             .clickable(role = Role.Button, onClickLabel = "Ver detalhes") {
                 navController.navigate("projeto/${projeto.id}")
             },
-    ) {
+        shape = RoundedCornerShape(16.dp),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+    )  {
         Column(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
