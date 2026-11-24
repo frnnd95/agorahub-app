@@ -8,7 +8,8 @@ Registro das iterações do Projeto Integrador: o que foi planejado, o que foi e
 | 2        | 06/10 a 13/10/2026 | 7 dias  | Concluída                     |
 | 3        | 13/10 a 27/10/2026 | 15 dias | Concluída, com itens passados para a Iteração 4 |
 | 4        | 27/10 a 10/11/2026 | 15 dias | Concluída, com o RF02 passado para a Iteração 5 |
-| 5        | 10/11 a 24/11/2026 | 15 dias | Em andamento                  |
+| 5        | 10/11 a 24/11/2026 | 15 dias | Concluída, com itens passados para a Iteração 6 |
+| 6        | 24/11 a 15/12/2026 | 20 dias | Em andamento                  |
 
 ## Iteração 1 — 29/09 a 06/10/2026
 
@@ -235,27 +236,27 @@ Também foram concluídas nesta iteração as issues #45, #48 e #47, do mileston
 
 ### Itens
 
-| Item                                                                | Requisito ou decisão | Responsável | Issue | Situação     |
-|---------------------------------------------------------------------|----------------------|-------------|-------|--------------|
-| Regras do Firestore das decisões D23 a D25 e solicitar participação | RF17, D23 a D25      | Fernanda    | #86   | Em andamento |
-| Aceitar uma solicitação                                             | RF21                 | Fernanda    | #91   | A fazer      |
-| E-mail dos membros nas solicitações Aceitas                         | RF23                 | Fernanda    | #96   | A fazer      |
-| Remover um membro                                                   | RF24                 | Fernanda    | #98   | A fazer      |
-| Confirmação do e-mail institucional                                 | RF02                 | Fernanda    | #50   | A fazer      |
-| Detalhes do projeto                                                 | RF16                 | Samuel      | #85   | Concluída    |
-| Solicitações recebidas                                              | RF20                 | Samuel      | #89   | A fazer      |
-| Recusar uma solicitação                                             | RF22                 | Samuel      | #92   | A fazer      |
-| Minhas solicitações                                                 | RF18                 | Samuel      | #94   | A fazer      |
-| Encerrar um projeto                                                 | RF26                 | Samuel      | #97   | A fazer      |
-| Criar um projeto                                                    | RF13                 | Jhully      | #87   | Em andamento |
-| Meus projetos                                                       | RF19                 | Jhully      | #88   | A fazer      |
-| Filtrar o Hub de Projetos por interesse                             | RF15                 | Jhully      | #90   | A fazer      |
-| Editar o título e a descrição de um projeto                         | RF25                 | Jhully      | #93   | A fazer      |
-| Reabrir um projeto fechado                                          | RF27                 | Jhully      | #95   | A fazer      |
-| Barra inferior só nas abas e nos detalhes da oportunidade   | RNF15                | Fernanda    | #102  | A fazer  |
-| Interesses em comum também em texto                         | RF16                 | A definir   | #103  | A fazer  |
-| Nome e outro curso com até 60 caracteres                    | RF07                 | A definir   | #104  | A fazer  |
-| Espaços, tamanho mínimo e aviso no Novo projeto             | RF13                 | A definir   | #107  | A fazer  |
+| Item                                                                | Requisito ou decisão | Responsável | Issue | Situação                 |
+|---------------------------------------------------------------------|----------------------|-------------|-------|--------------------------|
+| Regras do Firestore das decisões D23 a D25 e solicitar participação | RF17, D23 a D25      | Fernanda    | #86   | Concluída                |
+| Aceitar uma solicitação                                             | RF21                 | Fernanda    | #91   | Concluída                |
+| E-mail dos membros nas solicitações Aceitas                         | RF23                 | Fernanda    | #96   | Passou para a Iteração 6 |
+| Remover um membro                                                   | RF24                 | Fernanda    | #98   | Passou para a Iteração 6 |
+| Confirmação do e-mail institucional                                 | RF02                 | Fernanda    | #50   | Concluída                |
+| Detalhes do projeto                                                 | RF16                 | Samuel      | #85   | Concluída                |
+| Solicitações recebidas                                              | RF20                 | Samuel      | #89   | Concluída                |
+| Recusar uma solicitação                                             | RF22                 | Samuel      | #92   | Concluída                |
+| Minhas solicitações                                                 | RF18                 | Samuel      | #94   | Concluída                |
+| Encerrar um projeto                                                 | RF26                 | Samuel      | #97   | Concluída                |
+| Criar um projeto                                                    | RF13                 | Jhully      | #87   | Concluída                |
+| Meus projetos                                                       | RF19                 | Jhully      | #88   | Concluída                |
+| Filtrar o Hub de Projetos por interesse                             | RF15                 | Jhully      | #90   | Concluída                |
+| Editar o título e a descrição de um projeto                         | RF25                 | Jhully      | #93   | Concluída                |
+| Reabrir um projeto fechado                                          | RF27                 | Jhully      | #95   | Passou para a Iteração 6 |
+| Barra inferior só nas abas e nos detalhes da oportunidade           | RNF15                | Fernanda    | #102  | Concluída                |
+| Interesses em comum também em texto                                 | RF16                 | Samuel      | #103  | Concluída                |
+| Nome e outro curso com até 60 caracteres                            | RF07                 | Fernanda    | #104  | Concluída                |
+| Espaços, tamanho mínimo e aviso no Novo projeto                     | RF13                 | A definir   | #107  | Passou para a Iteração 6 |
 
 As decisões D23 a D25 foram registradas em 12/11, antes das issues que dependem delas. As regras do Firestore ficam na primeira parte da #86, publicada até 13/11, para que as outras issues possam ser testadas com dados cadastrados pelo console, sem esperar o RF17 inteiro.
 Em 18/11, a análise do protótipo levou a ajustes em várias issues: a tela Membros saiu, e o e-mail e o Remover ficam nas solicitações Aceitas (#96 e #98); as ações sem volta pedem confirmação; o requisitos.md passou para a versão 3.3. As issues #102 a #104 e a do RF13 foram criadas nesse dia.
@@ -297,3 +298,124 @@ A data final de cada tarefa é a do pull request aberto. O Lucas revisa em até 
 - Testes da Jousiclécia nas telas novas desta iteração: entram no APK da Iteração 5, testado na Iteração 6.
 
 Os pull requests são revisados pelo Lucas ou, se ele não puder, por outro dev. Quem abriu o pull request nunca revisa o próprio. A Jousiclécia testa a acessibilidade instalando o APK no celular (guia de desenvolvimento, seção 10).
+
+### Resultado
+
+A iteração terminou em 24/11/2026, com 15 dos 19 itens concluídos. O RF23, o RF24, o RF27 e os ajustes do Novo projeto (#107) passaram para a Iteração 6.
+
+**Entregue fora do plano:**
+
+| Item                                                      | Requisito ou decisão | Responsável | Issue ou PR |
+|-----------------------------------------------------------|----------------------|-------------|-------------|
+| Seta de voltar nas telas sem barra inferior               | Seção 5.3            | Samuel      | #105        |
+| Cores do tema completas, sem o lilás padrão do Material 3 | RNF06                | Fernanda    | PR #117     |
+| Borda no cartão de Meus projetos e filtro do Hub numa linha | RF19, RF15         | Samuel      | PR #118     |
+
+**Mudanças durante a iteração:**
+
+- Em 23/11, o tema passou a definir todas as cores do Material 3. O Samuel, como PO, aceitou o status Pendente com a cor secundária do tema, sem o amarelo de aviso; o Fechado continua em vermelho e o Encerrado em cinza.
+- A #105, planejada para a Iteração 6, foi concluída nesta.
+
+**Revisão e validação:**
+
+- Revisaram os pull requests: Lucas (#84, #99 a #101, #109, #110, #112 e #115 a #117), Fernanda (#111, #113, #114 e #118 a #122) e Samuel (#123). O #108, só de documentação, não tem revisão registrada.
+- Como a Jhully estava viajando, a Fernanda fez no #119 o merge da `develop` e os ajustes pedidos na revisão.
+- A Jousiclécia testou o APK da Iteração 4 e não encontrou problemas no cadastro, no perfil, no Hub de Projetos, nas telas de consulta, na Privacidade e dados, no modo avião, no erro de login e na recuperação de senha. O relato não cita a fonte no máximo, o Accessibility Scanner nem o tema escuro.
+- O Samuel validou as entregas como PO.
+- A reunião de 17/11 não aconteceu.
+
+**Métricas:**
+
+- Entrega dos itens planejados: 79% (15 de 19).
+- Aceite dos itens entregues: 100% (15 de 15, todos com o pull request aprovado na revisão).
+- Validação pelo PO: 100%.
+- Progresso do projeto: 90% (27 de 30 requisitos funcionais; faltam o RF23, o RF24 e o RF27).
+
+**Lições aprendidas:**
+
+- A timeline não foi seguida: 13 dos 17 pull requests de código entraram em 23 e 24/11, e as datas previstas iam de 14 a 22/11.
+- Seis issues mexeram na tela de detalhes do projeto, e os merges do último dia viraram uma cadeia de conflitos. Tirar a branch do RF26 da branch do RF18 ajudou.
+- Sem a reunião de 17/11, o atraso só apareceu no fim da iteração.
+- Publicar as regras do Firestore antes (#86, parte 1) permitiu testar as outras issues com dados do console, sem esperar o RF17.
+- O teste por iteração funcionou: a Jousiclécia testou o app inteiro. O roteiro precisa pedir cada item do checklist de acessibilidade.
+- Dados editados no console passam por cima das regras e podem criar situações que o app não gera, como um projeto com vagas negativas.
+
+### Mudanças para as próximas iterações
+
+- Issues que mexem na mesma tela são feitas uma depois da outra.
+- A reunião de acompanhamento é marcada no início da iteração.
+- O roteiro de teste da Jousiclécia lista cada item do checklist de acessibilidade (guia de desenvolvimento, seção 3).
+- Nos testes com dados do console, os status seguem as regras de negócio (RN24).
+
+## Iteração 6 — 24/11 a 15/12/2026
+
+### Objetivo
+
+- Concluir os três requisitos funcionais que faltam no MVP: RF23, RF24 e RF27.
+- Aplicar o padrão MVVM, critério de avaliação do segundo bimestre de Programação para Dispositivos Móveis (D26).
+- Documentar os padrões de projeto aplicados, para a avaliação de Processos de Desenvolvimento de Software.
+- Corrigir os problemas encontrados nas revisões e nos testes.
+- Preparar a apresentação final (15/12) e a entrega final (17/12) (RNF14).
+
+### Itens
+
+| Item                                                    | Requisito ou decisão | Responsável                | Issue   | Situação  |
+|---------------------------------------------------------|----------------------|----------------------------|---------|-----------|
+| E-mail dos membros nas solicitações Aceitas             | RF23                 | Fernanda                   | #96     | A fazer   |
+| Remover um membro                                       | RF24                 | Fernanda                   | #98     | A fazer   |
+| Reabrir um projeto fechado                              | RF27                 | Jhully                     | #95     | A fazer   |
+| Espaços, tamanho mínimo e aviso no Novo projeto         | RF13                 | Jhully                     | #107    | A fazer   |
+| Botão Enviar e-mail nas solicitações Aceitas            | RF23                 | Samuel                     | #106    | A fazer   |
+| Singleton na RetrofitHelper                             | Padrões de projeto   | Jhully                     | A criar | A fazer   |
+| Padrão MVVM nas telas                                   | D26                  | Fernanda, Jhully e Samuel  | A criar | A fazer   |
+| Documento dos padrões de projeto, com diagramas         | D26                  | Tanyse, Samuel e Fernanda  | A criar | A fazer   |
+| Correções da tabela abaixo                              | —                    | Ver a tabela               | A criar | A fazer   |
+| APK da Iteração 5 e roteiro de teste para a Jousiclécia | RNF01 a RNF07        | Fernanda                   | —       | A fazer   |
+| Projetos e oportunidades de demonstração no Firestore   | RN10                 | Fernanda                   | A criar | A fazer   |
+| Documentação final                                      | RNF13                | Samuel                     | A criar | A fazer   |
+
+### O que precisa ser corrigido
+
+| Problema                                                                                                     | Onde                                                              | Origem                  | Responsável          |
+|--------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|-------------------------|----------------------|
+| Dois toques rápidos em Aceitar mostram a mensagem de falha; o botão deve ficar desligado enquanto grava      | Solicitações recebidas (RF21)                                     | Revisão do #123         | Fernanda             |
+| O TalkBack conta o título e os cabeçalhos como itens da lista ("6 itens" com 3 solicitações)                 | Listas com título dentro da lista, como as Solicitações recebidas | Teste do RF21           | Samuel               |
+| Se o projeto for encerrado e a releitura falhar, aparece a mensagem de falha do Encerrar                     | Detalhes do projeto (RF26)                                        | Revisão do #120         | Samuel               |
+| Mensagens de tamanho mínimo diferentes entre criar e editar o projeto                                        | Novo projeto e Editar projeto (RF13 e RF25)                       | Revisão do #119         | Jhully (#107)        |
+| Projetos de teste aparecem no Hub de Projetos                                                                | Firestore                                                         | Teste da Jousiclécia    | Fernanda             |
+| README sem as telas novas; guia com o ícone Enviar antigo; linhas tortas na tabela de versões dos requisitos | Documentação                                                      | Revisão da documentação | Fernanda             |
+| Problemas que a Jousiclécia encontrar no APK da Iteração 5                                                   | —                                                                 | Teste de acessibilidade | Lucas abre as issues |
+
+### Timeline
+
+A data final de cada tarefa é a do pull request aberto. Cada pull request entra na `develop` assim que é aprovado. O Lucas revisa em até 24 horas.
+
+| Data          | Responsável              | Tarefa                                                                                 |
+|---------------|--------------------------|----------------------------------------------------------------------------------------|
+| 25/11         | Fernanda                 | Registrar a decisão D26 e criar as issues da iteração                                  |
+| 25 a 26/11    | Fernanda                 | Levar a `develop` para a `main` e enviar à Jousiclécia o APK e o roteiro da Iteração 5 |
+| 25 a 27/11    | Jhully                   | Reabrir um projeto fechado (RF27)                                                      |
+| 25 a 27/11    | Samuel                   | Corrigir a contagem do TalkBack e a mensagem do Encerrar                               |
+| 25 a 28/11    | Fernanda                 | E-mail dos membros nas solicitações Aceitas (RF23)                                     |
+| 25/11 a 15/12 | Lucas                    | Revisar os pull requests                                                               |
+| 26/11 a 08/12 | Jousiclécia              | Testar o APK da Iteração 5 e relatar os problemas ao Lucas                             |
+| 28 a 30/11    | Jhully                   | Espaços, tamanho mínimo e aviso no Novo projeto (#107)                                 |
+| 28 a 30/11    | Samuel                   | Piloto do MVVM numa tela, com exemplo no guia                                          |
+| 29/11 a 02/12 | Fernanda                 | Remover um membro (RF24) e o Aceitar desligado enquanto grava                          |
+| 29/11 a 02/12 | Samuel                   | Botão Enviar e-mail (#106), depois do merge do RF23                                    |
+| 01/12         | Equipe                   | Reunião online de acompanhamento                                                       |
+| 02/12         | Devs                     | Último dia para pull request de funcionalidade                                         |
+| 03 a 05/12    | Jhully                   | Singleton na RetrofitHelper                                                            |
+| 03 a 08/12    | Fernanda, Jhully e Samuel | MVVM nas telas de cada dev                                                             |
+| 08 a 10/12    | Tanyse, Samuel e Fernanda | Documento dos padrões de projeto (`docs/padroes-de-projeto.md`), com diagramas         |
+| 09 a 11/12    | Devs                     | Corrigir os problemas do teste da Jousiclécia                                          |
+| 09 a 11/12    | Samuel                   | Documentação final                                                                     |
+| 11/12         | Samuel                   | Validar as entregas como PO                                                            |
+| 11 a 12/12    | Fernanda                 | Apagar os dados de teste do Firestore e cadastrar os de demonstração                   |
+| 12/12         | Fernanda                 | Levar a `develop` para a `main` e gerar o APK final                                    |
+| 13 a 14/12    | Equipe                   | Preparar e ensaiar a apresentação final                                                |
+| 15/12         | Equipe                   | Apresentação final                                                                     |
+
+### Fora desta iteração
+
+- Funcionalidades da versão completa (`requisitos.md`, seção 7).
