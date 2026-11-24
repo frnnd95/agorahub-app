@@ -36,6 +36,7 @@ import br.edu.ifal.agorahub.ui.screen.EquipeScreen
 import br.edu.ifal.agorahub.ui.screen.RecusarSolicitacaoScreen
 import br.edu.ifal.agorahub.ui.screen.InicioScreen
 import br.edu.ifal.agorahub.ui.screen.MeusProjetosScreen
+import br.edu.ifal.agorahub.ui.screen.MinhasSolicitacoesScreen
 import br.edu.ifal.agorahub.ui.screen.MuralScreen
 import br.edu.ifal.agorahub.ui.screen.NovoProjetoScreen
 import br.edu.ifal.agorahub.ui.screen.PerfilScreen
@@ -90,10 +91,11 @@ class MainActivity : ComponentActivity() {
                         composable("projetos") { ProjetosScreen(navController) }
                         composable("novo-projeto") { NovoProjetoScreen(navController) }
                         composable("projeto/{id}") { backStackEntry ->
-                            DetalhesProjetoScreen(backStackEntry.arguments?.getString("id"))
+                            DetalhesProjetoScreen(backStackEntry.arguments?.getString("id"), navController)
                         }
                         composable("perfil") { PerfilScreen(navController) }
                         composable("solicitacoes-recebidas") { SolicitacoesRecebidasScreen(navController) }
+                        composable("minhas-solicitacoes") { MinhasSolicitacoesScreen() }
                         composable("recusar/{id}") { backStackEntry ->
                             RecusarSolicitacaoScreen(backStackEntry.arguments?.getString("id"), navController)
                         }
