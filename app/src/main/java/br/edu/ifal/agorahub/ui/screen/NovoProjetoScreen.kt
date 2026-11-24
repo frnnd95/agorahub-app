@@ -176,6 +176,21 @@ fun NovoProjetoScreen(
                         }
                     }
                 }
+                // RF25: no modo editar, grava só título e descrição
+                if (valido && editar && id != null) {
+                    criando = true
+                    scope.launch {
+                        try {
+                            ProjetoDados().editarProjeto(id, tituloLimpo, descricaoLimpa)
+                            // Volta aos detalhes, que leem o Firestore de novo
+                            navController.popBackStack()
+                        } catch (e: Exception) {
+                            criando = false
+                            erroGeral = "Não foi possível salvar as alterações. Confira a internet e tente de novo."
+                            Log.e("EditarProjeto", "Erro ao salvar o projeto", e)
+                        }
+                    }
+                }
             },
             enabled = !criando,
             modifier = Modifier
