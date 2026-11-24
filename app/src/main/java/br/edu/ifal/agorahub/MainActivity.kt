@@ -89,8 +89,17 @@ class MainActivity : ComponentActivity() {
                         composable("mural") { MuralScreen(navController) }
                         composable("projetos") { ProjetosScreen(navController) }
                         composable("novo-projeto") { NovoProjetoScreen(navController) }
+                        // RF25: por enquanto abre o formulário de criar; o modo editar vem depois
+                        // RF25: reaproveita o formulário do RF13 no modo editar
+                        composable("editar-projeto/{id}") { backStackEntry ->
+                            NovoProjetoScreen(
+                                navController,
+                                editar = true,
+                                id = backStackEntry.arguments?.getString("id")
+                            )
+                        }
                         composable("projeto/{id}") { backStackEntry ->
-                            DetalhesProjetoScreen(backStackEntry.arguments?.getString("id"))
+                            DetalhesProjetoScreen(backStackEntry.arguments?.getString("id"), navController)
                         }
                         composable("perfil") { PerfilScreen(navController) }
                         composable("solicitacoes-recebidas") { SolicitacoesRecebidasScreen(navController) }

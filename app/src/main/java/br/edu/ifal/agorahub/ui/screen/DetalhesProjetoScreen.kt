@@ -43,11 +43,12 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
+import androidx.navigation.NavController
 
 private val formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy")
 
 @Composable
-fun DetalhesProjetoScreen(id: String?, modifier: Modifier = Modifier) {
+fun DetalhesProjetoScreen(id: String?, navController: NavController, modifier: Modifier = Modifier) {
     var carregando by remember { mutableStateOf(true) }
     var falhou by remember { mutableStateOf(false) }
     var projeto by remember { mutableStateOf<Projeto?>(null) }
@@ -107,6 +108,12 @@ fun DetalhesProjetoScreen(id: String?, modifier: Modifier = Modifier) {
                 }
             }
         },
+        aoEditar = {
+            val atual = projeto
+            if (atual != null) {
+                navController.navigate("editar-projeto/${atual.id}")
+            }
+        },
         modifier = modifier
     )
 }
@@ -123,6 +130,7 @@ private fun DetalhesProjetoConteudo(
     enviando: Boolean,
     falhaEnvio: Boolean,
     aoConfirmar: () -> Unit,
+    aoEditar: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var mostrarAviso by remember { mutableStateOf(false) }
@@ -232,7 +240,17 @@ private fun DetalhesProjetoConteudo(
                     }
                 }
             }
-
+            // RF25: só o responsável, em projeto Aberto ou Fechado (RN29)
+            if (seuProjeto && (projeto.status == "Aberto" || projeto.status == "Fechado")) {
+                Button(
+                    onClick = aoEditar,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 48.dp)
+                ) {
+                    Text("Editar")
+                }
+            }
             // RF17: só para quem não é o responsável (RN20)
             if (!seuProjeto) {
                 if (impedimento != null) {
@@ -318,7 +336,8 @@ fun DetalhesProjetoScreenPreview() {
             impedimento = null,
             enviando = false,
             falhaEnvio = false,
-            aoConfirmar = { }
+            aoConfirmar = { },
+            aoEditar = { }
         )
     }
 }
