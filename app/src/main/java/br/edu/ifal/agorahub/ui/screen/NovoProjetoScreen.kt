@@ -31,6 +31,7 @@ import android.util.Log
 import androidx.compose.runtime.rememberCoroutineScope
 import br.edu.ifal.agorahub.data.ProjetoDados
 import kotlinx.coroutines.launch
+import androidx.compose.runtime.LaunchedEffect
 
 // RF13: formulário para criar um projeto
 @Composable
@@ -52,6 +53,25 @@ fun NovoProjetoScreen(
     var erroGeral by remember { mutableStateOf("") }
     var criando by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
+    var carregando by remember { mutableStateOf(editar) }
+    // RF25: no modo editar, preenche os campos com o projeto atual
+    LaunchedEffect(Unit) {
+        if (editar) {
+            try {
+                val projeto = ProjetoDados().buscarPorId(id)
+                if (projeto != null) {
+                    titulo = projeto.titulo
+                    descricao = projeto.descricao
+                } else {
+                    erroGeral = "Projeto não encontrado."
+                }
+            } catch (e: Exception) {
+                erroGeral = "Não foi possível carregar o projeto. Confira a conexão com a internet."
+                Log.e("EditarProjeto", "Erro ao carregar o projeto", e)
+            }
+            carregando = false
+        }
+    }
 
     Column(
         modifier = modifier
@@ -65,6 +85,9 @@ fun NovoProjetoScreen(
             text = if (editar) "Editar projeto" else "Novo projeto",
             style = MaterialTheme.typography.titleLarge
         )
+        if (carregando) {
+            Text(text = "Carregando projeto...", style = MaterialTheme.typography.bodyLarge)
+        }
         OutlinedTextField(
             value = titulo,
             onValueChange = { titulo = it },
