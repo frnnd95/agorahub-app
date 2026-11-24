@@ -31,7 +31,8 @@ import br.edu.ifal.agorahub.domain.Projeto
 import br.edu.ifal.agorahub.ui.components.CardProjeto
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material3.FilterChip
 import br.edu.ifal.agorahub.data.InteresseDados
 import androidx.compose.material.icons.filled.Check
@@ -114,7 +115,7 @@ private fun ProjetosConteudo(
                 meusInteresses = meusInteresses,
                 escolhido = escolhido,
                 aoEscolher = { escolhido = it },
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(vertical = 8.dp)
             )
         }
         if (carregando) {
@@ -180,11 +181,13 @@ private fun FiltroInteresse(
             }
         }
     }
-    FlowRow(
+    // Uma linha só, que rola para o lado (os do perfil logo depois de "Todos")
+    LazyRow(
         modifier = modifier.selectableGroup(),
+        contentPadding = PaddingValues(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        opcoes.forEach { opcao ->
+        items(opcoes) { opcao ->
             val marcado = opcao == escolhido
             FilterChip(
                 selected = marcado,
