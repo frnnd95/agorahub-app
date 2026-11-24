@@ -49,6 +49,7 @@ import br.edu.ifal.agorahub.data.perfilExemplo
 import br.edu.ifal.agorahub.domain.Perfil
 import br.edu.ifal.agorahub.ui.components.CartaoPerfil
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
+import androidx.compose.material.icons.automirrored.filled.Send
 
 @SuppressLint("AutoboxingStateCreation")
 @Composable
@@ -148,6 +149,12 @@ private fun PerfilConteudo(
                     icone = Icons.Default.Inbox,
                     texto = textoSolicitacoes,
                     onClick = { navController.navigate("solicitacoes-recebidas") }
+                )
+                // RF18: as solicitações enviadas por quem está logado
+                ItemOpcao(
+                    icone = Icons.AutoMirrored.Filled.Send,
+                    texto = "Minhas solicitações",
+                    onClick = { navController.navigate("minhas-solicitacoes") }
                 )
             }
         }
