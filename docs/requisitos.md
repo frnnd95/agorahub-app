@@ -469,6 +469,7 @@ Recursos que entraram por serem indispensáveis a um requisito (RNF11). Quem usa
 | `await()`, da biblioteca `kotlinx-coroutines-play-services` | Classes da pasta `data` que leem e gravam no Firestore | Espera o resultado do Firestore numa coroutine (D19) | D19 |
 | `semantics(mergeDescendants = true)` | Itens do Calendário acadêmico e da Equipe ÁgoraHub (RF29 e RF30) | O TalkBack lê cada item de uma vez: a data com o evento; o nome com o papel | D20 |
 | `buildAnnotatedString`, `withStyle` e `SpanStyle` | Cartão do Hub de Projetos (RF14), na linha "Criado por" | Deixam as vagas disponíveis (RN18) em negrito no meio da linha, num só `Text`, como no protótipo | PR #100 |
+| `joinToString` | Cartão do Hub (RF14) e detalhes do projeto (RF16), na linha "Em comum com você" | Junta os interesses em comum num só texto, separados por vírgula, para que a informação não dependa só do verde dos chips (RNF02, WCAG 1.4.1) | Issue #103 |
 | `whereEqualTo` | Consultas de `solicitacoes` (RF17 e, depois, RF18 e RF20) | Filtra as solicitações de um estudante ou de um responsável, a única leitura que a regra libera (D24) | Issue #86 |
 | `batch()`, `commit()` e `document()` sem identificador | Envio da solicitação (RF17) e, depois, aceite, remoção e encerramento | Grava a solicitação e o e-mail juntos, ou nenhum dos dois; o `document()` cria o identificador antes de gravar (D23, D25) | Issue #86 |
 | `AlertDialog` | Aviso da RN22 (RF17) e, depois, confirmações do RF24 e do RF26 | Mostra o aviso por cima da tela, com Confirmar e Cancelar, lidos pelo TalkBack | Issue #86 |

@@ -268,6 +268,15 @@ private fun DetalhesProjetoConteudo(
                         ChipInteresse(interesse = interesse, emComum = interesse in meusInteresses)
                     }
                 }
+                // RF16: os interesses em comum também em texto, não só pela cor (RNF02)
+                val emComum = projeto.interesses.filter { it in meusInteresses }
+                if (emComum.isNotEmpty()) {
+                    Text(
+                        text = "Em comum com você: ${emComum.joinToString(", ")}",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             }
             // RF25: só o responsável, em projeto Aberto ou Fechado (RN29)
             if (seuProjeto && (projeto.status == "Aberto" || projeto.status == "Fechado")) {
