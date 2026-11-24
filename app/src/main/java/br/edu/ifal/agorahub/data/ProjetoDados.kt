@@ -72,6 +72,18 @@ class ProjetoDados {
             .add(dados)
             .await()
     }
+    // RF25: grava só o título e a descrição; o resto do documento não muda
+    suspend fun editarProjeto(id: String, titulo: String, descricao: String) {
+        val dados = mapOf(
+            "titulo" to titulo,
+            "descricao" to descricao,
+        )
+        FirebaseFirestore.getInstance()
+            .collection("projetos")
+            .document(id)
+            .update(dados)
+            .await()
+    }
 
     // Documento do Firestore para Projeto (seção 9.3)
     private fun converter(doc: DocumentSnapshot): Projeto? {
