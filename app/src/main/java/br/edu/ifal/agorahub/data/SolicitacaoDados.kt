@@ -1,11 +1,12 @@
 package br.edu.ifal.agorahub.data
 
+import br.edu.ifal.agorahub.domain.Projeto
 import br.edu.ifal.agorahub.domain.Solicitacao
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
-import com.google.firebase.Timestamp
 
 class SolicitacaoDados {
     // As solicitações de quem está logado para um projeto (RN21)
@@ -48,6 +49,21 @@ class SolicitacaoDados {
             .document(id)
             .update(mapOf("status" to "Recusada", "motivo" to motivo))
             .await()
+    }
+
+    // RF21: aceita uma solicitação Pendente e acrescenta o membro, num só lote (D25)
+    suspend fun aceitar(solicitacao: Solicitacao, projeto: Projeto) {
+        val banco = FirebaseFirestore.getInstance()
+        val lote = banco.batch()
+        lote.update(
+            banco.collection("solicitacoes").document(solicitacao.id),
+            mapOf("status" to "Aceita")
+        )
+        lote.update(
+            banco.collection("projetos").document(projeto.id),
+            mapOf("membros" to projeto.membros + solicitacao.solicitante)
+        )
+        lote.commit().await()
     }
 
     // RF20: as solicitações dos projetos de quem está logado (D24)
