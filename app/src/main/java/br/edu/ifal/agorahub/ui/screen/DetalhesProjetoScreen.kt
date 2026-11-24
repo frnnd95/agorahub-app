@@ -59,6 +59,8 @@ fun DetalhesProjetoScreen(id: String?, navController: NavController, modifier: M
     var impedimento by remember { mutableStateOf<String?>(null) }
     var enviando by remember { mutableStateOf(false) }
     var falhaEnvio by remember { mutableStateOf(false) }
+    var encerrando by remember { mutableStateOf(false) }
+    var falhaEncerrar by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
     // Lê o projeto e, depois, o nome do responsável em estudantes (seção 9.3)
@@ -116,6 +118,26 @@ fun DetalhesProjetoScreen(id: String?, navController: NavController, modifier: M
             }
         },
         aoVerMinhas = { navController.navigate("minhas-solicitacoes") },
+        encerrando = encerrando,
+        falhaEncerrar = falhaEncerrar,
+        aoEncerrar = {
+            val atual = projeto
+            if (atual != null) {
+                scope.launch {
+                    encerrando = true
+                    falhaEncerrar = false
+                    try {
+                        ProjetoDados().encerrar(atual.id)
+                        // Recarrega os detalhes: com o status novo, o botão Encerrar some
+                        projeto = ProjetoDados().buscarPorId(atual.id)
+                    } catch (e: Exception) {
+                        falhaEncerrar = true
+                        Log.e("DetalhesProjeto", "Erro ao encerrar o projeto", e)
+                    }
+                    encerrando = false
+                }
+            }
+        },
         modifier = modifier
     )
 }
@@ -134,9 +156,13 @@ private fun DetalhesProjetoConteudo(
     aoConfirmar: () -> Unit,
     aoVerMinhas: () -> Unit,
     aoEditar: () -> Unit,
+    encerrando: Boolean,
+    falhaEncerrar: Boolean,
+    aoEncerrar: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var mostrarAviso by remember { mutableStateOf(false) }
+    var mostrarEncerrar by remember { mutableStateOf(false) }
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -332,6 +358,41 @@ private fun DetalhesProjetoConteudo(
                     }
                 }
             }
+            // RF26: só o responsável, só com o projeto Aberto ou Fechado (RN30)
+            if (seuProjeto && (projeto.status == "Aberto" || projeto.status == "Fechado")) {
+                if (falhaEncerrar) {
+                    Text(
+                        text = "Não foi possível encerrar o projeto. Confira a internet e tente de novo.",
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+                OutlinedButton(
+                    onClick = { mostrarEncerrar = true },
+                    enabled = !encerrando,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 48.dp)
+                ) {
+                    Text("Encerrar")
+                }
+                if (mostrarEncerrar) {
+                    AlertDialog(
+                        onDismissRequest = { mostrarEncerrar = false },
+                        text = {
+                            Text("Encerrar este projeto? As solicitações pendentes serão recusadas, e ele não poderá ser reaberto.")
+                        },
+                        confirmButton = {
+                            TextButton(onClick = {
+                                mostrarEncerrar = false
+                                aoEncerrar()
+                            }) { Text("Encerrar") }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = { mostrarEncerrar = false }) { Text("Cancelar") }
+                        }
+                    )
+                }
+            }
         }
     }
 }
@@ -352,7 +413,10 @@ fun DetalhesProjetoScreenPreview() {
             falhaEnvio = false,
             aoConfirmar = { },
             aoVerMinhas = { },
-            aoEditar = { }
+            aoEditar = { },
+            encerrando = false,
+            falhaEncerrar = false,
+            aoEncerrar = { }
         )
     }
 }
