@@ -192,7 +192,7 @@ fun NovoProjetoScreen(
                     }
                 }
             },
-            enabled = !criando,
+            enabled = !criando && !carregando,
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(min = 48.dp)
