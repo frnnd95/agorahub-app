@@ -51,19 +51,38 @@ class SolicitacaoDados {
             .await()
     }
 
-    // RF21: aceita uma solicitação Pendente e acrescenta o membro, num só lote (D25)
-    suspend fun aceitar(solicitacao: Solicitacao, projeto: Projeto) {
+    // RF21: aceita uma solicitação Pendente, num só lote (D25)
+    // Devolve true se as vagas acabaram e o projeto foi fechado (RN26)
+    suspend fun aceitar(solicitacao: Solicitacao, projeto: Projeto): Boolean {
         val banco = FirebaseFirestore.getInstance()
         val lote = banco.batch()
+        val membros = projeto.membros + solicitacao.solicitante
+        val fechou = membros.size >= projeto.vagas
+
         lote.update(
             banco.collection("solicitacoes").document(solicitacao.id),
             mapOf("status" to "Aceita")
         )
-        lote.update(
-            banco.collection("projetos").document(projeto.id),
-            mapOf("membros" to projeto.membros + solicitacao.solicitante)
-        )
+        val documentoProjeto = banco.collection("projetos").document(projeto.id)
+        if (fechou) {
+            lote.update(documentoProjeto, mapOf("membros" to membros, "status" to "Fechado"))
+            // As outras Pendentes do projeto; a regra exige o filtro por responsavel (D24)
+            val pendentes = banco.collection("solicitacoes")
+                .whereEqualTo("responsavel", solicitacao.responsavel)
+                .whereEqualTo("projeto", projeto.id)
+                .whereEqualTo("status", "Pendente")
+                .get()
+                .await()
+            for (doc in pendentes.documents) {
+                if (doc.id != solicitacao.id) {
+                    lote.update(doc.reference, mapOf("status" to "Recusada", "motivo" to "Vagas preenchidas"))
+                }
+            }
+        } else {
+            lote.update(documentoProjeto, mapOf("membros" to membros))
+        }
         lote.commit().await()
+        return fechou
     }
 
     // RF20: as solicitações dos projetos de quem está logado (D24)
