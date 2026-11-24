@@ -8,46 +8,48 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import br.edu.ifal.agorahub.data.ContaDados
 import br.edu.ifal.agorahub.data.PerfilDados
 import br.edu.ifal.agorahub.data.ProjetoDados
+import br.edu.ifal.agorahub.data.SolicitacaoDados
 import br.edu.ifal.agorahub.data.projetosExemplo
 import br.edu.ifal.agorahub.domain.Projeto
 import br.edu.ifal.agorahub.ui.components.ChipInteresse
 import br.edu.ifal.agorahub.ui.components.Selo
 import br.edu.ifal.agorahub.ui.theme.AgoraHubTheme
+import kotlinx.coroutines.launch
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.material3.Button
-import br.edu.ifal.agorahub.data.SolicitacaoDados
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.TextButton
-import androidx.compose.runtime.rememberCoroutineScope
-import kotlinx.coroutines.launch
 
 private val formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy")
 
 @Composable
-fun DetalhesProjetoScreen(id: String?, modifier: Modifier = Modifier) {
+fun DetalhesProjetoScreen(id: String?, navController: NavController, modifier: Modifier = Modifier) {
     var carregando by remember { mutableStateOf(true) }
     var falhou by remember { mutableStateOf(false) }
     var projeto by remember { mutableStateOf<Projeto?>(null) }
@@ -57,6 +59,8 @@ fun DetalhesProjetoScreen(id: String?, modifier: Modifier = Modifier) {
     var impedimento by remember { mutableStateOf<String?>(null) }
     var enviando by remember { mutableStateOf(false) }
     var falhaEnvio by remember { mutableStateOf(false) }
+    var encerrando by remember { mutableStateOf(false) }
+    var falhaEncerrar by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
     // Lê o projeto e, depois, o nome do responsável em estudantes (seção 9.3)
@@ -107,6 +111,33 @@ fun DetalhesProjetoScreen(id: String?, modifier: Modifier = Modifier) {
                 }
             }
         },
+        aoEditar = {
+            val atual = projeto
+            if (atual != null) {
+                navController.navigate("editar-projeto/${atual.id}")
+            }
+        },
+        aoVerMinhas = { navController.navigate("minhas-solicitacoes") },
+        encerrando = encerrando,
+        falhaEncerrar = falhaEncerrar,
+        aoEncerrar = {
+            val atual = projeto
+            if (atual != null) {
+                scope.launch {
+                    encerrando = true
+                    falhaEncerrar = false
+                    try {
+                        ProjetoDados().encerrar(atual.id)
+                        // Recarrega os detalhes: com o status novo, o botão Encerrar some
+                        projeto = ProjetoDados().buscarPorId(atual.id)
+                    } catch (e: Exception) {
+                        falhaEncerrar = true
+                        Log.e("DetalhesProjeto", "Erro ao encerrar o projeto", e)
+                    }
+                    encerrando = false
+                }
+            }
+        },
         modifier = modifier
     )
 }
@@ -123,9 +154,15 @@ private fun DetalhesProjetoConteudo(
     enviando: Boolean,
     falhaEnvio: Boolean,
     aoConfirmar: () -> Unit,
+    aoVerMinhas: () -> Unit,
+    aoEditar: () -> Unit,
+    encerrando: Boolean,
+    falhaEncerrar: Boolean,
+    aoEncerrar: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var mostrarAviso by remember { mutableStateOf(false) }
+    var mostrarEncerrar by remember { mutableStateOf(false) }
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -231,8 +268,27 @@ private fun DetalhesProjetoConteudo(
                         ChipInteresse(interesse = interesse, emComum = interesse in meusInteresses)
                     }
                 }
+                // RF16: os interesses em comum também em texto, não só pela cor (RNF02)
+                val emComum = projeto.interesses.filter { it in meusInteresses }
+                if (emComum.isNotEmpty()) {
+                    Text(
+                        text = "Em comum com você: ${emComum.joinToString(", ")}",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             }
-
+            // RF25: só o responsável, em projeto Aberto ou Fechado (RN29)
+            if (seuProjeto && (projeto.status == "Aberto" || projeto.status == "Fechado")) {
+                Button(
+                    onClick = aoEditar,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 48.dp)
+                ) {
+                    Text("Editar")
+                }
+            }
             // RF17: só para quem não é o responsável (RN20)
             if (!seuProjeto) {
                 if (impedimento != null) {
@@ -263,6 +319,17 @@ private fun DetalhesProjetoConteudo(
                             style = MaterialTheme.typography.bodyLarge,
                             modifier = Modifier.padding(16.dp)
                         )
+                    }
+                    // RF18: com a solicitação pendente, leva às Minhas solicitações
+                    if (impedimento == "Pendente") {
+                        OutlinedButton(
+                            onClick = aoVerMinhas,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .heightIn(min = 48.dp)
+                        ) {
+                            Text("Ver minhas solicitações")
+                        }
                     }
                 } else {
                     if (falhaEnvio) {
@@ -300,6 +367,41 @@ private fun DetalhesProjetoConteudo(
                     }
                 }
             }
+            // RF26: só o responsável, só com o projeto Aberto ou Fechado (RN30)
+            if (seuProjeto && (projeto.status == "Aberto" || projeto.status == "Fechado")) {
+                if (falhaEncerrar) {
+                    Text(
+                        text = "Não foi possível encerrar o projeto. Confira a internet e tente de novo.",
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+                OutlinedButton(
+                    onClick = { mostrarEncerrar = true },
+                    enabled = !encerrando,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 48.dp)
+                ) {
+                    Text("Encerrar")
+                }
+                if (mostrarEncerrar) {
+                    AlertDialog(
+                        onDismissRequest = { mostrarEncerrar = false },
+                        text = {
+                            Text("Encerrar este projeto? As solicitações pendentes serão recusadas, e ele não poderá ser reaberto.")
+                        },
+                        confirmButton = {
+                            TextButton(onClick = {
+                                mostrarEncerrar = false
+                                aoEncerrar()
+                            }) { Text("Encerrar") }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = { mostrarEncerrar = false }) { Text("Cancelar") }
+                        }
+                    )
+                }
+            }
         }
     }
 }
@@ -318,7 +420,12 @@ fun DetalhesProjetoScreenPreview() {
             impedimento = null,
             enviando = false,
             falhaEnvio = false,
-            aoConfirmar = { }
+            aoConfirmar = { },
+            aoVerMinhas = { },
+            aoEditar = { },
+            encerrando = false,
+            falhaEncerrar = false,
+            aoEncerrar = { }
         )
     }
 }

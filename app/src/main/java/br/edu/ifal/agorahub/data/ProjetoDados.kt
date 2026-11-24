@@ -72,6 +72,42 @@ class ProjetoDados {
             .add(dados)
             .await()
     }
+    // RF25: grava só o título e a descrição; o resto do documento não muda
+    suspend fun editarProjeto(id: String, titulo: String, descricao: String) {
+        val dados = mapOf(
+            "titulo" to titulo,
+            "descricao" to descricao,
+        )
+        FirebaseFirestore.getInstance()
+            .collection("projetos")
+            .document(id)
+            .update(dados)
+            .await()
+    }
+
+    // RF26: encerra o projeto e recusa as pendentes numa só gravação (RN30, D25)
+    suspend fun encerrar(id: String) {
+        val uid = ContaDados().uidAtual()
+            ?: throw IllegalStateException("Nenhum estudante logado")
+        val banco = FirebaseFirestore.getInstance()
+        // As pendentes deste projeto; a regra só libera a consulta por responsavel (D24)
+        val pendentes = banco.collection("solicitacoes")
+            .whereEqualTo("responsavel", uid)
+            .whereEqualTo("projeto", id)
+            .whereEqualTo("status", "Pendente")
+            .get()
+            .await()
+        val lote = banco.batch()
+        lote.update(banco.collection("projetos").document(id), mapOf("status" to "Encerrado"))
+        for (doc in pendentes.documents) {
+            lote.update(
+                banco.collection("solicitacoes").document(doc.id),
+                mapOf("status" to "Recusada", "motivo" to "Projeto encerrado")
+            )
+        }
+        // Ou grava tudo, ou nada; se falhar, lança uma exceção
+        lote.commit().await()
+    }
 
     // Documento do Firestore para Projeto (seção 9.3)
     private fun converter(doc: DocumentSnapshot): Projeto? {

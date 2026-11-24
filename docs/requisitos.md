@@ -469,14 +469,18 @@ Recursos que entraram por serem indispensáveis a um requisito (RNF11). Quem usa
 | `await()`, da biblioteca `kotlinx-coroutines-play-services` | Classes da pasta `data` que leem e gravam no Firestore | Espera o resultado do Firestore numa coroutine (D19) | D19 |
 | `semantics(mergeDescendants = true)` | Itens do Calendário acadêmico e da Equipe ÁgoraHub (RF29 e RF30) | O TalkBack lê cada item de uma vez: a data com o evento; o nome com o papel | D20 |
 | `buildAnnotatedString`, `withStyle` e `SpanStyle` | Cartão do Hub de Projetos (RF14), na linha "Criado por" | Deixam as vagas disponíveis (RN18) em negrito no meio da linha, num só `Text`, como no protótipo | PR #100 |
+| `joinToString` | Cartão do Hub (RF14) e detalhes do projeto (RF16), na linha "Em comum com você" | Junta os interesses em comum num só texto, separados por vírgula, para que a informação não dependa só do verde dos chips (RNF02, WCAG 1.4.1) | Issue #103 |
 | `whereEqualTo` | Consultas de `solicitacoes` (RF17 e, depois, RF18 e RF20) | Filtra as solicitações de um estudante ou de um responsável, a única leitura que a regra libera (D24) | Issue #86 |
 | `batch()`, `commit()` e `document()` sem identificador | Envio da solicitação (RF17) e, depois, aceite, remoção e encerramento | Grava a solicitação e o e-mail juntos, ou nenhum dos dois; o `document()` cria o identificador antes de gravar (D23, D25) | Issue #86 |
 | `AlertDialog` | Aviso da RN22 (RF17) e, depois, confirmações do RF24 e do RF26 | Mostra o aviso por cima da tela, com Confirmar e Cancelar, lidos pelo TalkBack | Issue #86 |
 | `get()` nas regras do Firestore | Regras de `solicitacoes` e `emails` (9.4) | A regra confere o projeto ou a solicitação ligados ao documento (D23, D24) | Issue #86 |
 | `add()` do Firestore e `toIntOrNull()` | Novo projeto (RF13), na função `criarProjeto` do `ProjetoDados` e na validação das vagas | O `add()` grava um documento com o identificador gerado pelo Firestore (seção 9.3); o `toIntOrNull()` converte as vagas em número sem fechar o app quando o texto não é número (RN16) | Issue #87 |
+| `update()` do Firestore | Editar projeto (RF25), na função `editarProjeto` do `ProjetoDados` | Altera só `titulo` e `descricao` de um documento que já existe; os campos protegidos pela regra (seção 9.4) não são enviados | Issue #93 |
 | `sendEmailVerification()` e `isEmailVerified`, do Firebase Authentication | Cadastro, Verificação, Entrar e abertura do app (RF02) | Enviam o link de confirmação e dizem se o e-mail foi confirmado (RN03, RNF12) | Issue #50 |
 | `popUpTo(navController.graph.id)` | Entrar (RF03), depois do login | Tira todas as telas da pilha, mesmo quando o app abriu na Verificação, e o Voltar no Mural fecha o app | Issue #50 |
+| `previousBackStackEntry` e `statusBarsPadding()` | Seta de voltar no `topBar` do `Scaffold` da `MainActivity` (#105) | O `previousBackStackEntry` diz se há tela anterior, para a seta não aparecer quando o Voltar deixaria o app em branco; o `statusBarsPadding()` afasta a seta da barra de status, porque o app desenha a tela inteira (`enableEdgeToEdge`) | Issue #105 |
 | `matches()` e `request.auth.token.email_verified` nas regras do Firestore | Função `institucional()` (seção 9.4) | Conferem no Firebase o domínio do e-mail (RN01) e a confirmação (RN03), porque o app pode ser contornado (RNF08) | Issue #50 |
+| `LazyRow` | Filtro de interesses do Hub de Projetos (RF15) | Mostra os interesses numa linha que rola para o lado, sem ocupar várias linhas acima da lista; é a versão horizontal do `LazyColumn` | PR #118 |
 
 ### 8.4 Correspondência das decisões da versão 2
 
