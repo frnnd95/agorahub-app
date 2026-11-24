@@ -111,6 +111,12 @@ fun DetalhesProjetoScreen(id: String?, navController: NavController, modifier: M
                 }
             }
         },
+        aoEditar = {
+            val atual = projeto
+            if (atual != null) {
+                navController.navigate("editar-projeto/${atual.id}")
+            }
+        },
         aoVerMinhas = { navController.navigate("minhas-solicitacoes") },
         encerrando = encerrando,
         falhaEncerrar = falhaEncerrar,
@@ -149,6 +155,7 @@ private fun DetalhesProjetoConteudo(
     falhaEnvio: Boolean,
     aoConfirmar: () -> Unit,
     aoVerMinhas: () -> Unit,
+    aoEditar: () -> Unit,
     encerrando: Boolean,
     falhaEncerrar: Boolean,
     aoEncerrar: () -> Unit,
@@ -262,7 +269,17 @@ private fun DetalhesProjetoConteudo(
                     }
                 }
             }
-
+            // RF25: só o responsável, em projeto Aberto ou Fechado (RN29)
+            if (seuProjeto && (projeto.status == "Aberto" || projeto.status == "Fechado")) {
+                Button(
+                    onClick = aoEditar,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 48.dp)
+                ) {
+                    Text("Editar")
+                }
+            }
             // RF17: só para quem não é o responsável (RN20)
             if (!seuProjeto) {
                 if (impedimento != null) {
@@ -396,6 +413,7 @@ fun DetalhesProjetoScreenPreview() {
             falhaEnvio = false,
             aoConfirmar = { },
             aoVerMinhas = { },
+            aoEditar = { },
             encerrando = false,
             falhaEncerrar = false,
             aoEncerrar = { }

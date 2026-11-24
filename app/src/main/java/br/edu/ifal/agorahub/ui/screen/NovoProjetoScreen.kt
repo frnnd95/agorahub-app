@@ -31,10 +31,16 @@ import android.util.Log
 import androidx.compose.runtime.rememberCoroutineScope
 import br.edu.ifal.agorahub.data.ProjetoDados
 import kotlinx.coroutines.launch
+import androidx.compose.runtime.LaunchedEffect
 
 // RF13: formulário para criar um projeto
 @Composable
-fun NovoProjetoScreen(navController: NavController, modifier: Modifier = Modifier) {
+fun NovoProjetoScreen(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+    editar: Boolean = false,
+    id: String? = null // RF25: projeto que será editado
+) {
     var titulo by remember { mutableStateOf("") }
     var descricao by remember { mutableStateOf("") }
     // Vagas como texto, porque o campo devolve texto
@@ -47,6 +53,25 @@ fun NovoProjetoScreen(navController: NavController, modifier: Modifier = Modifie
     var erroGeral by remember { mutableStateOf("") }
     var criando by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
+    var carregando by remember { mutableStateOf(editar) }
+    // RF25: no modo editar, preenche os campos com o projeto atual
+    LaunchedEffect(Unit) {
+        if (editar) {
+            try {
+                val projeto = ProjetoDados().buscarPorId(id)
+                if (projeto != null) {
+                    titulo = projeto.titulo
+                    descricao = projeto.descricao
+                } else {
+                    erroGeral = "Projeto não encontrado."
+                }
+            } catch (e: Exception) {
+                erroGeral = "Não foi possível carregar o projeto. Confira a conexão com a internet."
+                Log.e("EditarProjeto", "Erro ao carregar o projeto", e)
+            }
+            carregando = false
+        }
+    }
 
     Column(
         modifier = modifier
@@ -57,9 +82,12 @@ fun NovoProjetoScreen(navController: NavController, modifier: Modifier = Modifie
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text(
-            text = "Novo projeto",
+            text = if (editar) "Editar projeto" else "Novo projeto",
             style = MaterialTheme.typography.titleLarge
         )
+        if (carregando) {
+            Text(text = "Carregando projeto...", style = MaterialTheme.typography.bodyLarge)
+        }
         OutlinedTextField(
             value = titulo,
             onValueChange = { titulo = it },
@@ -77,28 +105,31 @@ fun NovoProjetoScreen(navController: NavController, modifier: Modifier = Modifie
             supportingText = { if (erroDescricao != "") Text(erroDescricao) },
             modifier = Modifier.fillMaxWidth()
         )
-        OutlinedTextField(
-            value = vagas,
-            onValueChange = { vagas = it },
-            label = { Text("Número de vagas") },
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            isError = erroVagas != "",
-            supportingText = { if (erroVagas != "") Text(erroVagas) },
-            modifier = Modifier.fillMaxWidth()
-        )
-        SeletorInteresses(
-            escolhidos = interesses,
-            aoMudar = { nova -> interesses = nova },
-            titulo = "Interesses procurados",
-            orientacao = "Escolha de 1 a 5 interesses."
-        )
-        if (erroInteresses != "") {
-            Text(
-                text = erroInteresses,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.error
+        // RF25: vagas e interesses não são editados
+        if (!editar) {
+            OutlinedTextField(
+                value = vagas,
+                onValueChange = { vagas = it },
+                label = { Text("Número de vagas") },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                isError = erroVagas != "",
+                supportingText = { if (erroVagas != "") Text(erroVagas) },
+                modifier = Modifier.fillMaxWidth()
             )
+            SeletorInteresses(
+                escolhidos = interesses,
+                aoMudar = { nova -> interesses = nova },
+                titulo = "Interesses procurados",
+                orientacao = "Escolha de 1 a 5 interesses."
+            )
+            if (erroInteresses != "") {
+                Text(
+                    text = erroInteresses,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
         }
         if (erroGeral != "") {
             Text(
@@ -114,19 +145,22 @@ fun NovoProjetoScreen(navController: NavController, modifier: Modifier = Modifie
                 val descricaoLimpa = descricao.trim()
                 val numeroVagas = vagas.trim().toIntOrNull()
                 erroTitulo = if (tituloLimpo == "") "Preencha este campo."
+                else if (editar && tituloLimpo.length < 5) "O título precisa ter pelo menos 5 caracteres."
                 else if (tituloLimpo.length > 80) "O título pode ter no máximo 80 caracteres."
                 else ""
                 erroDescricao = if (descricaoLimpa == "") "Preencha este campo."
+                else if (editar && descricaoLimpa.length < 20) "A descrição precisa ter pelo menos 20 caracteres."
                 else if (descricaoLimpa.length > 1000) "A descrição pode ter no máximo 1000 caracteres."
                 else ""
-                erroVagas = if (numeroVagas == null || numeroVagas < 1 || numeroVagas > 10)
+                // RF25: no modo editar, vagas e interesses não são conferidos
+                erroVagas = if (!editar && (numeroVagas == null || numeroVagas < 1 || numeroVagas > 10))
                     "Informe um número de 1 a 10." else ""
-                erroInteresses = if (interesses.isEmpty()) "Escolha pelo menos 1 interesse." else ""
+                erroInteresses = if (!editar && interesses.isEmpty()) "Escolha pelo menos 1 interesse." else ""
                 erroGeral = if (erroTitulo != "" || erroDescricao != "" || erroVagas != "")
                     "Confira os campos no início da tela." else ""
                 val valido = erroTitulo == "" && erroDescricao == "" &&
                         erroVagas == "" && erroInteresses == ""
-                if (valido && numeroVagas != null) {
+                if (valido && !editar && numeroVagas != null) {
                     criando = true
                     scope.launch {
                         try {
@@ -142,13 +176,28 @@ fun NovoProjetoScreen(navController: NavController, modifier: Modifier = Modifie
                         }
                     }
                 }
+                // RF25: no modo editar, grava só título e descrição
+                if (valido && editar && id != null) {
+                    criando = true
+                    scope.launch {
+                        try {
+                            ProjetoDados().editarProjeto(id, tituloLimpo, descricaoLimpa)
+                            // Volta aos detalhes, que leem o Firestore de novo
+                            navController.popBackStack()
+                        } catch (e: Exception) {
+                            criando = false
+                            erroGeral = "Não foi possível salvar as alterações. Confira a internet e tente de novo."
+                            Log.e("EditarProjeto", "Erro ao salvar o projeto", e)
+                        }
+                    }
+                }
             },
             enabled = !criando,
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(min = 48.dp)
         ) {
-            Text("Criar projeto")
+            Text(if (editar) "Salvar alterações" else "Criar projeto")
         }
     }
 }

@@ -72,6 +72,18 @@ class ProjetoDados {
             .add(dados)
             .await()
     }
+    // RF25: grava só o título e a descrição; o resto do documento não muda
+    suspend fun editarProjeto(id: String, titulo: String, descricao: String) {
+        val dados = mapOf(
+            "titulo" to titulo,
+            "descricao" to descricao,
+        )
+        FirebaseFirestore.getInstance()
+            .collection("projetos")
+            .document(id)
+            .update(dados)
+            .await()
+    }
 
     // RF26: encerra o projeto e recusa as pendentes numa só gravação (RN30, D25)
     suspend fun encerrar(id: String) {
