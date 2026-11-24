@@ -42,6 +42,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Button
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.launch
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.liveRegion
 
 @Composable
 fun SolicitacoesRecebidasScreen(navController: NavController, modifier: Modifier = Modifier) {
@@ -93,8 +95,12 @@ fun SolicitacoesRecebidasScreen(navController: NavController, modifier: Modifier
                         // RN25: sem vaga, não grava
                         mensagem = "O projeto não tem vagas disponíveis."
                     } else {
-                        SolicitacaoDados().aceitar(solicitacao, projeto)
-                        mensagem = null
+                        val fechou = SolicitacaoDados().aceitar(solicitacao, projeto)
+                        mensagem = if (fechou) {
+                            "Vagas preenchidas: o projeto foi fechado e as demais solicitações foram recusadas automaticamente."
+                        } else {
+                            null
+                        }
                         recarregar++
                     }
                 } catch (e: Exception) {
@@ -194,7 +200,9 @@ private fun SolicitacoesRecebidasConteudo(
             Text(
                 text = mensagem,
                 style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier
+                    .padding(16.dp)
+                    .semantics { liveRegion = LiveRegionMode.Polite }
             )
         }
     }
