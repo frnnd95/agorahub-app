@@ -34,7 +34,12 @@ import kotlinx.coroutines.launch
 
 // RF13: formulário para criar um projeto
 @Composable
-fun NovoProjetoScreen(navController: NavController, modifier: Modifier = Modifier) {
+fun NovoProjetoScreen(
+    navController: NavController,
+    modifier: Modifier = Modifier,
+    editar: Boolean = false,
+    id: String? = null // RF25: projeto que será editado
+) {
     var titulo by remember { mutableStateOf("") }
     var descricao by remember { mutableStateOf("") }
     // Vagas como texto, porque o campo devolve texto
@@ -57,7 +62,7 @@ fun NovoProjetoScreen(navController: NavController, modifier: Modifier = Modifie
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text(
-            text = "Novo projeto",
+            text = if (editar) "Editar projeto" else "Novo projeto",
             style = MaterialTheme.typography.titleLarge
         )
         OutlinedTextField(
@@ -77,28 +82,31 @@ fun NovoProjetoScreen(navController: NavController, modifier: Modifier = Modifie
             supportingText = { if (erroDescricao != "") Text(erroDescricao) },
             modifier = Modifier.fillMaxWidth()
         )
-        OutlinedTextField(
-            value = vagas,
-            onValueChange = { vagas = it },
-            label = { Text("Número de vagas") },
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            isError = erroVagas != "",
-            supportingText = { if (erroVagas != "") Text(erroVagas) },
-            modifier = Modifier.fillMaxWidth()
-        )
-        SeletorInteresses(
-            escolhidos = interesses,
-            aoMudar = { nova -> interesses = nova },
-            titulo = "Interesses procurados",
-            orientacao = "Escolha de 1 a 5 interesses."
-        )
-        if (erroInteresses != "") {
-            Text(
-                text = erroInteresses,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.error
+        // RF25: vagas e interesses não são editados
+        if (!editar) {
+            OutlinedTextField(
+                value = vagas,
+                onValueChange = { vagas = it },
+                label = { Text("Número de vagas") },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                isError = erroVagas != "",
+                supportingText = { if (erroVagas != "") Text(erroVagas) },
+                modifier = Modifier.fillMaxWidth()
             )
+            SeletorInteresses(
+                escolhidos = interesses,
+                aoMudar = { nova -> interesses = nova },
+                titulo = "Interesses procurados",
+                orientacao = "Escolha de 1 a 5 interesses."
+            )
+            if (erroInteresses != "") {
+                Text(
+                    text = erroInteresses,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
         }
         if (erroGeral != "") {
             Text(
@@ -143,12 +151,13 @@ fun NovoProjetoScreen(navController: NavController, modifier: Modifier = Modifie
                     }
                 }
             },
-            enabled = !criando,
+            // Provisório: no modo editar, só grava depois do incremento 5
+            enabled = !criando && !editar,
             modifier = Modifier
                 .fillMaxWidth()
                 .heightIn(min = 48.dp)
         ) {
-            Text("Criar projeto")
+            Text(if (editar) "Salvar alterações" else "Criar projeto")
         }
     }
 }
